@@ -240,6 +240,31 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Jumlah Data UKL-UPL MR Cluster KBLI</h5>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="chart">
+                                    <canvas id="Cluster" height="80" style="height: 80px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card" style="background-color: #133715; color: white;">
             <div class="card-header" style="background-color: #628462;">
                 <div class="form-group">
@@ -504,14 +529,7 @@
                             fill: false,
                             backgroundColor: '#f39c12',
                             tension: 0.1
-                        },
-                        // {
-                        //     label: 'TOTAL',
-                        //     data: prov_total,
-                        //     fill: false,
-                        //     backgroundColor: '#00a65a',
-                        //     tension: 0.1
-                        // }
+                        }
                     ]
                 }
 
@@ -564,6 +582,60 @@
                     type: 'line',
                     data: KegiatanData,
                     options: KegiatanOptions
+                })
+
+                // CLUSTER
+
+                var ClusterCanvas = $('#Cluster').get(0).getContext('2d')
+
+                let cluster_label = <?php echo json_encode($cluster_label); ?>;
+                let cluster_data = <?php echo json_encode($cluster_data); ?>;
+
+                var ClusterData = {
+                    labels: cluster_label,
+                    datasets: [{
+                            label: 'Total',
+                            data: cluster_data,
+                            fill: false,
+                            backgroundColor: [
+                                'rgba(255, 99, 132)',
+                                'rgba(255, 159, 64)',
+                                'rgba(255, 205, 86)',
+                                'rgba(75, 192, 192)',
+                                'rgba(54, 162, 235)',
+                                'rgba(153, 102, 255)',
+                                'rgba(201, 203, 207)',
+                                'rgba(255, 99, 132)',
+                                'rgba(255, 159, 64)',
+                                'rgba(255, 205, 86)',
+                                'rgba(75, 192, 192)'
+                            ],
+                            tension: 0.1
+                        }
+                    ]
+                }
+
+                var ClusterOptions = {
+                    maintainAspectRatio: true,
+                    responsive: true,
+                    legend: {
+                        display: true
+                    },
+                    scales: {
+                        xAxes: [
+                        {
+                            scaleLabel: {
+                                display: false,
+                            }
+                        }
+                        ]
+                    }
+                }
+
+                var Cluster = new Chart(ClusterCanvas, {
+                    type: 'bar',
+                    data: ClusterData,
+                    options: ClusterOptions
                 })
 
                 $('#world-map-markers').mapael({
