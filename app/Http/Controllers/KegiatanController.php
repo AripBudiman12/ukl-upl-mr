@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kegiatan;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\DataTables;
 
@@ -25,9 +22,9 @@ class KegiatanController extends Controller
             $start_date = str_replace('-', '/', request('start_date'));
             $end_date = str_replace('-', '/', request('end_date'));
             $statistik = Http::withToken('8|yrllsJEngF4NvGAa0xdQ0bD8LJ4OA6vY9Jak5WXa')->get('https://amdalnet-dev.menlhk.go.id/amdal-api/api/statistik?perbulan=0&start_date=' . $start_date . '&end_date=' . $end_date);
-        } if (request('perbulan')) {
+        } if (request('perbulan') == 1) {
             $statistik = Http::withToken('8|yrllsJEngF4NvGAa0xdQ0bD8LJ4OA6vY9Jak5WXa')->get('https://amdalnet-dev.menlhk.go.id/amdal-api/api/statistik?perbulan=1&start_date=' . $start_date . '&end_date=' . $end_date);
-        } elseif (empty(request(['start_date','end_date'])) && request('perbulan') == 0) {
+        } elseif (empty(request(['start_date','end_date'])) || request('perbulan') == 0) {
             $statistik = Http::withToken('8|yrllsJEngF4NvGAa0xdQ0bD8LJ4OA6vY9Jak5WXa')->get('https://amdalnet-dev.menlhk.go.id/amdal-api/api/statistik');
         }
 
@@ -92,19 +89,21 @@ class KegiatanController extends Controller
         ));
     }
 
-    public function datatable(Request $request)
+    public function datatable()
     {
         $limit = request('length');
         $start = request('start');
         $search = request('search');
 
-        $total = Http::withToken('8|yrllsJEngF4NvGAa0xdQ0bD8LJ4OA6vY9Jak5WXa')->get('https://amdalnet-dev.menlhk.go.id/amdal-api/api/total');
+        $total = Http::withToken('8|yrllsJEngF4NvGAa0xdQ0bD8LJ4OA6vY9Jak5WXa')->get('https://amdalnet-dev.menlhk.go.id/amdal-api/api/filteredTotal');
+        $api = Http::withToken('8|yrllsJEngF4NvGAa0xdQ0bD8LJ4OA6vY9Jak5WXa')->get('https://amdalnet-dev.menlhk.go.id/amdal-api/api/kegiatan?offset=' . $start . '&limit=' . $limit);
 
-        // if (request('search')) {
-        //     $api = Http::withToken('8|yrllsJEngF4NvGAa0xdQ0bD8LJ4OA6vY9Jak5WXa')->get('https://amdalnet-dev.menlhk.go.id/amdal-api/api/kegiatan?offset=' . $start . '&limit=' . $limit . '&search=' . $search);
-        // } else {
-            $api = Http::withToken('8|yrllsJEngF4NvGAa0xdQ0bD8LJ4OA6vY9Jak5WXa')->get('https://amdalnet-dev.menlhk.go.id/amdal-api/api/kegiatan?offset=' . $start . '&limit=' . $limit);
-        // }
+        return response()->json([
+            "draw" => intval(request('draw')),
+            "recordsTotal" => intval($total['data'][0]['count']),
+            "recordsFiltered" => intval($total['data'][0]['count']),
+            "data" => $api['data'],
+        ]);
 
         // if ($request->ajax()) {
         //     $data = $api;
@@ -136,16 +135,7 @@ class KegiatanController extends Controller
         //             ->make(true);
         // }
 
-        // return response()->json([
-        //     "draw" => intval(request('draw')),
-        //     "recordsTotal" => $total['data']['count'],
-        //     "recordsFiltered" => count($api['data']),
-        //     "data" => $api['data'],
-        //     "input" => ""
-        // ]);
-
-        $data = Http::withToken('8|yrllsJEngF4NvGAa0xdQ0bD8LJ4OA6vY9Jak5WXa')->get('https://amdalnet-dev.menlhk.go.id/amdal-api/api/kegiatan?limit=100&offset=100');
-
-        return DataTables::of($data['data'])->make(true);
+        // $data = Http::withToken('8|yrllsJEngF4NvGAa0xdQ0bD8LJ4OA6vY9Jak5WXa')->get('https://amdalnet-dev.menlhk.go.id/amdal-api/api/kegiatan?limit=100&offset=100');
+        // return DataTables::of($data['data'])->make(true);
     }
 }

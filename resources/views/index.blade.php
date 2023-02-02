@@ -622,13 +622,11 @@
                         display: true
                     },
                     scales: {
-                        xAxes: [
-                        {
-                            scaleLabel: {
-                                display: false,
+                        xAxes: [{
+                            ticks: {
+                                display: false
                             }
-                        }
-                        ]
+                        }]
                     }
                 }
 
