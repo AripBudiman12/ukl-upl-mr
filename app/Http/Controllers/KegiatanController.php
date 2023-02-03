@@ -2,11 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\districts;
+use App\Models\provinces;
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class KegiatanController extends Controller
 {
+    public function user_role()
+    {
+        $user = Auth::user()->id;
+        $kewenangan = User::join('luk_members', 'users.email', 'luk_members.email')
+        ->join('feasibility_test_team_members', 'luk_members.id', 'feasibility_test_team_members.id_luk_member')
+        ->join('feasibility_test_teams', 'feasibility_test_teams.id', 'feasibility_test_team_members.id_feasibility_test_team')
+        ->select('feasibility_test_teams.authority', 'feasibility_test_teams.id_province_name', 'feasibility_test_teams.id_district_name')
+        ->where('users.id',$user)->first();
+
+        $prov = null;
+        if ($kewenangan->id_province_name) {
+            $prov = provinces::find($prov)->name;
+        }
+
+        $kabkota = null;
+        if ($kewenangan->id_district_name) {
+            $kabkota = districts::find($kabkota)->name;
+        }
+
+        $data = [
+            'kewenangan' => $kewenangan->authority,
+            'provinsi' => $prov,
+            'kabkota' => $kabkota
+        ];
+
+        return $data;
+    }
+
     public function index()
     {
         $uklupl_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl');
@@ -24,7 +56,7 @@ class KegiatanController extends Controller
             $statistik = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/statistik?perbulan=0&start_date=' . $start_date . '&end_date=' . $end_date);
         } if (request('perbulan') == 1) {
             $statistik = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/statistik?perbulan=1&start_date=' . $start_date . '&end_date=' . $end_date);
-        } elseif (empty(request(['start_date','end_date'])) || request('perbulan') == 0) {
+        } elseif (empty(request(['start_date','end_date','perbulan']))) {
             $statistik = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/statistik');
         }
 

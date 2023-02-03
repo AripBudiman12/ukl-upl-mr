@@ -1,9 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('section')
     <div class="container-fluid mt-3 pt-3" style="background-color: #628462;">
-        <h3 class="text-center"><b style="color:white;">Daftar Rekap SPPL dan UKL-UPL Menengah Rendah</b></h3>
-        <div class="row">
+        <div class="row-12 mb-3">
+            <a href="https://amdalnet.menlhk.go.id/"><button class="btn btn-light float-left">Kembali</button></a>
+            <h3 class="text-center"><b style="color:white; margin-left: -90px">Daftar Rekap SPPL dan UKL-UPL Menengah
+                    Rendah</b></h3>
+        </div>
+
+        {{-- <div class="row">
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
@@ -55,7 +60,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="row">
             <div class="col-md-12">
@@ -117,7 +122,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Jumlah UKL-UPL SPPL per Kewenangan</h3>
@@ -148,7 +153,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Jumlah UKL-UPL per Kewenangan</h3>
@@ -180,7 +185,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Jumlah SPPL per Kewenangan</h3>
@@ -210,6 +215,30 @@
                     </div>
                 </div>
             </div>
+
+            {{-- cluster --}}
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Jumlah Data UKL-UPL MR Cluster KBLI</h5>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="chart-responsive">
+                                    <canvas id="Cluster" height="150"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -232,31 +261,6 @@
                                 </p> --}}
                                 <div class="chart">
                                     <canvas id="Statistic" height="80" style="height: 80px;"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Jumlah Data UKL-UPL MR Cluster KBLI</h5>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="chart">
-                                    <canvas id="Cluster" height="80" style="height: 80px;"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -506,7 +510,6 @@
                 // - MONTHLY SALES CHART -
                 //-----------------------
 
-                // Get context with jQuery - using jQuery's .get() method.
                 var StatisticCanvas = $('#Statistic').get(0).getContext('2d')
 
                 let prov_label = <?php echo json_encode($prov_label); ?>;
@@ -527,7 +530,7 @@
                             label: 'SPPL',
                             data: prov_sppl,
                             fill: false,
-                            backgroundColor: '#f39c12',
+                            backgroundColor: '#7FFF00',
                             tension: 0.1
                         }
                     ]
@@ -584,57 +587,41 @@
                     options: KegiatanOptions
                 })
 
-                // CLUSTER
+                // Cluster Donut
 
                 var ClusterCanvas = $('#Cluster').get(0).getContext('2d')
 
                 let cluster_label = <?php echo json_encode($cluster_label); ?>;
                 let cluster_data = <?php echo json_encode($cluster_data); ?>;
 
-                var ClusterData = {
+                 var ClusterData = {
                     labels: cluster_label,
                     datasets: [{
-                            label: 'Total',
-                            data: cluster_data,
-                            fill: false,
-                            backgroundColor: [
-                                'rgba(255, 99, 132)',
-                                'rgba(255, 159, 64)',
-                                'rgba(255, 205, 86)',
-                                'rgba(75, 192, 192)',
-                                'rgba(54, 162, 235)',
-                                'rgba(153, 102, 255)',
-                                'rgba(201, 203, 207)',
-                                'rgba(255, 99, 132)',
-                                'rgba(255, 159, 64)',
-                                'rgba(255, 205, 86)',
-                                'rgba(75, 192, 192)'
-                            ],
-                            tension: 0.1
-                        }
-                    ]
+                        label: 'Total',
+                        data: cluster_data,
+                        backgroundColor: ['rgba(255, 99, 132)',
+                            'rgba(255, 159, 64)',
+                            'rgba(255, 205, 86)',
+                            'rgba(75, 192, 192)',
+                            'rgba(54, 162, 235)',
+                            'rgba(153, 102, 255)',
+                            'rgba(201, 203, 207)',
+                            'rgba(255, 99, 132)',
+                            'rgba(255, 159, 64)',
+                            'rgba(255, 205, 86)',
+                            'rgba(75, 192, 192)']
+                    }]
                 }
-
                 var ClusterOptions = {
-                    maintainAspectRatio: true,
-                    responsive: true,
                     legend: {
-                        display: true
-                    },
-                    scales: {
-                        xAxes: [{
-                            ticks: {
-                                display: false
-                            }
-                        }]
+                        display: false
                     }
                 }
-
                 var Cluster = new Chart(ClusterCanvas, {
-                    type: 'bar',
+                    type: 'doughnut',
                     data: ClusterData,
                     options: ClusterOptions
-                })
+                });
 
                 $('#world-map-markers').mapael({
                     map: {
