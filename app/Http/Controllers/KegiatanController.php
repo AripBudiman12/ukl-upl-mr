@@ -42,6 +42,13 @@ class KegiatanController extends Controller
 
     public function index()
     {
+
+        $uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat');
+        $sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/sppl_pusat');
+        $uklupl_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl');
+        $uklupl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL');
+        $sppl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=SPPL');
+        $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/cluster');
         $start_date = "";
         $end_date = "";
 
@@ -53,13 +60,22 @@ class KegiatanController extends Controller
             $statistik = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/statistik?perbulan=1&start_date=' . $start_date . '&end_date=' . $end_date);
         } elseif (empty(request(['start_date','end_date','perbulan']))) {
             $statistik = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/statistik');
-            $uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat');
-            $sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/sppl_pusat');
-            $uklupl_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl');
-            $uklupl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL');
-            $sppl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=SPPL');
-            $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/cluster');
         }
+
+        #region Total UKL-UPL dan SPPL
+        $jum_uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL');
+        $jum_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=SPPL');
+
+        $total_uklupl = 0;
+        for ($i = 0; $i < count($jum_uklupl['data']); $i++) {
+            $total_uklupl += $jum_uklupl['data'][$i]['jumlah'];
+        }
+
+        $total_sppl = 0;
+        for ($i = 0; $i < count($jum_sppl['data']); $i++) {
+            $total_sppl += $jum_sppl['data'][$i]['jumlah'];
+        }
+        #endregion
 
         $uklupl_data = array();
         for ($i = 0; $i < count($uklupl['data']); $i++ ) {
@@ -71,15 +87,6 @@ class KegiatanController extends Controller
             $sppl_data[] = $sppl['data'][$i]['jumlah'];
         }
 
-        $total_uklupl = 0;
-        for ($i = 0; $i < count($uklupl_data); $i++) {
-            $total_uklupl += $uklupl_data[$i];
-        }
-
-        $total_sppl = 0;
-        for ($i = 0; $i < count($sppl_data); $i++) {
-            $total_sppl += $sppl_data[$i];
-        }
 
         $uklupl_sppl_data = array();
         for ($i = 0; $i < count($uklupl_sppl['data']); $i++ ) {
