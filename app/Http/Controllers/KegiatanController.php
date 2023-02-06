@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\districts;
 use App\Models\provinces;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -41,12 +42,6 @@ class KegiatanController extends Controller
 
     public function index()
     {
-        $uklupl_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl');
-        $uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat');
-        $sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/sppl_pusat');
-        $uklupl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL');
-        $sppl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=SPPL');
-        $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/cluster');
         $start_date = "";
         $end_date = "";
 
@@ -58,6 +53,12 @@ class KegiatanController extends Controller
             $statistik = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/statistik?perbulan=1&start_date=' . $start_date . '&end_date=' . $end_date);
         } elseif (empty(request(['start_date','end_date','perbulan']))) {
             $statistik = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/statistik');
+            $uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat');
+            $sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/sppl_pusat');
+            $uklupl_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl');
+            $uklupl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL');
+            $sppl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=SPPL');
+            $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/cluster');
         }
 
         $uklupl_data = array();
@@ -68,6 +69,16 @@ class KegiatanController extends Controller
         $sppl_data = array();
         for ($i = 0; $i < count($sppl['data']); $i++ ) {
             $sppl_data[] = $sppl['data'][$i]['jumlah'];
+        }
+
+        $total_uklupl = 0;
+        for ($i = 0; $i < count($uklupl_data); $i++) {
+            $total_uklupl += $uklupl_data[$i];
+        }
+
+        $total_sppl = 0;
+        for ($i = 0; $i < count($sppl_data); $i++) {
+            $total_sppl += $sppl_data[$i];
         }
 
         $uklupl_sppl_data = array();
@@ -106,16 +117,9 @@ class KegiatanController extends Controller
             $stat_data[] = $statistik['data'][$i]['jumlah'];
         }
 
-
-        $total_uklupl = 0;
-        for ($i = 0; $i < count($uklupl_data); $i++) {
-            $total_uklupl += $uklupl_data[$i];
-        }
-
-        $total_sppl = 0;
-        for ($i = 0; $i < count($sppl_data); $i++) {
-            $total_sppl += $sppl_data[$i];
-        }
+        $tanggal = $this->getDate();
+        $tgl_awal = $tanggal['start'];
+        $tgl_akhir = $tanggal['now'];
 
         return view('index', compact(
             'uklupl_data',
@@ -130,7 +134,9 @@ class KegiatanController extends Controller
             'cluster_label',
             'cluster_data',
             'total_uklupl',
-            'total_sppl'
+            'total_sppl',
+            'tgl_awal',
+            'tgl_akhir',
         ));
     }
 
@@ -150,37 +156,23 @@ class KegiatanController extends Controller
             "data" => $api['data'],
         ]);
 
-        // if ($request->ajax()) {
-        //     $data = $api;
-        //     return Datatables::of($data)
-        //             ->addIndexColumn()
-        //             ->addColumn('kewenangan', function($row){
-        //                  if($row->kewenangan){
-        //                     return '<span class="badge badge-primary">Kab / Kot</span>';
-        //                  }elseif($row->kewenangan){
-        //                     return '<span class="badge badge-primary">Pusat</span>';
-        //                  }
-        //                  else{
-        //                     return '<span class="badge badge-danger">Provinsi</span>';
-        //                  }
-        //             })
-        //             ->filter(function ($instance) use ($request) {
-        //                 if ($request->get('kewenangan') == '0' || $request->get('kewenangan') == '1' || $request->get('kewenangan') == '2') {
-        //                     $instance->where('kewenangan', $request->get('kewenangan'));
-        //                 }
-        //                 if (!empty($request->get('search'))) {
-        //                      $instance->where(function($w) use($request){
-        //                         $search = $request->get('search');
-        //                         $w->orWhere('jenis_kegiatan', 'LIKE', "%$search%")
-        //                         ->orWhere('jenisdokumen', 'LIKE', "%$search%");
-        //                     });
-        //                 }
-        //             })
-        //             ->rawColumns(['kewenangan'])
-        //             ->make(true);
-        // }
+    }
 
-        // $data = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?limit=100&offset=100');
-        // return DataTables::of($data['data'])->make(true);
+    public function getDate()
+    {
+        $month = Carbon::now()->subMonths(3)->format('Y-m');
+        $now = Carbon::now()->format('Y-m-d');
+
+        $date = Carbon::now()->format('d');
+        $subtract = $date - ($date - 1);
+
+        $start = $month . "-0" . $subtract;
+
+        $data = [
+            'start' => $start,
+            'now' => $now
+        ];
+
+        return $data;
     }
 }

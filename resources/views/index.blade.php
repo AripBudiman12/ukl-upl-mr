@@ -18,27 +18,23 @@
                             {{ $total_uklupl }}
                         </span>
                     </div>
-
                 </div>
-
             </div>
 
             <div class="col-12 col-sm-6 col-md-6">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Jummlah SPPL</span>
+                        <span class="info-box-text">Jumlah SPPL</span>
                         <span class="info-box-number">
                             {{ $total_sppl }}
                         </span>
                     </div>
-
                 </div>
-
             </div>
+        </div>
 
-
-            {{-- <div class="clearfix hidden-md-up"></div>
+        {{-- <div class="clearfix hidden-md-up"></div>
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
@@ -61,7 +57,47 @@
 
                 </div>
             </div> --}}
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="info-box">
+                    <form action="{{ route('index') }}">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select class="form-control" name="perbulan" id="perbulan">
+                                            <option value="0">Pilih</option>
+                                            <option value="0">Pertanggal</option>
+                                            <option value="1">Perbulan</option>
+                                        </select>
+                                    </td>
+                                    <td class="align-middle">
+                                        <label for="start_date" class="mx-2">Tanggal Awal:</label>
+                                    </td>
+                                    <td>
+                                        <input type="date" class="form-control" name="start_date" id="start_date"
+                                            value="{{ $tgl_awal }}">
+                                    </td>
+                                    <td class="align-middle">
+                                        <label for="end_date" class="mx-2">Tanggal Akhir:</label>
+                                    </td>
+                                    <td>
+                                        <input type="date" class="form-control" name="end_date" id="end_date"
+                                            value="{{ $tgl_akhir }}">
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary ml-2"><i
+                                                class="fa fa-filter"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
         </div>
+
 
         <div class="row">
             <div class="col-md-12">
@@ -79,40 +115,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="chart">
-
-                                    <form action="/">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <select class="form-control" name="perbulan" id="perbulan">
-                                                            <option value="0">Pilih</option>
-                                                            <option value="0">Pertanggal</option>
-                                                            <option value="1">Perbulan</option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <label for="start_date" class="mx-2">Tanggal Awal:</label>
-                                                    </td>
-                                                    <td>
-                                                        <input type="date" class="form-control" name="start_date"
-                                                            id="start_date">
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <label for="end_date" class="mx-2">Tanggal Akhir:</label>
-                                                    </td>
-                                                    <td>
-                                                        <input type="date" class="form-control" name="end_date"
-                                                            id="end_date">
-                                                    </td>
-                                                    <td>
-                                                        <button type="submit" class="btn btn-primary ml-2"><i
-                                                                class="fa fa-filter"></i></button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </form>
                                     <canvas id="Kegiatan" height="80" style="height: 80px;"></canvas>
                                 </div>
                             </div>
@@ -433,7 +435,9 @@
 
                 let sppl_data = <?php echo json_encode($sppl_data); ?>;
                 let uklupl_data = <?php echo json_encode($uklupl_data); ?>;
-                let uklupl_sppl_data = <?php echo json_encode($uklupl_sppl_data); ?>;
+                let total_uklupl = <?php echo json_encode($total_uklupl); ?>;
+                let total_sppl = <?php echo json_encode($total_sppl); ?>;
+
 
                 var ProvinsiCanvas = $('#pieChart').get(0).getContext('2d')
                 var pieData = {
@@ -442,7 +446,7 @@
                         'UKLUPL',
                     ],
                     datasets: [{
-                        data: uklupl_sppl_data,
+                        data: [total_sppl,total_uklupl],
                         backgroundColor: ['#f56954', '#00a65a']
                     }]
                 }
@@ -595,7 +599,7 @@
                 let cluster_label = <?php echo json_encode($cluster_label); ?>;
                 let cluster_data = <?php echo json_encode($cluster_data); ?>;
 
-                 var ClusterData = {
+                var ClusterData = {
                     labels: cluster_label,
                     datasets: [{
                         label: 'Total',
@@ -610,7 +614,8 @@
                             'rgba(255, 99, 132)',
                             'rgba(255, 159, 64)',
                             'rgba(255, 205, 86)',
-                            'rgba(75, 192, 192)']
+                            'rgba(75, 192, 192)'
+                        ]
                     }]
                 }
                 var ClusterOptions = {
