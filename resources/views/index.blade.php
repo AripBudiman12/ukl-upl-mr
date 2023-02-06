@@ -8,15 +8,14 @@
                     Rendah</b></h3>
         </div>
 
-        {{-- <div class="row">
-            <div class="col-12 col-sm-6 col-md-3">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
                 <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">CPU Traffic</span>
+                        <span class="info-box-text">Jumlah UKL-UPL Menengah Rendah</span>
                         <span class="info-box-number">
-                            10
-                            <small>%</small>
+                            {{ $total_uklupl }}
                         </span>
                     </div>
 
@@ -24,12 +23,14 @@
 
             </div>
 
-            <div class="col-12 col-sm-6 col-md-3">
+            <div class="col-12 col-sm-6 col-md-6">
                 <div class="info-box mb-3">
-                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Likes</span>
-                        <span class="info-box-number">41,410</span>
+                        <span class="info-box-text">Jummlah SPPL</span>
+                        <span class="info-box-number">
+                            {{ $total_sppl }}
+                        </span>
                     </div>
 
                 </div>
@@ -37,7 +38,7 @@
             </div>
 
 
-            <div class="clearfix hidden-md-up"></div>
+            {{-- <div class="clearfix hidden-md-up"></div>
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
@@ -59,8 +60,8 @@
                     </div>
 
                 </div>
-            </div>
-        </div> --}}
+            </div> --}}
+        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -125,7 +126,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Jumlah UKL-UPL SPPL per Kewenangan</h3>
+                        <h3 class="card-title">Jumlah UKL-UPL dan SPPL</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -144,7 +145,7 @@
 
                             <div class="col-md-4">
                                 <ul class="chart-legend clearfix">
-                                    <li><i class="far fa-circle text-success"></i> UKLUPL</li>
+                                    <li><i class="far fa-circle text-success"></i> UKLUPL Menengah Rendah</li>
                                     <li><i class="far fa-circle text-danger"></i> SPPL</li>
                                 </ul>
                             </div>
@@ -156,7 +157,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Jumlah UKL-UPL per Kewenangan</h3>
+                        <h3 class="card-title">Jumlah UKL-UPL Menengah Rendah per Kewenangan</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -220,7 +221,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Jumlah Data UKL-UPL MR Cluster KBLI</h5>
+                        <h5 class="card-title">Jumlah UKL-UPL Menengah Rendah Berdasarkan Cluster KBLI</h5>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -358,7 +359,7 @@
                             });
                         }, 50);
                     },
-                    scrollY: 400,
+                    scrollY: 500,
                     scroller: {
                         loadingIndicator: true
                     },

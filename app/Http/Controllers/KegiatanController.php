@@ -106,6 +106,17 @@ class KegiatanController extends Controller
             $stat_data[] = $statistik['data'][$i]['jumlah'];
         }
 
+
+        $total_uklupl = 0;
+        for ($i = 0; $i < count($uklupl_data); $i++) {
+            $total_uklupl += $uklupl_data[$i];
+        }
+
+        $total_sppl = 0;
+        for ($i = 0; $i < count($sppl_data); $i++) {
+            $total_sppl += $sppl_data[$i];
+        }
+
         return view('index', compact(
             'uklupl_data',
             'sppl_data',
@@ -117,7 +128,9 @@ class KegiatanController extends Controller
             'stat_label',
             'stat_data',
             'cluster_label',
-            'cluster_data'
+            'cluster_data',
+            'total_uklupl',
+            'total_sppl'
         ));
     }
 
