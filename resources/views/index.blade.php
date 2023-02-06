@@ -3,9 +3,9 @@
 @section('section')
     <div class="container-fluid mt-3 pt-3" style="background-color: #628462;">
         <div class="row-12 mb-3">
-            <a href="https://amdalnet-dev.menlhk.go.id/#/dashboard"><button class="btn btn-light float-left">Kembali</button></a>
+            {{-- <a href="https://amdalnet-dev.menlhk.go.id/#/dashboard"><button class="btn btn-light float-left">Kembali</button></a> --}}
             {{-- <a class="nav-link" data-widget="pushmenu" href="#" role="button"><button class="btn btn-light float-left">Kembali</button></a> --}}
-            <h3 class="text-center"><b style="color:white; margin-left: -90px">Daftar Rekap SPPL dan UKL-UPL Menengah
+            <h3 class="text-center"><b style="color:white;">Daftar Rekap SPPL dan UKL-UPL Menengah
                     Rendah</b></h3>
         </div>
 
@@ -100,7 +100,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Grafik UKL-UPL Menengah RendahGrafik UKL-UPL Menengah Rendah UKL-UPL Menengah Rendah</h5>
+                        <h5 class="card-title">Grafik UKL-UPL Menengah Rendah</h5>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -202,8 +202,8 @@
                                 <div class="chart-responsive">
                                     <canvas id="sppl" height="150"></canvas>
                                 </div>
-
                             </div>
+
                             <div class="col-md-4">
                                 <ul class="chart-legend clearfix">
                                     <li><i class="far fa-circle text-danger"></i> Kab/Kota</li>
@@ -230,10 +230,24 @@
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="chart-responsive">
                                     <canvas id="Cluster" height="150"></canvas>
                                 </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <ul class="chart-legend clearfix">
+                                    <li><i class="far fa-circle" style="color: rgba(255, 99, 132)"></i> SPBU Mini dan Sejenisnya</li>
+                                    <li><i class="far fa-circle" style="color: rgba(255, 159, 64)"></i> Industri Berbasis Produksi dg Pembangunan Sarpras</li>
+                                    <li><i class="far fa-circle" style="color: rgba(255, 205, 86)"></i> Budidaya Perikanan Air Laut di Perairan</li>
+                                    <li><i class="far fa-circle" style="color: rgba(75, 192, 192)"></i> Budidaya Perikanan Air Payau di Darat</li>
+                                    <li><i class="far fa-circle" style="color: rgba(255, 190, 12)"></i> Budidaya Perikanan Air Tawar di Darat</li>
+                                    <li><i class="far fa-circle" style="color: rgba(234, 29, 157)"></i> Pembenihan dan Budi Daya Pertanian</li>
+                                    <li><i class="far fa-circle" style="color: rgba(153, 102, 255)"></i> Industri Berbasis Lahan dg Pembangunan Sarpras</li>
+                                    <li><i class="far fa-circle" style="color: rgba(201, 203, 207)"></i> Pembibitan dan Budi Daya Ternak</li>
+                                    <li><i class="far fa-circle" style="color: rgba(205, 156, 100)"></i> Kegiatan Perdagangan, Jasa, Pariwisata dg Sarpras</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -300,7 +314,7 @@
                 <table id='dataTable' class="table hover table-bordered table-striped" style="table-layout: fixed;">
                     <thead>
                         <tr>
-                            <th>Tanggal Recordss</th>
+                            <th>Tanggal Records</th>
                             <th>NIB</th>
                             <th>Pemrakarsa</th>
                             <th>Judul Usaha/Kegiatan</th>
@@ -309,6 +323,7 @@
                             <th>Kab/Kota</th>
                             <th>Kewenagan</th>
                             <th>Jenis Dokling</th>
+                            <th>Unduh File</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -370,8 +385,8 @@
                             name: 'tanggal_input'
                         },
                         {
-                            data: 'oss_nib',
-                            name: 'oss_nib'
+                            data: 'nib',
+                            name: 'nib'
                         },
                         {
                             data: 'pemrakarsa',
@@ -386,12 +401,12 @@
                             name: 'lokasi'
                         },
                         {
-                            data: 'name_1',
-                            name: 'name_1'
+                            data: 'prov',
+                            name: 'prov'
                         },
                         {
-                            data: 'name_2',
-                            name: 'name_2'
+                            data: 'kota',
+                            name: 'kota'
                         },
                         {
                             data: 'kewenangan',
@@ -400,6 +415,10 @@
                         {
                             data: 'jenisdokumen',
                             name: 'jenisdokumen'
+                        },
+                        {
+                            data: 'file',
+                            name: 'file'
                         }
                     ],
                 });
@@ -570,13 +589,11 @@
                             'rgba(255, 159, 64)',
                             'rgba(255, 205, 86)',
                             'rgba(75, 192, 192)',
-                            'rgba(54, 162, 235)',
+                            'rgba(255, 190, 12)',
+                            'rgba(234, 29, 157)',
                             'rgba(153, 102, 255)',
                             'rgba(201, 203, 207)',
-                            'rgba(255, 99, 132)',
-                            'rgba(255, 159, 64)',
-                            'rgba(255, 205, 86)',
-                            'rgba(75, 192, 192)'
+                            'rgba(205, 156, 100)',
                         ]
                     }]
                 }

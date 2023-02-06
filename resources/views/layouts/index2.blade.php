@@ -171,70 +171,93 @@
 
     <div class="card-body">
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar elevation-2">
+        <aside class="main-sidebar elevation-2" style="background-color: #033022;">
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar -->
-                <ul class="navbar-nav sidebar accordion" id="accordionSidebar" style="background-color: #033022;">
-                    <img src="{{ asset('img/logo-amdal.png') }}" style="width: 200px;">
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <img src="{{ asset('img/logo-amdal.png') }}" style="width: 200px;">
 
-                    <!-- Sidebar - Brand -->
-                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/operator">
-                        {{-- <div class="sidebar-brand-icon rotate-n-15"> --}}
-                        <!-- <i class="fas fa-laugh-wink"></i> -->
-                        {{-- </div> --}}
-                        {{-- <div class="sidebar-brand-text mx-3">Amdalnet</div> --}}
-                    </a>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="">
-                            <i class="fas fa-book"></i>
-                            <span>Perubahan SKKL</span>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="" style="color: white;">
+                                <i class="fas fa-book"></i>
+                                <p>Dashbor
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="pages/charts/chartjs.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>ChartJS</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="pages/charts/flot.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Flot</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="pages/charts/inline.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Inline</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="pages/charts/uplot.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>uPlot</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="" style="color: white;">
+                                <i class="fas fa-book"></i>
+                                <p>Profil Pengguna</p>
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="">
-                            <i class="fas fa-book"></i>
-                            <span>Perubahan PKPLH</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="">
-                            <i class="fas fa-book"></i>
-                            <span>Perubahan SKKL</span>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="" style="color: white;">
+                                <i class="fas fa-book"></i>
+                                <p>Profil TUK</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="" style="color: white;">
+                                <i class="fas fa-book"></i>
+                                <p>Daftar Kegiatan<i class="right fas fa-angle-left"></i></p>
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="">
-                            <i class="fas fa-book"></i>
-                            <span>Perubahan PKPLH</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="">
-                            <i class="fas fa-book"></i>
-                            <span>Perubahan SKKL</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="">
-                            <i class="fas fa-book"></i>
-                            <span>Perubahan PKPLH</span>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="" style="color: white;">
+                                <i class="fas fa-book"></i>
+                                <p>Kegiatan<i class="right fas fa-angle-left"></i></p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="" style="color: white;">
+                                <i class="fas fa-book"></i>
+                                <p>Perubahan PL</p>
+                            </a>
+                        </li>
 
 
-                    <!-- Divider -->
-                    <hr class="sidebar-divider">
+                        <!-- Divider -->
+                        <hr class="sidebar-divider">
 
-                    <!-- Sidebar Toggler (Sidebar) -->
-                    <div class="text-center d-none d-md-inline">
-                        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                    </div>
+                        <!-- Sidebar Toggler (Sidebar) -->
+                        <div class="text-center d-none d-md-inline">
+                            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                        </div>
 
-                </ul>
+                    </ul>
+                </nav>
                 <!-- End of Sidebar -->
 
             </div>
@@ -582,6 +605,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             fetch_data()
+
             function fetch_data() {
                 $('#dataTable').DataTable({
                     'responsive': true,
@@ -664,6 +688,7 @@
             $('#kewenangan').change(function() {
                 table.draw();
             });
+
             function filter() {
                 table.ajax.reload(null, false)
             }
@@ -685,7 +710,7 @@
                         'UKLUPL',
                     ],
                     datasets: [{
-                        data: [total_sppl,total_uklupl],
+                        data: [total_sppl, total_uklupl],
                         backgroundColor: ['#f56954', '#00a65a']
                     }]
                 }

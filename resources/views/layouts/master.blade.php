@@ -88,7 +88,7 @@
     <div id="wrapper"></div>
     {{-- @include('layouts.sidebar') --}}
 
-    <div class="title mt-3">
+    {{-- <div class="title mt-3">
         <div style="padding: 10px; text-align: center;">
             <a href="https://amdalnet.menlhk.go.id" target="_blank">
                 <img src="{{ asset('img/lhk_logo.png') }}" style="max-height: 80px; height:auto;">
@@ -96,7 +96,7 @@
                     style="max-height: 80px; height:auto;">
             </a>
         </div>
-    </div>
+    </div> --}}
     <section class="content">
         @yield('section')
     </section>
