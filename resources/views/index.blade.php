@@ -125,7 +125,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Jumlah UKL-UPL Menengah Rendah Menengah Rendah dan SPPL</h3>
+                        <h3 class="card-title">Jumlah UKL-UPL Menengah Rendah dan SPPL</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -317,6 +317,8 @@
                             <th>Tanggal Records</th>
                             <th>NIB</th>
                             <th>Pemrakarsa</th>
+                            <th>Nomor Telepon</th>
+                            <th>Email</th>
                             <th>Judul Usaha/Kegiatan</th>
                             <th>Lokasi</th>
                             <th>Provinsi</th>
@@ -407,6 +409,14 @@
                         {
                             data: 'pemrakarsa',
                             name: 'pemrakarsa'
+                        },
+                        {
+                            data: 'notelp',
+                            name: 'notelp'
+                        },
+                        {
+                            data: 'email',
+                            name: 'email'
                         },
                         {
                             data: 'judul_kegiatan',
