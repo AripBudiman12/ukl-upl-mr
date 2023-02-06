@@ -238,15 +238,15 @@
 
                             <div class="col-md-6">
                                 <ul class="chart-legend clearfix">
-                                    <li><i class="far fa-circle" style="color: rgba(255, 99, 132)"></i> SPBU Mini dan Sejenisnya</li>
+                                    <li><i class="far fa-circle" style="color: rgba(255, 99, 132)"></i> Kegiatan Perdagangan, Jasa, Pariwisata dg Sarpras</li>
                                     <li><i class="far fa-circle" style="color: rgba(255, 159, 64)"></i> Industri Berbasis Produksi dg Pembangunan Sarpras</li>
-                                    <li><i class="far fa-circle" style="color: rgba(255, 205, 86)"></i> Budidaya Perikanan Air Laut di Perairan</li>
-                                    <li><i class="far fa-circle" style="color: rgba(75, 192, 192)"></i> Budidaya Perikanan Air Payau di Darat</li>
-                                    <li><i class="far fa-circle" style="color: rgba(255, 190, 12)"></i> Budidaya Perikanan Air Tawar di Darat</li>
-                                    <li><i class="far fa-circle" style="color: rgba(234, 29, 157)"></i> Pembenihan dan Budi Daya Pertanian</li>
-                                    <li><i class="far fa-circle" style="color: rgba(153, 102, 255)"></i> Industri Berbasis Lahan dg Pembangunan Sarpras</li>
-                                    <li><i class="far fa-circle" style="color: rgba(201, 203, 207)"></i> Pembibitan dan Budi Daya Ternak</li>
-                                    <li><i class="far fa-circle" style="color: rgba(205, 156, 100)"></i> Kegiatan Perdagangan, Jasa, Pariwisata dg Sarpras</li>
+                                    <li><i class="far fa-circle" style="color: rgba(255, 205, 86)"></i> Industri Berbasis Lahan dg Pembangunan Sarpras</li>
+                                    <li><i class="far fa-circle" style="color: rgba(75, 192, 192)"></i> SPBU Mini dan Sejenisnya</li>
+                                    <li><i class="far fa-circle" style="color: rgba(255, 190, 12)"></i> Budidaya Perikanan Air Payau di Darat</li>
+                                    <li><i class="far fa-circle" style="color: rgba(234, 29, 157)"></i> Budi Daya Perikanan Air Tawar di Darat</li>
+                                    <li><i class="far fa-circle" style="color: rgba(153, 102, 255)"></i> Budidaya Perikanan Air Laut di Perairan</li>
+                                    <li><i class="far fa-circle" style="color: rgba(201, 203, 207)"></i> Perbenihan dan Budi Daya Pertanian</li>
+                                    <li><i class="far fa-circle" style="color: rgba(205, 156, 100)"></i> Pembibitan dan Budi Daya Ternak</li>
                                 </ul>
                             </div>
                         </div>
@@ -345,7 +345,7 @@
                     'responsive': true,
                     'lengthChange': true,
                     'autoWidth': false,
-                    'pageLength': 25,
+                    'pageLength': 10,
                     'processing': true,
                     'serverSide': true,
                     'serverMethod': 'post',
