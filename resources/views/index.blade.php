@@ -321,9 +321,10 @@
                             <th>Lokasi</th>
                             <th>Provinsi</th>
                             <th>Kab/Kota</th>
-                            <th>Kewenagan</th>
+                            <th>Kewenangan</th>
                             <th>Jenis Dokling</th>
                             <th>Unduh File</th>
+                            <th>Unduh PL</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -374,11 +375,26 @@
                         loadingIndicator: true
                     },
                     ajax: {
-                        url: "{{ route('index.data') }}",
                         type: "GET",
-                        data: function(d) {
-                            d.kewenangan = $("#kewenangan").val()
-                        }
+                        url: "{{ route('index.data') }}",
+                        // dataSrc: function (json) {
+                        //     var return_data = new Array();
+                        //     for (var i=0; i< json.length; i++){
+                        //         return_data.push({
+                        //             'tanggal_input' : json[i]['tanggal_input'],
+                        //             'nib' : json[i]['nib'],
+                        //             'pemrakarsa' : json[i]['pemrakarsa'],
+                        //             'judul_kegiatan' : json[i]['judul_kegiatan'],
+                        //             'lokasi' : json[i]['lokasi'],
+                        //             'prov' : json[i]['prov'],
+                        //             'kota' : json[i]['kota'],
+                        //             'kewenangan' : json[i]['kewenangan'],
+                        //             'jenisdokumen' : json[i]['jenisdokumen'],
+                        //             'download'  : '<a href="https://amdal.menlhk.go.id/amdalnet/' + json[i]['file'] + '" target="_blank"><span class="fa fa-download"></span> &nbsp;Download</a>',
+                        //         });
+                        //     }
+                        //     return return_data;
+                        // }
                     },
                     'columns': [{
                             data: 'tanggal_input',
@@ -417,9 +433,13 @@
                             name: 'jenisdokumen'
                         },
                         {
-                            data: 'file',
-                            name: 'file'
-                        }
+                            data: 'file_url',
+                            name: 'file_url'
+                        },
+                        {
+                            data: 'pl_url',
+                            name: 'pl_url'
+                        },
                     ],
                 });
             }

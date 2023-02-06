@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [KegiatanController::class, 'index'])->name('index');
 
 Route::get('/test', [KegiatanController::class, 'index2'])->name('index2');
+Route::get('/testing', [KegiatanController::class, 'testing']);
 
 Route::get('/data', [KegiatanController::class, 'datatable'])->name('index.data');
 

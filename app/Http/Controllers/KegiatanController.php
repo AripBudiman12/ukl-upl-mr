@@ -462,4 +462,11 @@ class KegiatanController extends Controller
             'tot_sppl',
         ));
     }
+
+    public function testing()
+    {
+        $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?offset=0&limit=100');
+        
+        return $api;
+    }
 }
