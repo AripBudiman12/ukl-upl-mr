@@ -84,6 +84,10 @@
 </head>
 
 <body class="hold-transition layout-fixed" style="background-color: #133715;">
+
+    <div id="wrapper"></div>
+    {{-- @include('layouts.sidebar') --}}
+
     <div class="title mt-3">
         <div style="padding: 10px; text-align: center;">
             <a href="https://amdalnet.menlhk.go.id" target="_blank">

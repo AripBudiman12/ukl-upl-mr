@@ -4,7 +4,6 @@
     <div class="container-fluid mt-3 pt-3" style="background-color: #628462;">
         <div class="row-12 mb-3">
             <a href="https://amdalnet-dev.menlhk.go.id/#/dashboard"><button class="btn btn-light float-left">Kembali</button></a>
-            {{-- <a class="nav-link" data-widget="pushmenu" href="#" role="button"><button class="btn btn-light float-left">Kembali</button></a> --}}
             <h3 class="text-center"><b style="color:white; margin-left: -90px">Daftar Rekap SPPL dan UKL-UPL Menengah
                     Rendah</b></h3>
         </div>
@@ -100,7 +99,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Grafik UKL-UPL Menengah RendahGrafik UKL-UPL Menengah Rendah UKL-UPL Menengah Rendah</h5>
+                        <h5 class="card-title">Grafik UKL-UPL Menengah Rendah UKL-UPL Menengah Rendah</h5>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -125,7 +124,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Jumlah UKL-UPL Menengah Rendah Menengah Rendah dan SPPL</h3>
+                        <h3 class="card-title">Jumlah UKL-UPL Menengah Rendah dan SPPL</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
