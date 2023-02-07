@@ -344,7 +344,7 @@
             fetch_data()
             function fetch_data() {
                 $('#dataTable').DataTable({
-                    'responsive': true,
+                    'responsive': false,
                     'lengthChange': true,
                     'autoWidth': false,
                     'pageLength': 10,
