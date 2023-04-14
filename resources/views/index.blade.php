@@ -346,7 +346,7 @@
                 $('#dataTable').DataTable({
                     'responsive': false,
                     'lengthChange': true,
-                    'autoWidth': false,
+                    'autoWidth': true,
                     'pageLength': 10,
                     'processing': true,
                     'serverSide': true,

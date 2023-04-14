@@ -84,7 +84,7 @@ class KegiatanController extends Controller
                 $uklupl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
                 $sppl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=SPPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
                 $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/cluster?provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
-            } elseif ($user['kewenangan'] == 'Kab / Kota') {
+            } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
                 $uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
                 $sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/sppl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
                 $uklupl_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl?kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
@@ -107,7 +107,7 @@ class KegiatanController extends Controller
                 $uklupl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi);
                 $sppl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=SPPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi);
                 $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/cluster?provinsi=' . $provinsi);
-            } elseif ($user['kewenangan'] == 'Kab / Kota') {
+            } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
                 $uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota);
                 $sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/sppl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota);
                 $uklupl_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl?kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota);
@@ -126,7 +126,7 @@ class KegiatanController extends Controller
         } elseif ($user['kewenangan'] == 'Provinsi') {
             $jum_uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&provinsi=' . $provinsi);
             $jum_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=SPPL&provinsi=' . $provinsi);
-        } elseif ($user['kewenangan'] == 'Kab / Kota') {
+        } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
             $jum_uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&provinsi=' . $provinsi . "&kabkota=" . $kabkota);
             $jum_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=SPPL&provinsi=' . $provinsi . "&kabkota=" . $kabkota);
         }
@@ -242,7 +242,7 @@ class KegiatanController extends Controller
         //         $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
         //     } elseif ($user['kewenangan'] == "Provinsi") {
         //         $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?provinsi=' . $provinsi . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
-        //     } elseif ($user['kewenangan'] == 'Kab / Kota') {
+        //     } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
         //         $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
         //     }
         // } else {
@@ -250,7 +250,7 @@ class KegiatanController extends Controller
         //         $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?offset=' . $start . '&limit=' . $limit);
         //     } elseif ($user['kewenangan'] == "Provinsi") {
         //         $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?provinsi=' . $provinsi . '&offset=' . $start . '&limit=' . $limit);
-        //     } elseif ($user['kewenangan'] == 'Kab / Kota') {
+        //     } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
         //         $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&offset=' . $start . '&limit=' . $limit);
         //     }
         // }
@@ -262,7 +262,7 @@ class KegiatanController extends Controller
         } elseif ($user['kewenangan'] == "Provinsi") {
             $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?provinsi=' . $provinsi . '&offset=' . $start . '&limit=' . $limit);
             $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?provinsi=' . $provinsi);
-        } elseif ($user['kewenangan'] == 'Kab / Kota') {
+        } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
             $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&offset=' . $start . '&limit=' . $limit);
             $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?provinsi=' . $provinsi . '&kabkota=' . $kabkota);
         }
@@ -337,7 +337,7 @@ class KegiatanController extends Controller
                 $uklupl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
                 $sppl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=SPPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
                 $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/cluster?kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
-            } elseif ($user['kewenangan'] == 'Kab / Kota') {
+            } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
                 $uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
                 $sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/sppl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
                 $uklupl_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl?kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
@@ -360,7 +360,7 @@ class KegiatanController extends Controller
                 $uklupl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi);
                 $sppl_prov = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=SPPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi);
                 $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/cluster?kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi);
-            } elseif ($user['kewenangan'] == 'Kab / Kota') {
+            } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
                 $uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota);
                 $sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/sppl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota);
                 $uklupl_sppl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl?kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota);
