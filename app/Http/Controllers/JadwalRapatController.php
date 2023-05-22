@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class JadwalRapatController extends Controller
 {
     public function data()
@@ -55,18 +57,20 @@ class JadwalRapatController extends Controller
         $result = $data;
         $limit = request('length');
         $start = request('start');
-        $search = request('search');
+        $search = request('search')['value'];
 
-        if (!$search && $limit && $start) {
+        if ($limit != null AND $start != null) {
             $result = $data->skip($start)->take($limit);
-        } else if ($search && !$limit && !$start) {
+            $totalSearch = intval($data->count());
+        } if ($search != null AND $limit == null AND $start == null) {
             $result = $data->filter(function ($item) use ($search) {
                 return false !== stripos($item['Nama_Perusahaan'], $search) or stripos($item['Kegiatan'], $search) or stripos($item['Tanggal_Rapat'], $search) or stripos($item['Jam_Rapat'], $search) or stripos($item['Keterangan'], $search);
             });
-        } else if ($search && $limit && $start) {
+        } if ($search != null AND $limit != null AND $start != null) {
             $result = $data->filter(function ($item) use ($search) {
                 return false !== stripos($item['Nama_Perusahaan'], $search) or stripos($item['Kegiatan'], $search) or stripos($item['Tanggal_Rapat'], $search) or stripos($item['Jam_Rapat'], $search) or stripos($item['Keterangan'], $search);
             })->skip($start)->take($limit);
+            $totalSearch = intval($result->count());
         }
 
         $datas = array();
@@ -83,57 +87,41 @@ class JadwalRapatController extends Controller
         }
 
         return response()->json([
-            'draw' => intval(request('val')),
+            'draw' => intval(request('draw')),
             'recordsTotal' => intval($data->count()),
-            'recordsFiltered' => intval($result->count()),
+            'recordsFiltered' => $totalSearch,
             'data' => $datas
         ]);
     }
 
-    public function calendar()
+    public function calendar(Request $request)
     {
         $data = $this->data();
-        $result = $data;
-        $limit = request('length');
-        $start = request('start');
-        $search = request('search');
 
-        if (!$search && $limit && $start) {
-            $result = $data->skip($start)->take($limit);
-        } else if ($search && !$limit && !$start) {
-            $result = $data->filter(function ($item) use ($search) {
-                // replace stristr with your choice of matching function
-                return false !== stripos($item['Nama_Perusahaan'], $search) or stripos($item['Kegiatan'], $search) or stripos($item['Tanggal_Rapat'], $search) or stripos($item['Jam_Rapat'], $search) or stripos($item['Keterangan'], $search);
-            });
-        } else if ($search && $limit && $start) {
-            $result = $data->filter(function ($item) use ($search) {
-                // replace stristr with your choice of matching function
-                return false !== stripos($item['Nama_Perusahaan'], $search) or stripos($item['Kegiatan'], $search) or stripos($item['Tanggal_Rapat'], $search) or stripos($item['Jam_Rapat'], $search) or stripos($item['Keterangan'], $search);
-            })->skip($start)->take($limit);
+        function random_color_part() {
+            return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+        }
+        
+        function random_color() {
+            return random_color_part() . random_color_part() . random_color_part();
         }
 
         $datas = array();
-        foreach ($result as $tag) {
+        foreach ($data as $tag) {
             $datas[] = [
-                'nomor' => $tag['Nomor'],
-                'nama_perusahaan' => $tag['Nama_Perusahaan'],
-                'title' => $tag['Kegiatan'],
-                // 'date' => date('D M d Y H:i:s', strtotime($tag['date'])) . ' GMT ' . date('O', strtotime($tag['date'])),
-                'date' => (int) date('d', strtotime($tag['date'])),
-                'month' => (int) date('m', strtotime($tag['date'])),
-                'year' => (int) date('Y', strtotime($tag['date'])),
+                'id' => $tag['Nomor'],
+                'title' => $tag['Jam_Rapat'] . ' - ' . $tag['Nama_Perusahaan'],
                 'start' => date('Y-m-d', strtotime($tag['date'])),
                 'end' => date('Y-m-d', strtotime($tag['date'])),
-                'jam_rapat' => $tag['Jam_Rapat'],
+                // 'color' => '#' . random_color(),
+                'perusahaan' => $tag['Nama_Perusahaan'],
+                'kegiatan' => $tag['Kegiatan'],
+                'tanggal' => $tag['Tanggal_Rapat'],
+                'jam' => $tag['Jam_Rapat'],
                 'keterangan' => $tag['Keterangan'],
             ];
         }
 
-        return response()->json([
-            'draw' => intval(request('val')),
-            'recordsTotal' => intval($data->count()),
-            'recordsFiltered' => intval($result->count()),
-            'data' => $datas
-        ]);
+        return view('calendar', compact('datas'));
     }
 }
