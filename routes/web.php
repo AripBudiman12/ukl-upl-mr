@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JadwalRapatController;
 use App\Http\Controllers\KegiatanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [KegiatanController::class, 'index'])->name('index');
+Route::get('/jadwal-rapat', function() {
+    return view('rapatTabel');
+});
+Route::get('/tabel', [JadwalRapatController::class, 'table'])->name('tabel.data');
+Route::get('/calendar', [JadwalRapatController::class, 'calendar'])->name('calendar');
 
 Route::get('/test', [KegiatanController::class, 'index2'])->name('index2');
 Route::get('/testing', [KegiatanController::class, 'testing']);
