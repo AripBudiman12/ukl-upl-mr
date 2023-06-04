@@ -74,14 +74,14 @@
                                     </td>
                                     <td>
                                         <input type="date" class="form-control" name="start_date" id="start_date"
-                                            value="{{ $tgl_awal }}">
+                                            value="{{ $start_date }}">
                                     </td>
                                     <td class="align-middle">
                                         <label for="end_date" class="mx-2">Tanggal Akhir:</label>
                                     </td>
                                     <td>
                                         <input type="date" class="form-control" name="end_date" id="end_date"
-                                            value="{{ $tgl_akhir }}">
+                                            value="{{ $end_date }}">
                                     </td>
                                     <td>
                                         <button type="submit" class="btn btn-primary ml-2"><i
@@ -100,7 +100,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Grafik UKL-UPL Menengah Rendah</h5>
+                        <h5 class="card-title"><b>Grafik UKL-UPL Menengah Rendah</b></h5>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -125,7 +125,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Jumlah UKL-UPL Menengah Rendah dan SPPL</h3>
+                        <h3 class="card-title"><b>Jumlah Data UKL-UPL MR dan SPPL</b>  ({{ $start_date }} s/d {{ $end_date }})</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -150,13 +150,38 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-14 col-sm-7 col-md-7" style="padding-left: 20px;">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Jumlah UKL-UPL Menengah Rendah</span>
+                                    <span class="info-box-number">
+                                        {{ $tot_uklupl }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-10 col-sm-5 col-md-5" style="padding-right: 20px;">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Jumlah SPPL</span>
+                                    <span class="info-box-number">
+                                        {{ $tot_sppl }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Jumlah UKL-UPL Menengah Rendah per Kewenangan</h3>
+                        <h3 class="card-title"><b>Jumlah UKL-UPL Menengah Rendah per Kewenangan</b></h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -182,13 +207,50 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-8 col-sm-4 col-md-4" style="padding-left: 20px;">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Kab/Kota</span>
+                                    <span class="info-box-number">
+                                        <span>Belum</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-8 col-sm-4 col-md-4">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Provinsi</span>
+                                    <span class="info-box-number">
+                                        <span>Belum</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-8 col-sm-4 col-md-4" style="padding-right: 20px;">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Pusat</span>
+                                    <span class="info-box-number">
+                                        <span>Belum</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Jumlah SPPL per Kewenangan</h3>
+                        <h3 class="card-title"><b>Jumlah SPPL per Kewenangan</b></h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -213,6 +275,43 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-8 col-sm-4 col-md-4" style="padding-left: 20px;">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Kab/Kota</span>
+                                    <span class="info-box-number">
+                                        <span>Belum</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-8 col-sm-4 col-md-4">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Provinsi</span>
+                                    <span class="info-box-number">
+                                        <span>Belum</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-8 col-sm-4 col-md-4" style="padding-right: 20px;">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Pusat</span>
+                                    <span class="info-box-number">
+                                        <span>Belum</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -220,7 +319,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Jumlah UKL-UPL Menengah Rendah Berdasarkan Cluster KBLI</h5>
+                        <h5 class="card-title"><b>Jumlah UKL-UPL Menengah Rendah Berdasarkan Cluster KBLI</b></h5>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -593,7 +692,7 @@
                         label: 'Statistik',
                         data: stat_data,
                         fill: false,
-                        borderColor: '#00a65a',
+                        backgroundColor: '#00a65a',
                         tension: 0.1
                     }]
                 }
@@ -602,7 +701,7 @@
                     responsive: true,
                 }
                 var Kegiatan = new Chart(KegiatanCanvas, {
-                    type: 'line',
+                    type: 'bar',
                     data: KegiatanData,
                     options: KegiatanOptions
                 })

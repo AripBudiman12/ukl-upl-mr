@@ -214,6 +214,8 @@ class KegiatanController extends Controller
             'tgl_akhir',
             'tot_uklupl',
             'tot_sppl',
+            'start_date',
+            'end_date'
         ));
     }
 
@@ -279,7 +281,7 @@ class KegiatanController extends Controller
     public function getDate()
     {
         $month = Carbon::now()->subMonths(3)->format('Y-m');
-        $now = Carbon::now()->format('Y-m-d');
+        $now = Carbon::now()->format('d-m-y');
 
         $date = Carbon::now()->format('d');
         $subtract = $date - ($date - 1);
@@ -474,7 +476,7 @@ class KegiatanController extends Controller
     public function testing()
     {
         $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('https://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?offset=0&limit=100');
-        
+
         return $api;
     }
 }
