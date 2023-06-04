@@ -122,6 +122,9 @@
     <script src="{{ asset('js/1.12.1-jquery.datatables.min.js') }}"></script>
     <script src="{{ asset('js/2.2.9-datatables.responsive.min.js') }}"></script>
     <script src="{{ asset('js/datatables.bootstrap4.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     @stack('scripts')
 </body>
