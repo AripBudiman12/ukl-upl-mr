@@ -235,8 +235,8 @@ class KegiatanController extends Controller
         $search = request('search');
 
         $user = $this->user_role();
-        $start_date = "";
-        $end_date = "";
+        $start_date = request('start_date');
+        $end_date = request('end_date');
 
         $provinsi = "";
         $kabkota = "";

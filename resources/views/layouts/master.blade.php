@@ -84,8 +84,6 @@
 </head>
 
 <body class="hold-transition layout-fixed" style="background-color: #133715;">
-
-    <div id="wrapper"></div>
     {{-- @include('layouts.sidebar') --}}
 
     {{-- <div class="title mt-3">

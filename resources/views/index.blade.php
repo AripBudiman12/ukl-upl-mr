@@ -5,8 +5,7 @@
         <div class="row-12 mb-3">
             {{-- <a href="https://amdalnet-dev.menlhk.go.id/#/dashboard"><button class="btn btn-light float-left">Kembali</button></a> --}}
             {{-- <a class="nav-link" data-widget="pushmenu" href="#" role="button"><button class="btn btn-light float-left">Kembali</button></a> --}}
-            <h3 class="text-center"><b style="color:white;">Daftar Rekap SPPL dan UKL-UPL Menengah
-                    Rendah</b></h3>
+            <h3 class="text-center"><b style="color:white;">Daftar Rekap SPPL dan UKL-UPL Menengah Rendah</b></h3>
         </div>
 
         <div class="row">
@@ -16,7 +15,7 @@
                     <div class="info-box-content">
                         <span class="info-box-text">Jumlah UKL-UPL Menengah Rendah</span>
                         <span class="info-box-number">
-                            {{ $total_uklupl }}
+                            {{ number_format($total_uklupl, 0, ',', '.') }}
                         </span>
                     </div>
                 </div>
@@ -28,7 +27,7 @@
                     <div class="info-box-content">
                         <span class="info-box-text">Jumlah SPPL Menengah Rendah</span>
                         <span class="info-box-number">
-                            {{ $total_sppl }}
+                            {{ number_format($total_sppl, 0, ',', '.') }}
                         </span>
                     </div>
                 </div>
@@ -72,16 +71,25 @@
                                     <td class="align-middle">
                                         <label for="start_date" class="mx-2">Tanggal Awal:</label>
                                     </td>
+                                    <?php
+                                        if ($start_date != null) {
+                                            $date_start = date('Y-m-d', strtotime($start_date));
+                                            $date_end = date('Y-m-d', strtotime($end_date));
+                                        } else {
+                                            $date_start = null;
+                                            $date_end = null;
+                                        }
+                                    ?>
                                     <td>
                                         <input type="date" class="form-control" name="start_date" id="start_date"
-                                            value="{{ date('Y-m-d', strtotime($start_date)) }}">
+                                            value="{{ $date_start }}">
                                     </td>
                                     <td class="align-middle">
                                         <label for="end_date" class="mx-2">Tanggal Akhir:</label>
                                     </td>
                                     <td>
                                         <input type="date" class="form-control" name="end_date" id="end_date"
-                                            value="{{ date('Y-m-d', strtotime($end_date)) }}">
+                                            value="{{ $date_end }}">
                                     </td>
                                     <td>
                                         <button type="submit" class="btn btn-primary ml-2"><i
@@ -165,7 +173,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Jumlah UKL-UPL Menengah Rendah</span>
                                     <span class="info-box-number">
-                                        {{ $tot_uklupl }}
+                                        {{ number_format($tot_uklupl, 0, ',', '.') }}
                                     </span>
                                 </div>
                             </div>
@@ -177,7 +185,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Jumlah SPPL</span>
                                     <span class="info-box-number">
-                                        {{ $tot_sppl }}
+                                        {{ number_format($tot_sppl, 0, ',', '.') }}
                                     </span>
                                 </div>
                             </div>
@@ -226,7 +234,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Kab/Kota</span>
                                     <span class="info-box-number">
-                                        <span>{{ $uklupl_data[0] }}</span>
+                                        <span>{{ number_format($uklupl_data[0], 0, ',', '.') }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -238,7 +246,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Provinsi</span>
                                     <span class="info-box-number">
-                                        <span>{{ $uklupl_data[1] }}</span>
+                                        <span>{{ number_format($uklupl_data[1], 0, ',', '.') }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -250,7 +258,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Pusat</span>
                                     <span class="info-box-number">
-                                        <span>{{ $uklupl_data[2] }}</span>
+                                        <span>{{ number_format($uklupl_data[2], 0, ',', '.') }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -298,7 +306,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Kab/Kota</span>
                                     <span class="info-box-number">
-                                        <span>{{ $sppl_data[0] }}</span>
+                                        <span>{{ number_format($sppl_data[0], 0, ',', '.') }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -310,7 +318,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Provinsi</span>
                                     <span class="info-box-number">
-                                        <span>{{ $sppl_data[1] }}</span>
+                                        <span>{{ number_format($sppl_data[1], 0, ',', '.') }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -322,7 +330,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Pusat</span>
                                     <span class="info-box-number">
-                                        <span>{{ $sppl_data[2] }}</span>
+                                        <span>{{ number_format($sppl_data[2], 0, ',', '.') }}</span>
                                     </span>
                                 </div>
                             </div>
