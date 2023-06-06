@@ -26,7 +26,7 @@
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Jumlah SPPL</span>
+                        <span class="info-box-text">Jumlah SPPL Menengah Rendah</span>
                         <span class="info-box-number">
                             {{ $total_sppl }}
                         </span>
@@ -57,7 +57,7 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <div class="info-box">
+                <div class="info-box align-items-center">
                     <form action="{{ route('index') }}">
                         <table>
                             <tbody>
@@ -74,14 +74,14 @@
                                     </td>
                                     <td>
                                         <input type="date" class="form-control" name="start_date" id="start_date"
-                                            value="{{ $start_date }}">
+                                            value="{{ date('Y-m-d', strtotime($start_date)) }}">
                                     </td>
                                     <td class="align-middle">
                                         <label for="end_date" class="mx-2">Tanggal Akhir:</label>
                                     </td>
                                     <td>
                                         <input type="date" class="form-control" name="end_date" id="end_date"
-                                            value="{{ $end_date }}">
+                                            value="{{ date('Y-m-d', strtotime($end_date)) }}">
                                     </td>
                                     <td>
                                         <button type="submit" class="btn btn-primary ml-2"><i
@@ -100,7 +100,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title"><b>Grafik UKL-UPL Menengah Rendah</b></h5>
+                        <h5 class="card-title"><b>Grafik UKL-UPL Menengah Rendah</b>
+                        @if ($start_date != null)
+                            ({{ $dts }} s/d {{ $dte }})
+                        @endif
+                        </h5>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -125,7 +129,11 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><b>Jumlah Data UKL-UPL MR dan SPPL</b>  ({{ $start_date }} s/d {{ $end_date }})</h3>
+                        <h3 class="card-title"><b>Jumlah Data UKL-UPL MR dan SPPL</b>
+                            @if ($start_date != null)
+                                ({{ $dts }} s/d {{ $dte }})
+                            @endif
+                        </h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -181,7 +189,11 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><b>Jumlah UKL-UPL Menengah Rendah per Kewenangan</b></h3>
+                        <h3 class="card-title"><b>Jumlah UKL-UPL Menengah Rendah per Kewenangan</b>
+                        @if ($start_date != null)
+                            ({{ $dts }} s/d {{ $dte }})
+                        @endif
+                        </h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -214,7 +226,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Kab/Kota</span>
                                     <span class="info-box-number">
-                                        <span>Belum</span>
+                                        <span>{{ $uklupl_data[0] }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -226,7 +238,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Provinsi</span>
                                     <span class="info-box-number">
-                                        <span>Belum</span>
+                                        <span>{{ $uklupl_data[1] }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -238,7 +250,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Pusat</span>
                                     <span class="info-box-number">
-                                        <span>Belum</span>
+                                        <span>{{ $uklupl_data[2] }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -250,7 +262,11 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><b>Jumlah SPPL per Kewenangan</b></h3>
+                        <h3 class="card-title"><b>Jumlah SPPL per Kewenangan</b>
+                        @if ($start_date != null)
+                            ({{ $dts }} s/d {{ $dte }})
+                        @endif
+                        </h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -282,7 +298,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Kab/Kota</span>
                                     <span class="info-box-number">
-                                        <span>Belum</span>
+                                        <span>{{ $sppl_data[0] }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -294,7 +310,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Provinsi</span>
                                     <span class="info-box-number">
-                                        <span>Belum</span>
+                                        <span>{{ $sppl_data[1] }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -306,7 +322,7 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Pusat</span>
                                     <span class="info-box-number">
-                                        <span>Belum</span>
+                                        <span>{{ $sppl_data[2] }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -319,7 +335,11 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title"><b>Jumlah UKL-UPL Menengah Rendah Berdasarkan Cluster KBLI</b></h5>
+                        <h5 class="card-title"><b>Jumlah UKL-UPL Menengah Rendah Berdasarkan Cluster KBLI</b>
+                        @if ($start_date != null)
+                            ({{ $dts }} s/d {{ $dte }})
+                        @endif
+                        </h5>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -358,7 +378,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Jumlah UKLUPL & SPPL di setiap Provinsi</h5>
+                        <h5 class="card-title"><b>Jumlah UKLUPL & SPPL di setiap Provinsi</b>
+                        @if ($start_date != null)
+                            ({{ $dts }} s/d {{ $dte }})
+                        @endif
+                        </h5>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>

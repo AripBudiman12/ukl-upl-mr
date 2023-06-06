@@ -196,6 +196,13 @@ class KegiatanController extends Controller
         $tgl_awal = $tanggal['start'];
         $tgl_akhir = $tanggal['now'];
 
+        $dts = new Carbon($start_date);
+        $dte = new Carbon($end_date);
+        setlocale(\LC_TIME,'IND');
+
+        $dts = $dts->formatLocalized('%e %B %Y');
+        $dte = $dte->formatLocalized('%e %B %Y');
+
         return view('index', compact(
             'uklupl_data',
             'sppl_data',
@@ -215,7 +222,9 @@ class KegiatanController extends Controller
             'tot_uklupl',
             'tot_sppl',
             'start_date',
-            'end_date'
+            'end_date',
+            'dts',
+            'dte'
         ));
     }
 
