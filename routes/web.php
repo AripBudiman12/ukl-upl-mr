@@ -29,6 +29,7 @@ Route::get('/test', [KegiatanController::class, 'index2'])->name('index2');
 Route::get('/testing', [KegiatanController::class, 'testing']);
 
 Route::get('/data', [KegiatanController::class, 'datatable'])->name('index.data');
+Route::get('/export', [KegiatanController::class, 'export'])->name('export.data');
 
 Auth::routes();
 
