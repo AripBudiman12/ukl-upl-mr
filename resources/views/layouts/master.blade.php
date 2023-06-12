@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/jquery.datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.datatables.min.css') }}}">
     <link rel="stylesheet" href="{{ asset('css/cloudflare.twitter-bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loading.css') }}">
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -83,7 +84,7 @@
     </script>
 </head>
 
-<body class="hold-transition layout-fixed" style="background-color: #133715;">
+<body class="hold-transition layout-fixed" style="background-color: #133715;" onload="hide_loading();">
     {{-- @include('layouts.sidebar') --}}
 
     {{-- <div class="title mt-3">
@@ -116,6 +117,7 @@
     {{-- <script src="{{ asset('dist/js/pages/dashboard2.js') }}"></script> --}}
 
     <!-- Script -->
+    <script src="{{ asset('js/loading.js') }}"></script>
     <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
     <script src="{{ asset('js/1.12.1-jquery.datatables.min.js') }}"></script>
     <script src="{{ asset('js/2.2.9-datatables.responsive.min.js') }}"></script>
