@@ -17,6 +17,70 @@
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css?v=3.2.0') }}">
+
+    <style>
+        #preloader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 99999;
+            height: 100%;
+            width: 100%;
+            background: #fff;
+            display: flex;
+        }
+        .loader{
+            margin: auto;
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            position: relative;
+        }
+        .loader:before{
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            border-radius: 50%;
+            opacity: 0;
+            animation: popin 1.5s linear infinite 0s;
+        }
+        .loader:after{
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            border-radius: 50%;
+            opacity: 0;
+            animation: popin 1.5s linear infinite 0.5s;
+        }
+
+        @keyframes popin{
+            0%{
+                opacity: 0;
+                transform: scale(0);
+            }
+            1%{
+                opacity: 0.1;
+                transform: scale(0);
+            }
+            99%{
+                opacity: 0;
+                transform: scale(2);
+            }
+            100%{
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+    </style>
+
     <script nonce="35ffcdf7-fe60-4ada-a7ee-09091d8615ed">
         (function(w, d) {
             ! function(f, g, h, i) {
@@ -82,6 +146,21 @@
             }(w, d, "zarazData", "script");
         })(window, document);
     </script>
+
+    {{-- <script>
+        (function ($) {
+            // "use strict";
+
+            var preloader = $("#preloader");
+            $(window).on("load", function () {
+                setTimeout(() => {
+                    preloader.fadeOut("slow", function () {
+                        $(this).remove();
+                    });
+                }, 20);
+            });
+        })(jQuery);
+    </script> --}}
 </head>
 
 <body class="hold-transition layout-fixed" style="background-color: #133715;" onload="hide_loading();">

@@ -424,6 +424,13 @@
         <div class="card" style="background-color: #133715; color: white;">
             <div class="card-header" style="background-color: #628462;">
                 <div class="form-group">
+                    {{-- <div>
+                        @if ($start_date != null)
+                            <h4 class="align-content-center">
+                                Tanggal : {{ $dts }} s/d {{ $dte }}
+                            </h4>
+                        @endif
+                    </div> --}}
                     {{-- <table border="0">
                         <form action="/">
                             <tr>
@@ -448,7 +455,16 @@
                     </table> --}}
                 </div>
             </div>
+            
             <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalExport">
+                        <i class="fas fa-file-excel">&nbsp;&nbsp;&nbsp;Export</i>
+                    </button>
+                    <h4>
+                        Tanggal : {{ $dts }} s/d {{ $dte }}
+                    </h4>
+                </div>
                 <table id='dataTable' class="table hover table-bordered table-striped" style="table-layout: fixed;">
                     <thead>
                         <tr>
@@ -474,6 +490,45 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalExport" tabindex="-1" role="dialog" aria-labelledby="modalExportLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalExportLabel">Pilih Opsi Export</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('export.data') }}" method="GET">
+                    @csrf
+                    <input type="text" name="date_end" value="{{ $date_end }}" hidden>
+                    <input type="text" name="date_start" value="{{ $date_start }}" hidden>
+                    <div class="modal-body">
+                        <label class="col-form-label">Tanggal Data</label>
+                        <h5>{{ $dts }} sampai dengan {{ $dte }}</h5>
+
+                        <label class="col-form-label">Total Data</label>
+                        <h5>{{ number_format($totalData, 0, ',', '.') }}</h5>
+
+                        <div class="form-group row px-2">
+                            <label class="col-form-label">Data awal</label>
+                            <input type="number" style="width: 100%" class="form-control" name="start" placeholder="Nomor Data Awal" required>
+                            <small style="color: red">*Data pertama dimulai dari 0</small>
+                        </div>
+                        <div class="form-group row px-2">
+                            <label class="col-form-label">Data Yang Diambil</label>
+                            <input type="number" style="width: 100%" class="form-control" name="length" placeholder="Jumlah Data Yang Diambil" required>
+                            <small style="color: red">*Jika data yang diambil terlalu banyak, kemungkinan akan terjadi error</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Export</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
 @endsection
 
 @push('scripts')
@@ -516,7 +571,7 @@
                     },
                     ajax: {
                         type: "GET",
-                        url: "{{ route('index.data') }}",
+                        url: "{{ route('index.data', ['date_start' => $date_start, 'date_end' => $date_end]) }}",
                         // dataSrc: function (json) {
                         //     var return_data = new Array();
                         //     for (var i=0; i< json.length; i++){
@@ -591,6 +646,7 @@
                     ],
                 });
             }
+
             $('#kewenangan').change(function() {
                 table.draw();
             });
