@@ -16,7 +16,7 @@ function hide_loading() {
             clearInterval(fadeEffect)
             fadeTarget.style.display = "none"
         }
-    },1000)
+    },100)
 }
 function tampil_data_ajax() {
     show_loading()
