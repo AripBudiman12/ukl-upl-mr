@@ -457,6 +457,11 @@
             </div>
             
             <div class="card-body">
+                @if (session('message'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('message') }}
+                    </div>
+                @endif
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalExport">
                         <i class="fas fa-file-excel">&nbsp;&nbsp;&nbsp;Export</i>
