@@ -1,6 +1,11 @@
 @extends('layouts.master')
 
 @section('section')
+<div class="loading overlay">
+    <div class="lds-circle"><div></div></div>
+</div>
+{{-- <button onclick="tampil_data_ajax()">Load data Ajax</button> --}}
+<div id="data_ajax"></div>
     <div class="container-fluid mt-3 pt-3" style="background-color: #628462;">
         <div class="row-12 mb-3">
             {{-- <a href="https://amdalnet-dev.menlhk.go.id/#/dashboard"><button class="btn btn-light float-left">Kembali</button></a> --}}
@@ -92,8 +97,10 @@
                                             value="{{ $date_end }}">
                                     </td>
                                     <td>
-                                        <button type="submit" class="btn btn-primary ml-2"><i
-                                                class="fa fa-filter"></i></button>
+                                        <div id="data_ajax">
+                                            <button type="submit" class="btn btn-primary ml-2" onload="hide_loading();"><i
+                                                    class="fa fa-filter"></i></button>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -450,6 +457,11 @@
             </div>
             
             <div class="card-body">
+                @if (session('message'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('message') }}
+                    </div>
+                @endif
                 <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalExport">
                         <i class="fas fa-file-excel">&nbsp;&nbsp;&nbsp;Export</i>

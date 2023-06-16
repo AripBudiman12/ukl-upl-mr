@@ -7,6 +7,7 @@ use App\Models\districts;
 use App\Models\provinces;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
@@ -518,7 +519,12 @@ class KegiatanController extends Controller
 
     public function export()
     {
-        return Excel::download(new KegiatanExport(request('length'), request('start'), request('date_start'), request('date_end')), 'uklupl_mr.xlsx');
+        try {
+            $exported = Excel::download(new KegiatanExport(request('length'), request('start'), request('date_start'), request('date_end')), 'uklupl_mr.xlsx');
+        } catch (\Exception $e) {
+            return back()->with('message', 'Data yang diambil terlalu banyak, coba untuk kurangi jumlah file yang diambil');
+        }
+        return $exported;
     }
 
     public function user_role()
