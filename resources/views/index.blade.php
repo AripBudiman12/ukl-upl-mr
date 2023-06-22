@@ -18,7 +18,7 @@
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Jumlah UKL-UPL Menengah Rendah</span>
+                        <span class="info-box-text">Jumlah Data UKL-UPL</span>
                         <span class="info-box-number">
                             {{ number_format($total_uklupl, 0, ',', '.') }}
                         </span>
@@ -30,7 +30,7 @@
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Jumlah SPPL Menengah Rendah</span>
+                        <span class="info-box-text">Jumlah Data SPPL berdasarkan aliran data sementara OSS (data keseluruhan on progress)</span>
                         <span class="info-box-number">
                             {{ number_format($total_sppl, 0, ',', '.') }}
                         </span>
