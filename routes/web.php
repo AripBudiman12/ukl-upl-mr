@@ -25,7 +25,6 @@ Route::get('/calendar-rapat', [JadwalRapatController::class, 'calendar']);
 Route::get('/tabel', [JadwalRapatController::class, 'table'])->name('tabel.data');
 Route::get('/calendar', [JadwalRapatController::class, 'calendar'])->name('calendar');
 
-Route::get('/test', [KegiatanController::class, 'index2'])->name('index2');
 Route::get('/testing', [KegiatanController::class, 'testing']);
 
 Route::get('/data', [KegiatanController::class, 'datatable'])->name('index.data');
