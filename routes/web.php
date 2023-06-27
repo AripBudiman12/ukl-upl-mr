@@ -16,14 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function() {
-    return view('maintenance');
-})->name('index');
-// Route::get('/', [KegiatanController::class, 'index'])->name('index');
+// Route::get('/', function() {
+//     return view('maintenance');
+// })->name('index');
+Route::get('/', [KegiatanController::class, 'index'])->name('index');
 Route::get('/jadwal-rapat', function() {
     return view('rapatTabel');
 });
-Route::get('/calendar-rapat', [JadwalRapatController::class, 'calendar']);
+
+Route::get('/calendar-rapat', function() {
+    return view('maintenance');
+})->name('index');
+// Route::get('/calendar-rapat', [JadwalRapatController::class, 'calendar']);
 
 Route::get('/tabel', [JadwalRapatController::class, 'table'])->name('tabel.data');
 Route::get('/calendar', [JadwalRapatController::class, 'calendar'])->name('calendar');
