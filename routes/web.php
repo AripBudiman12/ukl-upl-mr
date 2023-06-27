@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [KegiatanController::class, 'index'])->name('index');
+Route::get('/', function() {
+    return view('maintenance');
+})->name('index');
+// Route::get('/', [KegiatanController::class, 'index'])->name('index');
 Route::get('/jadwal-rapat', function() {
     return view('rapatTabel');
 });
