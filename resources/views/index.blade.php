@@ -66,15 +66,17 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <td class="align-middle">
-                                        <label for="start_date" class="mx-2">Kewenangan:</label>
-                                    </td>
-                                    <td>
-                                        <select class="form-control" name="filterKewenangan" id="filterKewenangan">
-                                            <option value="all" {{ $filterKewenangan == 'all' ? 'selected' : '' }}>Semua</option>
-                                            <option value="Pusat" {{ $filterKewenangan == 'Pusat' ? 'selected' : '' }}>Pusat</option>
-                                        </select>
-                                    </td>
+                                    @if ($kewenangan == 'Pusat')
+                                        <td class="align-middle">
+                                            <label for="start_date" class="mx-2">Kewenangan:</label>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="filterKewenangan" id="filterKewenangan">
+                                                <option value="all" {{ $filterKewenangan == 'all' ? 'selected' : '' }}>Semua</option>
+                                                <option value="Pusat" {{ $filterKewenangan == 'Pusat' ? 'selected' : '' }}>Pusat</option>
+                                            </select>
+                                        </td>
+                                    @endif
                                     <td class="align-middle">
                                         <label for="start_date" class="mx-2">Perbulan:</label>
                                     </td>

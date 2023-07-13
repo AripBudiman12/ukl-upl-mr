@@ -212,8 +212,10 @@ class KegiatanController extends Controller
             $filterKewenangan = request('filterKewenangan');
         }
 
+        $kewenangan = $user['kewenangan'];
         return view('index', compact(
             'filterKewenangan',
+            'kewenangan',
             'uklupl_data',
             'sppl_data',
             'uklupl_sppl_data',
