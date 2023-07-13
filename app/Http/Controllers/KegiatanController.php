@@ -36,16 +36,32 @@ class KegiatanController extends Controller
         if (request('start_date')) {
             $start_date = str_replace('-', '/', request('start_date'));
             $end_date = str_replace('-', '/', request('end_date'));
-            $statistik = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&perbulan=0&start_date=' . $start_date . '&end_date=' . $end_date);
+            $statistic = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('filterKewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&perbulan=0&start_date=' . $start_date . '&end_date=' . $end_date);
         } else {
             $start_date = str_replace('-', '/', $date['start']);
             $end_date = str_replace('-', '/', $date['now']);
         }
         
         if (request('perbulan') == 1) {
-            $statistik = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&perbulan=1&start_date=' . $start_date . '&end_date=' . $end_date);
-        } elseif (empty(request(['start_date','end_date','perbulan']))) {
-            $statistik = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota);
+            $statistic = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('filterKewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&perbulan=1&start_date=' . $start_date . '&end_date=' . $end_date);
+        } else if (empty(request(['start_date','end_date','perbulan']))) {
+            $statistic = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('filterKewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota);
+        }
+        
+        $important = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=all&kewenangan=' . $user['kewenangan'] . '&perbulan=0&start_date=2022-09-21&end_date=2022-09-23');
+        $statistik = array();
+        for ($i = 0; $i < count($statistic['data']); $i++) {
+            if ($statistic['data'][$i]['tanggal_record'] == '2022/09/22') {
+                if ($user['kewenangan'] == 'Pusat') {
+                    $statistik[$i]['jumlah'] = $important['data'][1]['jumlah'];
+                    $statistik[$i]['tanggal_record'] = $statistic['data'][$i]['tanggal_record'];
+                } else {
+                    $statistik[$i]['jumlah'] = $statistic['data'][$i]['jumlah'];
+                    $statistik[$i]['tanggal_record'] = $statistic['data'][$i]['tanggal_record'];
+                }
+            }
+            $statistik[$i]['jumlah'] = $statistic['data'][$i]['jumlah'];
+            $statistik[$i]['tanggal_record'] = $statistic['data'][$i]['tanggal_record'];
         }
 
         #region
@@ -162,13 +178,13 @@ class KegiatanController extends Controller
 
         $stat_label = array();
         $stat_data = array();
-        for ($i = 0; $i < count($statistik['data']); $i++) {
+        for ($i = 0; $i < count($statistik); $i++) {
             if (request('perbulan')) {
-                $stat_label[] = $statistik['data'][$i]['bulan'];
+                $stat_label[] = $statistik[$i]['bulan'];
             } elseif (request('perbulan') == 0 || empty(request('perbulan'))) {
-                $stat_label[] = $statistik['data'][$i]['tanggal_record'];
+                $stat_label[] = $statistik[$i]['tanggal_record'];
             }
-            $stat_data[] = $statistik['data'][$i]['jumlah'];
+            $stat_data[] = $statistik[$i]['jumlah'];
         }
 
         $tanggal = $this->getDate();
@@ -191,7 +207,13 @@ class KegiatanController extends Controller
         }
         $totalData = intval($total['data'][0]['count']);
 
+        $filterKewenangan = null;
+        if (request('filterKewenangan') != null) {
+            $filterKewenangan = request('filterKewenangan');
+        }
+
         return view('index', compact(
+            'filterKewenangan',
             'uklupl_data',
             'sppl_data',
             'uklupl_sppl_data',
