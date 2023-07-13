@@ -62,7 +62,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="info-box align-items-center">
-                    <form action="{{ route('index') }}">
+                    <form action="{{ route('chart-index') }}">
                         <table>
                             <tbody>
                                 <tr>

@@ -76,8 +76,55 @@ class JadwalRapatController extends Controller
         $date_now = Carbon::now()->format('m/d/Y');
         $datas = array();
         $i = 1;
+        #region
+        // foreach ($result as $tag) {
+        //     if ($tag['date'] == $date_now and $tag['Keterangan'] != null) {
+        //         $datas[] = [
+        //             'nomor' => $i,
+        //             'nama_perusahaan' => $tag['Nama_Perusahaan'],
+        //             'title' => $tag['Kegiatan'],
+        //             'start' => $tag['Tanggal_Rapat'],
+        //             'end' => $tag['Tanggal_Rapat'],
+        //             'jam_rapat' => $tag['Jam_Rapat'],
+        //             'keterangan' => $tag['Keterangan'],
+        //         ];
+        //         $i++;
+        //     }
+        // }
+
+        // foreach ($result as $tag) {
+        //     if ($tag['date'] == $date_now and $tag['Keterangan'] == null) {
+        //         $datas[] = [
+        //             'nomor' => $i,
+        //             'nama_perusahaan' => $tag['Nama_Perusahaan'],
+        //             'title' => $tag['Kegiatan'],
+        //             'start' => $tag['Tanggal_Rapat'],
+        //             'end' => $tag['Tanggal_Rapat'],
+        //             'jam_rapat' => $tag['Jam_Rapat'],
+        //             'keterangan' => $tag['Keterangan'],
+        //         ];
+        //         $i++;
+        //     }
+        // }
+
+        // foreach ($result as $tag) {
+        //     if ($tag['date'] != $date_now) {
+        //         $datas[] = [
+        //             'nomor' => $i,
+        //             'nama_perusahaan' => $tag['Nama_Perusahaan'],
+        //             'title' => $tag['Kegiatan'],
+        //             'start' => $tag['Tanggal_Rapat'],
+        //             'end' => $tag['Tanggal_Rapat'],
+        //             'jam_rapat' => $tag['Jam_Rapat'],
+        //             'keterangan' => $tag['Keterangan'],
+        //         ];
+        //         $i++;
+        //     }
+        // }
+        #endregion
+
         foreach ($result as $tag) {
-            if ($tag['date'] == $date_now and $tag['Keterangan'] != null) {
+            if ($tag['Tanggal_Rapat'] != null) {
                 $datas[] = [
                     'nomor' => $i,
                     'nama_perusahaan' => $tag['Nama_Perusahaan'],
@@ -92,22 +139,7 @@ class JadwalRapatController extends Controller
         }
 
         foreach ($result as $tag) {
-            if ($tag['date'] == $date_now and $tag['Keterangan'] == null) {
-                $datas[] = [
-                    'nomor' => $i,
-                    'nama_perusahaan' => $tag['Nama_Perusahaan'],
-                    'title' => $tag['Kegiatan'],
-                    'start' => $tag['Tanggal_Rapat'],
-                    'end' => $tag['Tanggal_Rapat'],
-                    'jam_rapat' => $tag['Jam_Rapat'],
-                    'keterangan' => $tag['Keterangan'],
-                ];
-                $i++;
-            }
-        }
-
-        foreach ($result as $tag) {
-            if ($tag['date'] != $date_now) {
+            if ($tag['Tanggal_Rapat'] == null) {
                 $datas[] = [
                     'nomor' => $i,
                     'nama_perusahaan' => $tag['Nama_Perusahaan'],
