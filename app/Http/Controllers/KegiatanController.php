@@ -326,24 +326,40 @@ class KegiatanController extends Controller
         // }
         #endregion
 
-        if ($user['kewenangan'] == "Pusat") {
-            $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?search=' . $search . 'offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
-            $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?search=' . $search . 'start_date=' . $start_date . '&end_date=' . $end_date);
-        } elseif ($user['kewenangan'] == "Provinsi") {
-            $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?search=' . $search . 'provinsi=' . $provinsi . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
-            $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?search=' . $search . 'provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
-        } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
-            $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?search=' . $search . 'provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
-            $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?search=' . $search . 'provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        if ($search != null) {
+            if ($user['kewenangan'] == "Pusat") {
+                $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?search=' . $search . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
+                $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?search=' . $search . '&start_date=' . $start_date . '&end_date=' . $end_date);
+            } elseif ($user['kewenangan'] == "Provinsi") {
+                $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?search=' . $search . '&provinsi=' . $provinsi . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
+                $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?search=' . $search . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+            } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
+                $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?search=' . $search . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
+                $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?search=' . $search . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
+            }
+        } else {
+            if ($user['kewenangan'] == "Pusat") {
+                $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
+                $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?start_date=' . $start_date . '&end_date=' . $end_date);
+            } elseif ($user['kewenangan'] == "Provinsi") {
+                $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?provinsi=' . $provinsi . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
+                $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+            } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
+                $api = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
+                $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
+            }
         }
-
+        
+        // return 'http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?search=' . $search . 'offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date;
+        // return 'http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?start_date=' . $start_date . '&end_date=' . $end_date;
+        // return $total;
+        // $total = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?start_date=2023-04-01&end_date=2023-07-24');
         return response()->json([
             "draw" => intval(request('draw')),
             "recordsTotal" => intval($total['data'][0]['count']),
             "recordsFiltered" => intval($total['data'][0]['count']),
             "data" => $api['data'],
         ]);
-
     }
 
     public function getDate()
