@@ -32,7 +32,7 @@ class KegiatanController extends Controller
         }
 
         $date = $this->getDate();
-        // return $date;
+
         if (request('start_date')) {
             $start_date = str_replace('-', '/', request('start_date'));
             $end_date = str_replace('-', '/', request('end_date'));
@@ -156,16 +156,21 @@ class KegiatanController extends Controller
             $uklupl_sppl_data[] = $uklupl_sppl['data'][$i]['jumlah'];
         }
 
-        $prov_total = array();
         $prov_uklupl = array();
         $prov_sppl = array();
         $prov_label = array();
+
+        if (count($uklupl_prov['data']) > count($sppl_prov['data'])) {
+            for ($i = 0; $i < count($uklupl_prov['data']); $i++ ) {
+                // fix this
+            } 
+        }
+
         for ($i = 0; $i < count($sppl_prov['data']); $i++ ) {
-            if ($sppl_prov['data'][$i]['jumlah'] != null) {
+            if ($sppl_prov['data'][$i]['jumlah'] != null && $sppl_prov['data'][$i]['prov'] != null) {
                 $prov_label[] = $uklupl_prov['data'][$i]['prov'];
                 $prov_sppl[] = $sppl_prov['data'][$i]['jumlah'];
                 $prov_uklupl[] = $uklupl_prov['data'][$i]['jumlah'];
-                $prov_total[] = $sppl_prov['data'][$i]['jumlah'] + $uklupl_prov['data'][$i]['jumlah'];
             }
         }
 
@@ -222,7 +227,6 @@ class KegiatanController extends Controller
             'prov_label',
             'prov_uklupl',
             'prov_sppl',
-            'prov_total',
             'stat_label',
             'stat_data',
             'cluster_label',

@@ -484,11 +484,12 @@
                         Tanggal : {{ $dts }} s/d {{ $dte }}
                     </h4>
                 </div>
-                <table id='dataTable' class="table hover table-bordered table-striped" style="table-layout: fixed;">
+                <table id='dataTable' class="table hover table-bordered table-striped" style="table-layout: fixed; font-size: 12px;">
                     <thead>
                         <tr>
                             <th>Tanggal Records</th>
                             <th>NIB</th>
+                            <th>KBLI</th>
                             <th>Pemrakarsa</th>
                             <th>Nomor Telepon</th>
                             <th>Email</th>
@@ -617,6 +618,10 @@
                         {
                             data: 'nib',
                             name: 'nib'
+                        },
+                        {
+                            data: 'kbli',
+                            name: 'kbli'
                         },
                         {
                             data: 'pemrakarsa',
@@ -757,7 +762,6 @@
                 let prov_label = <?php echo json_encode($prov_label); ?>;
                 let prov_uklupl = <?php echo json_encode($prov_uklupl); ?>;
                 let prov_sppl = <?php echo json_encode($prov_sppl); ?>;
-                let prov_total = <?php echo json_encode($prov_total); ?>;
                 var StatisticData = {
                     labels: prov_label,
                     datasets: [{
