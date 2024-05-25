@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\JadwalRapatController;
 use App\Http\Controllers\KegiatanController;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,11 @@ Route::get('/testing', [KegiatanController::class, 'testing']);
 
 Route::get('/data', [KegiatanController::class, 'datatable'])->name('index.data');
 Route::get('/export', [KegiatanController::class, 'export'])->name('export.data');
+Route::get('/api/statistic', [ChartController::class, 'statistic']);
+Route::get('/api/total', [ChartController::class, 'total']);
+Route::get('/api/authority', [ChartController::class, 'authority']);
+Route::get('/api/province', [ChartController::class, 'province']);
+Route::get('/api/cluster', [ChartController::class, 'cluster']);
 
 Auth::routes();
 

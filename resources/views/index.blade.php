@@ -141,8 +141,12 @@
                         </div>
                     </div>
 
+                    {{-- Grafik Kegiatan --}}
                     <div class="card-body">
-                        <div class="row">
+                        <div class="loading-kegiatan" style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Proses...
+                        </div>
+                        <div class="row" id="canvas_kegiatan">
                             <div class="col-md-12">
                                 <div class="chart">
                                     <canvas id="Kegiatan" height="80" style="height: 80px;"></canvas>
@@ -170,8 +174,12 @@
                         </div>
                     </div>
 
+                    {{-- Grafik Jumlah Data UKL-UPL MR dan SPPL --}}
                     <div class="card-body">
-                        <div class="row">
+                        <div class="loading" style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Proses...
+                        </div>
+                        <div class="row" id="canvas_jml_data">
                             <div class="col-md-8">
                                 <div class="chart-responsive">
                                     <canvas id="pieChart" height="150"></canvas>
@@ -185,29 +193,30 @@
                                     <li><i class="far fa-circle text-danger"></i> SPPL</li>
                                 </ul>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-14 col-sm-7 col-md-7" style="padding-left: 20px;">
-                            <div class="info-box">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Jumlah UKL-UPL Menengah Rendah</span>
-                                    <span class="info-box-number">
-                                        {{ number_format($tot_uklupl, 0, ',', '.') }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-10 col-sm-5 col-md-5" style="padding-right: 20px;">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Jumlah SPPL</span>
-                                    <span class="info-box-number">
-                                        {{ number_format($tot_sppl, 0, ',', '.') }}
-                                    </span>
+                            <div class="row">
+                                <div class="col-14 col-sm-7 col-md-7" style="padding-left: 20px;">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Jumlah UKL-UPL Menengah Rendah</span>
+                                            <span class="info-box-number">
+                                                {{ number_format($tot_uklupl, 0, ',', '.') }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-10 col-sm-5 col-md-5" style="padding-right: 20px;">
+                                    <div class="info-box mb-3">
+                                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Jumlah SPPL</span>
+                                            <span class="info-box-number">
+                                                {{ number_format($tot_sppl, 0, ',', '.') }}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -230,8 +239,12 @@
                         </div>
                     </div>
 
+                    {{-- Grafik jumlah UKL-UPL Menengah Rendah per Kewenangan --}}
                     <div class="card-body">
-                        <div class="row">
+                        <div class="loading" style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Proses...
+                        </div>
+                        <div class="row" id="canvas_jml_uklupl">
                             <div class="col-md-8">
                                 <div class="chart-responsive">
                                     <canvas id="uklupl" height="150"></canvas>
@@ -246,41 +259,42 @@
                                     <li><i class="far fa-circle text-warning"></i> Pusat</li>
                                 </ul>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-8 col-sm-4 col-md-4" style="padding-left: 20px;">
-                            <div class="info-box">
-                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Kab/Kota</span>
-                                    <span class="info-box-number">
-                                        <span>{{ number_format($uklupl_data[0], 0, ',', '.') }}</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-8 col-sm-4 col-md-4">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Provinsi</span>
-                                    <span class="info-box-number">
-                                        <span>{{ number_format($uklupl_data[1], 0, ',', '.') }}</span>
-                                    </span>
+                            <div class="row">
+                                <div class="col-8 col-sm-4 col-md-4" style="padding-left: 20px;">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Kab/Kota</span>
+                                            <span class="info-box-number">
+                                                <span>{{ number_format($uklupl_data[0], 0, ',', '.') }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="col-8 col-sm-4 col-md-4" style="padding-right: 20px;">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Pusat</span>
-                                    <span class="info-box-number">
-                                        <span>{{ number_format($uklupl_data[2], 0, ',', '.') }}</span>
-                                    </span>
+        
+                                <div class="col-8 col-sm-4 col-md-4">
+                                    <div class="info-box mb-3">
+                                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Provinsi</span>
+                                            <span class="info-box-number">
+                                                <span>{{ number_format($uklupl_data[1], 0, ',', '.') }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-8 col-sm-4 col-md-4" style="padding-right: 20px;">
+                                    <div class="info-box mb-3">
+                                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Pusat</span>
+                                            <span class="info-box-number">
+                                                <span>{{ number_format($uklupl_data[2], 0, ',', '.') }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -303,8 +317,12 @@
                         </div>
                     </div>
 
+                    {{-- Grafik SPPL Per Kewenangan --}}
                     <div class="card-body">
-                        <div class="row">
+                        <div class="loading" style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Proses...
+                        </div>
+                        <div class="row" id="canvas_jml_sppl">
                             <div class="col-md-8">
                                 <div class="chart-responsive">
                                     <canvas id="sppl" height="150"></canvas>
@@ -313,47 +331,90 @@
 
                             <div class="col-md-4">
                                 <ul class="chart-legend clearfix">
-                                    <li><i class="far fa-circle text-danger"></i> Kab/Kota</li>
-                                    <li><i class="far fa-circle text-success"></i> Provinsi</li>
+                                    @if (count($sppl_data) == 3)
                                     <li><i class="far fa-circle text-warning"></i> Pusat</li>
+                                    <li><i class="far fa-circle text-success"></i> Provinsi</li>
+                                    <li><i class="far fa-circle text-danger"></i> Kab/Kota</li>
+                                    @elseif (count($sppl_data) == 2)
+                                    <li><i class="far fa-circle text-warning"></i> Pusat</li>
+                                    <li><i class="far fa-circle text-success"></i> Provinsi</li>
+                                    @elseif (count($sppl_data) == 1)
+                                    <li><i class="far fa-circle text-warning"></i> Pusat</li>
+                                    @endif
                                 </ul>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-8 col-sm-4 col-md-4" style="padding-left: 20px;">
-                            <div class="info-box">
-                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Kab/Kota</span>
-                                    <span class="info-box-number">
-                                        <span>{{ number_format($sppl_data[0], 0, ',', '.') }}</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-8 col-sm-4 col-md-4">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Provinsi</span>
-                                    <span class="info-box-number">
-                                        <span>{{ number_format($sppl_data[1], 0, ',', '.') }}</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-8 col-sm-4 col-md-4" style="padding-right: 20px;">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Pusat</span>
-                                    <span class="info-box-number">
-                                        <span>{{ number_format($sppl_data[2], 0, ',', '.') }}</span>
-                                    </span>
-                                </div>
+                            <div class="row">
+                                @if (count($sppl_data) == 3)
+                                    <div class="col-8 col-sm-4 col-md-4" style="padding-left: 20px;">
+                                        <div class="info-box">
+                                            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Kab/Kota</span>
+                                                <span class="info-box-number">
+                                                    <span>{{ number_format($sppl_data[0], 0, ',', '.') }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 col-sm-4 col-md-4">
+                                        <div class="info-box mb-3">
+                                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Provinsi</span>
+                                                <span class="info-box-number">
+                                                    <span>{{ number_format($sppl_data[1], 0, ',', '.') }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 col-sm-4 col-md-4" style="padding-right: 20px;">
+                                        <div class="info-box mb-3">
+                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Pusat</span>
+                                                <span class="info-box-number">
+                                                    <span>{{ number_format($sppl_data[2], 0, ',', '.') }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @elseif (count($sppl_data) == 2)
+                                    <div class="col-12 col-sm-6 col-md-6" style="padding-left: 20px;">
+                                        <div class="info-box mb-3">
+                                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Provinsi</span>
+                                                <span class="info-box-number">
+                                                    <span>{{ number_format($sppl_data[0], 0, ',', '.') }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-6" style="padding-right: 20px;">
+                                        <div class="info-box mb-3">
+                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Pusat</span>
+                                                <span class="info-box-number">
+                                                    <span>{{ number_format($sppl_data[1], 0, ',', '.') }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @elseif (count($sppl_data) == 1)
+                                    <div class="col-24 col-sm-12 col-md-12" style="padding-right: 20px;">
+                                        <div class="info-box mb-3">
+                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Pusat</span>
+                                                <span class="info-box-number">
+                                                    <span>{{ number_format($sppl_data[0], 0, ',', '.') }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -377,7 +438,10 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="row">
+                        <div class="loading" style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Proses...
+                        </div>
+                        <div class="row" id="canvas_cluster">
                             <div class="col-md-6">
                                 <div class="chart-responsive">
                                     <canvas id="Cluster" height="150"></canvas>
@@ -407,7 +471,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title"><b>Jumlah UKLUPL & SPPL di setiap Provinsi</b>
+                        <h5 class="card-title"><b>Jumlah UKL-UPL & SPPL di setiap Provinsi</b>
                         @if ($start_date != null)
                             ({{ $dts }} s/d {{ $dte }})
                         @endif
@@ -420,11 +484,11 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="row">
+                        <div class="loading" style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Proses...
+                        </div>
+                        <div class="row" id="canvas_statistic">
                             <div class="col-md-12">
-                                {{-- <p class="text-center">
-                                    <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
-                                </p> --}}
                                 <div class="chart">
                                     <canvas id="Statistic" height="80" style="height: 80px;"></canvas>
                                 </div>
@@ -688,11 +752,12 @@
                 let uklupl_data = <?php echo json_encode($uklupl_data); ?>;
                 let tot_uklupl = <?php echo json_encode($tot_uklupl); ?>;
                 let tot_sppl = <?php echo json_encode($tot_sppl); ?>;
+                let kewenangan = "<?php echo $kewenangan; ?>";
                 var ProvinsiCanvas = $('#pieChart').get(0).getContext('2d')
                 var pieData = {
                     labels: [
                         'SPPL',
-                        'UKLUPL',
+                        'UKL-UPL',
                     ],
                     datasets: [{
                         data: [tot_sppl,tot_uklupl],
@@ -734,17 +799,45 @@
                 });
                 // Three Donut
                 var spplChart = $('#sppl').get(0).getContext('2d')
-                var spplData = {
-                    labels: [
-                        'Kab/Kota',
-                        'Provinsi',
-                        'Pusat',
-                    ],
-                    datasets: [{
-                        data: sppl_data,
-                        backgroundColor: ['#f56954', '#00a65a', '#f39c12']
-                    }]
+                if (sppl_data.length == 3) {
+                    var spplData = {
+                        labels: [
+                            'Kab/Kota',
+                            'Provinsi',
+                            'Pusat',
+                        ],
+                        datasets: [{
+                            data: sppl_data,
+                            backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+                        }]
+                    }
                 }
+                
+                if (sppl_data.length == 2) {
+                    var spplData = {
+                        labels: [
+                            'Provinsi',
+                            'Pusat',
+                        ],
+                        datasets: [{
+                            data: sppl_data,
+                            backgroundColor: ['#00a65a', '#f39c12']
+                        }]
+                    }
+                }
+                
+                if (sppl_data.length == 1) {
+                    var spplData = {
+                        labels: [
+                            'Pusat',
+                        ],
+                        datasets: [{
+                            data: sppl_data,
+                            backgroundColor: ['#f39c12']
+                        }]
+                    }
+                }
+
                 var spplOptions = {
                     legend: {
                         display: false
@@ -765,7 +858,7 @@
                 var StatisticData = {
                     labels: prov_label,
                     datasets: [{
-                            label: 'UKLUPL',
+                            label: 'UKL-UPL',
                             data: prov_uklupl,
                             fill: false,
                             backgroundColor: '#f56954',
