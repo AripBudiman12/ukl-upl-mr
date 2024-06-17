@@ -218,7 +218,7 @@ class KegiatanController extends Controller
         }
 
         $kewenangan = $user['kewenangan'];
-        return view('index', compact(
+        return view('index-backup', compact(
             'filterKewenangan',
             'kewenangan',
             'uklupl_data',
@@ -382,112 +382,6 @@ class KegiatanController extends Controller
         ];
 
         return $data;
-    }
-
-    public function testing()
-    {
-        $data = $this->data();
-        $result = $data;
-        $limit = request('length');
-        $start = request('start');
-        $search = null;
-        // $search = request('search')['value'];
-
-        if ($limit != null AND $start != null) {
-            $result = $data->skip($start)->take($limit);
-            $totalSearch = intval($data->count());
-        } if ($search != null AND $limit == null AND $start == null) {
-            $result = $data->filter(function ($item) use ($search) {
-                return false !== stripos($item['Nama_Perusahaan'], $search) or stripos($item['Kegiatan'], $search) or stripos($item['Tanggal_Rapat'], $search) or stripos($item['Jam_Rapat'], $search) or stripos($item['Keterangan'], $search);
-            });
-        } if ($search != null AND $limit != null AND $start != null) {
-            $result = $data->filter(function ($item) use ($search) {
-                return false !== stripos($item['Nama_Perusahaan'], $search) or stripos($item['Kegiatan'], $search) or stripos($item['Tanggal_Rapat'], $search) or stripos($item['Jam_Rapat'], $search) or stripos($item['Keterangan'], $search);
-            })->skip($start)->take($limit);
-            $totalSearch = intval($result->count());
-        }
-
-        $date_now = Carbon::now()->format('m/d/Y');
-        $datas = array();
-        $i = 1;
-        #region
-        // foreach ($result as $tag) {
-        //     if ($tag['date'] == $date_now and $tag['Keterangan'] != null) {
-        //         $datas[] = [
-        //             'nomor' => $i,
-        //             'nama_perusahaan' => $tag['Nama_Perusahaan'],
-        //             'title' => $tag['Kegiatan'],
-        //             'start' => $tag['Tanggal_Rapat'],
-        //             'end' => $tag['Tanggal_Rapat'],
-        //             'jam_rapat' => $tag['Jam_Rapat'],
-        //             'keterangan' => $tag['Keterangan'],
-        //         ];
-        //         $i++;
-        //     }
-        // }
-
-        // foreach ($result as $tag) {
-        //     if ($tag['date'] == $date_now and $tag['Keterangan'] == null) {
-        //         $datas[] = [
-        //             'nomor' => $i,
-        //             'nama_perusahaan' => $tag['Nama_Perusahaan'],
-        //             'title' => $tag['Kegiatan'],
-        //             'start' => $tag['Tanggal_Rapat'],
-        //             'end' => $tag['Tanggal_Rapat'],
-        //             'jam_rapat' => $tag['Jam_Rapat'],
-        //             'keterangan' => $tag['Keterangan'],
-        //         ];
-        //         $i++;
-        //     }
-        // }
-
-        // foreach ($result as $tag) {
-        //     if ($tag['date'] != $date_now) {
-        //         $datas[] = [
-        //             'nomor' => $i,
-        //             'nama_perusahaan' => $tag['Nama_Perusahaan'],
-        //             'title' => $tag['Kegiatan'],
-        //             'start' => $tag['Tanggal_Rapat'],
-        //             'end' => $tag['Tanggal_Rapat'],
-        //             'jam_rapat' => $tag['Jam_Rapat'],
-        //             'keterangan' => $tag['Keterangan'],
-        //         ];
-        //         $i++;
-        //     }
-        // }
-        #endregion
-
-        foreach ($result as $tag) {
-            if ($tag['Tanggal_Rapat'] != null) {
-                $datas[] = [
-                    'nomor' => $i,
-                    'nama_perusahaan' => $tag['Nama_Perusahaan'],
-                    'title' => $tag['Kegiatan'],
-                    'start' => $tag['Tanggal_Rapat'],
-                    'end' => $tag['Tanggal_Rapat'],
-                    'jam_rapat' => $tag['Jam_Rapat'],
-                    'keterangan' => $tag['Keterangan'],
-                ];
-                $i++;
-            }
-        }
-
-        foreach ($result as $tag) {
-            if ($tag['Tanggal_Rapat'] == null) {
-                $datas[] = [
-                    'nomor' => $i,
-                    'nama_perusahaan' => $tag['Nama_Perusahaan'],
-                    'title' => $tag['Kegiatan'],
-                    'start' => $tag['Tanggal_Rapat'],
-                    'end' => $tag['Tanggal_Rapat'],
-                    'jam_rapat' => $tag['Jam_Rapat'],
-                    'keterangan' => $tag['Keterangan'],
-                ];
-                $i++;
-            }
-        }
-
-        return $datas;
     }
 
     public function export()

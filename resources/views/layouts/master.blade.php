@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>Dashboard MR & R</title>
+
     {{-- css --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/preview.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.datatables.min.css') }}">
@@ -19,6 +21,17 @@
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css?v=3.2.0') }}">
 
     <style>
+        #modalContent {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #modalContent > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         #preloader {
             position: fixed;
             left: 0;
@@ -31,10 +44,23 @@
         }
         .loader{
             margin: auto;
+            height: 100px;
+            width: 100px;
+            border-radius: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .loader-text{
+            margin: auto;
             height: 50px;
             width: 50px;
-            border-radius: 50%;
+            /* border-radius: 50%; */
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .loader:before{
             content: '';
@@ -81,7 +107,7 @@
         }
     </style>
 
-    <script nonce="35ffcdf7-fe60-4ada-a7ee-09091d8615ed">
+    {{-- <script nonce="35ffcdf7-fe60-4ada-a7ee-09091d8615ed">
         (function(w, d) {
             ! function(f, g, h, i) {
                 f[h] = f[h] || {};
@@ -145,7 +171,7 @@
                     "DOMContentLoaded", zaraz.init)
             }(w, d, "zarazData", "script");
         })(window, document);
-    </script>
+    </script> --}}
 
     {{-- <script>
         (function ($) {
@@ -163,26 +189,12 @@
     </script> --}}
 </head>
 
-<body class="hold-transition layout-fixed" style="background-color: #133715;" onload="hide_loading();">
-    {{-- @include('layouts.sidebar') --}}
-
-    {{-- <div class="title mt-3">
-        <div style="padding: 10px; text-align: center;">
-            <a href="https://amdalnet.menlhk.go.id" target="_blank">
-                <img src="{{ asset('img/lhk_logo.png') }}" style="max-height: 80px; height:auto;">
-                <img src="{{ asset('img/logo-amdal-white.png') }}" href="amdalnet.menlhk.go.id"
-                    style="max-height: 80px; height:auto;">
-            </a>
-        </div>
-    </div> --}}
+<body class="hold-transition layout-fixed" style="background-color: #133715;">
     <section class="content">
         @yield('section')
     </section>
 
-    <aside class="control-sidebar control-sidebar-dark">
-
-    </aside>
-
+    <!-- JS Includes -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
@@ -193,9 +205,21 @@
     <script src="{{ asset('plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
     <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('dist/js/demo.js') }}"></script>
+
+    {{-- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.js?v=3.2.0') }}"></script>
+    <script src="{{ asset('plugins/jquery-mousewheel/jquery.mousewheel.js') }}"></script>
+    <script src="{{ asset('plugins/raphael/raphael.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-mapael/jquery.mapael.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
+    <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+    {{-- <script src="{{ asset('dist/js/demo.js') }}"></script> --}}
     {{-- <script src="{{ asset('dist/js/pages/dashboard2.js') }}"></script> --}}
 
-    <!-- Script -->
+    {{-- <!-- Script -->
     <script src="{{ asset('js/loading.js') }}"></script>
     <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
     <script src="{{ asset('js/1.12.1-jquery.datatables.min.js') }}"></script>
@@ -203,9 +227,19 @@
     <script src="{{ asset('js/datatables.bootstrap4.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
+
+    <!-- DataTables Scripts -->
+    <script src="{{ asset('js/1.12.1-jquery.datatables.min.js') }}"></script>
+    <script src="{{ asset('js/2.2.9-datatables.responsive.min.js') }}"></script>
+    <script src="{{ asset('js/datatables.bootstrap4.min.js') }}"></script>
+
+    <!-- Other Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     @stack('scripts')
 </body>
-
+    
 </html>
