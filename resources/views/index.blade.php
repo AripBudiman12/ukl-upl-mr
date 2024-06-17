@@ -549,6 +549,7 @@
         </div>
     </div>
 
+    <input type="text" value="{{ $url_app }}" id="app_url" hidden>
     {{-- MODAL EXPORT --}}
     <div class="modal fade" id="modalExport" tabindex="-1" role="dialog" aria-labelledby="modalExportLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -597,8 +598,13 @@
             var start_date = <?php echo json_encode($start_date); ?>;
             var end_date = <?php echo json_encode($end_date); ?>;
             var province = <?php echo json_encode($province); ?>;
-            var url_app = <?php echo json_encode($url_app ?? 'https://amdalnet-dev.menlhk.go.id/dashboard_mr/'); ?>
+            // var url_app = <?php echo json_encode($url_app ?? ''); ?>;
+            var url_app = '';
             var district = '';
+
+            if (url_app == '') {
+                url_app = $('#app_url').val();
+            }
 
             // TOTAL DATA
             $.ajax({
