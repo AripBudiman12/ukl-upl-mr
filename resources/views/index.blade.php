@@ -558,7 +558,6 @@
             var start_date = <?php echo json_encode($start_date); ?>;
             var end_date = <?php echo json_encode($end_date); ?>;
             var province = <?php echo json_encode($province); ?>;
-            var url_app = '';
             var district = '';
 
             // TOTAL DATA
@@ -577,7 +576,7 @@
 
             // STATISIK
             $.ajax({
-                // url: `${url_app}/statistic?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                // url: `/statistic?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
                 url: "{{ route('api.statistic', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                 method: 'GET',
                 success: function(data) {
@@ -607,7 +606,7 @@
 
             // TOTAL BY DATE
             $.ajax({
-                // url: `${url_app}/totalByDate?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                // url: `/totalByDate?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
                 url: "{{ route('api.totalByDate', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                 method: 'GET',
                 success: function(data) {
@@ -642,7 +641,7 @@
 
             // TOTAL BY AUTHORITY
             $.ajax({
-                // url: `${url_app}/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                // url: `/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
                 url: "{{ route('api.totalByAuthority', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                 method: 'GET',
                 success: function(data) {
@@ -703,7 +702,7 @@
 
             // DATA BY CLUSTER KBLI
             $.ajax({
-                // url: `${url_app}/cluster?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                // url: `/cluster?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
                 url: "{{ route('api.cluster', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                 method: 'GET',
                 success: function(data) {
@@ -746,7 +745,7 @@
 
             // DATA PER PROVINSI
             $.ajax({
-                // url: `${url_app}/ByProvince?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                // url: `/ByProvince?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
                 url: "{{ route('api.ByProvince', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                 method: 'GET',
                 success: function(data) {
