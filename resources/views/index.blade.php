@@ -593,7 +593,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            var url_app = <?php echo json_encode($url_app); ?>
+            var url_app = <?php echo json_encode($url_app); ?>;
             var kewenangan = <?php echo json_encode($filterKewenangan); ?>;
             var start_date = <?php echo json_encode($start_date); ?>;
             var end_date = <?php echo json_encode($end_date); ?>;
