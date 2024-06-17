@@ -77,7 +77,9 @@ class DashboardController extends Controller
 
         $kewenangan = $user['kewenangan'];
         $district = '';
+        $url_app = config('app.url');
         return view('index', compact(
+            'url_app',
             'filterKewenangan',
             'kewenangan',
             'tgl_awal',

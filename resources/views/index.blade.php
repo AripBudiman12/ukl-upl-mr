@@ -549,6 +549,7 @@
         </div>
     </div>
 
+    <input type="text" value="{{ $url_app }}" hidden>
 @endsection
 
 @push('scripts')
