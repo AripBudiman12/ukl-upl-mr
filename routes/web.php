@@ -44,12 +44,12 @@ Route::get('/export', [KegiatanController::class, 'export'])->name('export.data'
 // Route::get('/api/cluster', [ChartController::class, 'cluster']);
 
 // GET DATA APIs
-Route::get('statistic', [DashboardController::class, 'statistic']);
-Route::get('total', [DashboardController::class, 'total']);
-Route::get('totalByDate', [DashboardController::class, 'totalByDate']);
-Route::get('totalByAuthority', [DashboardController::class, 'totalByAuthority']);
-Route::get('cluster', [DashboardController::class, 'cluster']);
-Route::get('ByProvince', [DashboardController::class, 'ByProvince']);
+Route::get('statistic', [DashboardController::class, 'statistic'])->name('api.statistic');
+Route::get('total', [DashboardController::class, 'total'])->name('api.total');
+Route::get('totalByDate', [DashboardController::class, 'totalByDate'])->name('api.totalByDate');
+Route::get('totalByAuthority', [DashboardController::class, 'totalByAuthority'])->name('api.totalByAuthority');
+Route::get('cluster', [DashboardController::class, 'cluster'])->name('api.cluster');
+Route::get('ByProvince', [DashboardController::class, 'ByProvince'])->name('api.ByProvince');
 Route::get('datatable_mr', [DashboardController::class, 'datatable_mr'])->name('datatable_mr');
 Route::get('datatable_r', [DashboardController::class, 'datatable_r'])->name('datatable_r');
 

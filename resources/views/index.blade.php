@@ -593,11 +593,11 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            var url_app = <?php echo json_encode($url_app); ?>;
             var kewenangan = <?php echo json_encode($filterKewenangan); ?>;
             var start_date = <?php echo json_encode($start_date); ?>;
             var end_date = <?php echo json_encode($end_date); ?>;
             var province = <?php echo json_encode($province); ?>;
+            var url_app = <?php echo json_encode($url_app ?? 'https://amdalnet-dev.menlhk.go.id/dashboard_mr/'); ?>
             var district = '';
 
             // TOTAL DATA
