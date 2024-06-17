@@ -561,6 +561,9 @@
             var province = <?php echo json_encode($province); ?>;
             var district = '';
 
+            var url_app = <?php echo json_encode($url_app ?? ''); ?>;
+            console.log(url_app); // Use url_app in your JavaScript
+            
             // TOTAL DATA
             $.ajax({
                 url: "{{ route('api.total') }}",
