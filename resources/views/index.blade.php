@@ -550,45 +550,6 @@
     </div>
 
     <input type="text" value="{{ $url_app }}" id="app_url" hidden>
-    {{-- MODAL EXPORT --}}
-    {{-- <div class="modal fade" id="modalExport" tabindex="-1" role="dialog" aria-labelledby="modalExportLabel" aria-hidden="true"> --}}
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalExportLabel">Pilih Opsi Export</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('export.data') }}" method="GET">
-                    @csrf
-                    <input type="text" name="date_end" value="{{ $date_end }}" hidden>
-                    <input type="text" name="date_start" value="{{ $date_start }}" hidden>
-                    <div class="modal-body">
-                        <label class="col-form-label">Tanggal Data</label>
-                        <h5>{{ $dts }} sampai dengan {{ $dte }}</h5>
-
-                        <label class="col-form-label">Total Data</label>
-                        {{-- <h5>{{ number_format($totalData, 0, ',', '.') }}</h5> --}}
-
-                        <div class="form-group row px-2">
-                            <label class="col-form-label">Data awal</label>
-                            <input type="number" style="width: 100%" class="form-control" name="start" placeholder="Nomor Data Awal" required>
-                            <small style="color: red">*Data pertama dimulai dari 0</small>
-                        </div>
-                        <div class="form-group row px-2">
-                            <label class="col-form-label">Data Yang Diambil</label>
-                            <input type="number" style="width: 100%" class="form-control" name="length" placeholder="Jumlah Data Yang Diambil" required>
-                            <small style="color: red">*Jika data yang diambil terlalu banyak, kemungkinan akan terjadi error</small>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Export</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-      </div>
 @endsection
 
 @push('scripts')
