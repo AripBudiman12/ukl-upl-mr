@@ -77,7 +77,9 @@ class DashboardController extends Controller
 
         $kewenangan = $user['kewenangan'];
         $district = '';
+        $url_app = env('APP_URL');
         return view('index', compact(
+            'url_app',
             'filterKewenangan',
             'kewenangan',
             'tgl_awal',
@@ -317,6 +319,13 @@ class DashboardController extends Controller
 
     public function datatable_mr()
     {
+        // Increase memory limit to unlimited
+        ini_set('memory_limit', '-1');
+        // Set the max execution time limit to unlimited
+        ini_set('max_execution_time', 0);
+        // Set the execution time limit to unlimited
+        set_time_limit(0);
+
         $search = null;
         if (request('search')['value'] != null) {
             $search = request('search')['value'];
@@ -354,6 +363,13 @@ class DashboardController extends Controller
 
     public function datatable_r()
     {
+        // Increase memory limit to unlimited
+        ini_set('memory_limit', '-1');
+        // Set the max execution time limit to unlimited
+        ini_set('max_execution_time', 0);
+        // Set the execution time limit to unlimited
+        set_time_limit(0);
+        
         $search = null;
         if (request('search')['value'] != null) {
             $search = request('search')['value'];
