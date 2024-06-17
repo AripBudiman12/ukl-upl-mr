@@ -551,7 +551,7 @@
 
     <input type="text" value="{{ $url_app }}" id="app_url" hidden>
     {{-- MODAL EXPORT --}}
-    <div class="modal fade" id="modalExport" tabindex="-1" role="dialog" aria-labelledby="modalExportLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="modalExport" tabindex="-1" role="dialog" aria-labelledby="modalExportLabel" aria-hidden="true"> --}}
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
