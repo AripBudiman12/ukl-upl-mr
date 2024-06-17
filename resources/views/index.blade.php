@@ -549,7 +549,6 @@
         </div>
     </div>
 
-    {{-- <input type="text" value="{{ $url_app }}" id="app_url" hidden> --}}
 @endsection
 
 @push('scripts')
@@ -559,13 +558,8 @@
             var start_date = <?php echo json_encode($start_date); ?>;
             var end_date = <?php echo json_encode($end_date); ?>;
             var province = <?php echo json_encode($province); ?>;
-            // var url_app = <?php echo json_encode($url_app ?? ''); ?>;
             var url_app = '';
             var district = '';
-
-            // if (url_app == '') {
-            //     url_app = $('#app_url').val();
-            // }
 
             // TOTAL DATA
             $.ajax({
