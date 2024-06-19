@@ -441,7 +441,7 @@
         </div>
 
         {{-- DATATABLE MR --}}
-        <div class="card" style="background-color: #133715; color: white;">
+        <div class="card" id="mr_card" style="background-color: #133715; color: white; display: none;">
             <div class="card-body">
                 <div class="form-group mt-2" style="display: flex; justify-content: center; align-items: center;">
                     <h2><b>Daftar Resiko Menengah Rendah</b></h2>
@@ -484,7 +484,7 @@
         </div>
 
         {{-- DATATABLE R --}}
-        <div class="card" style="background-color: #133715; color: white;">
+        <div class="card" id="r_card" style="background-color: #133715; color: white; display: none;">
             <div class="card-body">
                 <div class="form-group mt-2" style="display: flex; justify-content: center; align-items: center;">
                     <h2><b>Daftar Resiko Rendah</b></h2>
@@ -791,118 +791,128 @@
                         },
                         options: options
                     });
+                    $('#mr_card').show();
+                    datatable_mr();
                 },
                 error: function() {
                     $('#loading_byprov').text('Gagal memuat data');
+                    $('#mr_card').show();
+                    datatable_mr();
                 }
             })
 
             // DATATABLE MR
-            $('#dataTableMr').DataTable({
-                'responsive': false,
-                'lengthChange': true,
-                'autoWidth': true,
-                'pageLength': 10,
-                'processing': true,
-                'serverSide': true,
-                'serverMethod': 'post',
-                "order": [
-                    [0, "desc"]
-                ],
-                'deferRender': true,
-                'scrollX': true,
-                'scrollY': false,
-                scroller: {
-                    loadingIndicator: true
-                },
-                ajax: {
-                    type: "GET",
-                    url: "{{ route('datatable_mr', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-                },
-                'columns': [
-                    { data: 'last_kirim', name: 'last_kirim' },
-                    { data: 'nib', name: 'nib' },
-                    { data: 'kbli', name: 'kbli' },
-                    { data: 'bidang', name: 'bidang' },
-                    { data: 'id_izin', name: 'id_izin' },
-                    { data: 'judul', name: 'judul' },
-                    { data: 'alamat', name: 'alamat' },
-                    { data: 'province', name: 'province' },
-                    { data: 'district', name: 'district' },
-                    { data: 'kewenangan', name: 'kewenangan' },
-                    {
-                        data: 'id_izin',
-                        name: 'sppl',
-                        render: function (data, type, row) {
-                            return `<button class="btn btn-sm btn-success btn-sppl" data-id_izin="${data}">Unduh</button>`;
-                        }
+            function datatable_mr () {
+                $('#dataTableMr').DataTable({
+                    'responsive': false,
+                    'lengthChange': true,
+                    'autoWidth': true,
+                    'pageLength': 10,
+                    'processing': true,
+                    'serverSide': true,
+                    'serverMethod': 'post',
+                    "order": [
+                        [0, "desc"]
+                    ],
+                    'deferRender': true,
+                    'scrollX': true,
+                    'scrollY': false,
+                    scroller: {
+                        loadingIndicator: true
                     },
-                    {
-                        data: 'id_izin',
-                        name: 'pkplh_otomatis',
-                        render: function (data, type, row) {
-                            return `<button class="btn btn-sm btn-success btn-pkplh" data-id_izin="${data}">Unduh</button>`;
-                        }
+                    ajax: {
+                        type: "GET",
+                        url: "{{ route('datatable_mr', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                     },
-                    {
-                        data: 'id_izin',
-                        name: 'lampiran',
-                        render: function (data, type, row) {
-                            return `<button class="btn btn-sm btn-success btn-lampiran" data-id_izin="${data}">Unduh</button>`;
-                        }
-                    },
-                ],
-            });
+                    'columns': [
+                        { data: 'last_kirim', name: 'last_kirim' },
+                        { data: 'nib', name: 'nib' },
+                        { data: 'kbli', name: 'kbli' },
+                        { data: 'bidang', name: 'bidang' },
+                        { data: 'id_izin', name: 'id_izin' },
+                        { data: 'judul', name: 'judul' },
+                        { data: 'alamat', name: 'alamat' },
+                        { data: 'province', name: 'province' },
+                        { data: 'district', name: 'district' },
+                        { data: 'kewenangan', name: 'kewenangan' },
+                        {
+                            data: 'id_izin',
+                            name: 'sppl',
+                            render: function (data, type, row) {
+                                return `<button class="btn btn-sm btn-success btn-sppl" data-id_izin="${data}">Unduh</button>`;
+                            }
+                        },
+                        {
+                            data: 'id_izin',
+                            name: 'pkplh_otomatis',
+                            render: function (data, type, row) {
+                                return `<button class="btn btn-sm btn-success btn-pkplh" data-id_izin="${data}">Unduh</button>`;
+                            }
+                        },
+                        {
+                            data: 'id_izin',
+                            name: 'lampiran',
+                            render: function (data, type, row) {
+                                return `<button class="btn btn-sm btn-success btn-lampiran" data-id_izin="${data}">Unduh</button>`;
+                            }
+                        },
+                    ],
+                });
+                $('#r_card').show();
+                datatable_r();
+            }
 
             // DATATABLE R
-            $('#dataTableR').DataTable({
-                'responsive': false,
-                'lengthChange': true,
-                'autoWidth': true,
-                'pageLength': 10,
-                'processing': true,
-                'serverSide': true,
-                'serverMethod': 'post',
-                "order": [
-                    [0, "desc"]
-                ],
-                'deferRender': true,
-                'scrollX': true,
-                'scrollY': false,
-                scroller: {
-                    loadingIndicator: true
-                },
-                ajax: {
-                    type: "GET",
-                    url: "{{ route('datatable_r', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-                },
-                'columns': [
-                    { data: 'last_kirim', name: 'last_kirim' },
-                    { data: 'nib', name: 'nib' },
-                    { data: 'kbli', name: 'kbli' },
-                    { data: 'bidang', name: 'bidang' },
-                    { data: 'id_izin', name: 'id_izin' },
-                    { data: 'judul', name: 'judul' },
-                    { data: 'alamat', name: 'alamat' },
-                    { data: 'province', name: 'province' },
-                    { data: 'district', name: 'district' },
-                    { data: 'kewenangan', name: 'kewenangan' },
-                    {
-                        data: 'id_izin',
-                        name: 'sppl',
-                        render: function (data, type, row) {
-                            return `<button class="btn btn-sm btn-success btn-sppl" data-id_izin="${data}">Unduh</button>`;
-                        }
+            function datatable_r () {
+                $('#dataTableR').DataTable({
+                    'responsive': false,
+                    'lengthChange': true,
+                    'autoWidth': true,
+                    'pageLength': 10,
+                    'processing': true,
+                    'serverSide': true,
+                    'serverMethod': 'post',
+                    "order": [
+                        [0, "desc"]
+                    ],
+                    'deferRender': true,
+                    'scrollX': true,
+                    'scrollY': false,
+                    scroller: {
+                        loadingIndicator: true
                     },
-                    {
-                        data: 'id_izin',
-                        name: 'lampiran',
-                        render: function (data, type, row) {
-                            return `<button class="btn btn-sm btn-success btn-lampiran" data-id_izin="${data}">Unduh</button>`;
-                        }
+                    ajax: {
+                        type: "GET",
+                        url: "{{ route('datatable_r', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                     },
-                ],
-            });
+                    'columns': [
+                        { data: 'last_kirim', name: 'last_kirim' },
+                        { data: 'nib', name: 'nib' },
+                        { data: 'kbli', name: 'kbli' },
+                        { data: 'bidang', name: 'bidang' },
+                        { data: 'id_izin', name: 'id_izin' },
+                        { data: 'judul', name: 'judul' },
+                        { data: 'alamat', name: 'alamat' },
+                        { data: 'province', name: 'province' },
+                        { data: 'district', name: 'district' },
+                        { data: 'kewenangan', name: 'kewenangan' },
+                        {
+                            data: 'id_izin',
+                            name: 'sppl',
+                            render: function (data, type, row) {
+                                return `<button class="btn btn-sm btn-success btn-sppl" data-id_izin="${data}">Unduh</button>`;
+                            }
+                        },
+                        {
+                            data: 'id_izin',
+                            name: 'lampiran',
+                            render: function (data, type, row) {
+                                return `<button class="btn btn-sm btn-success btn-lampiran" data-id_izin="${data}">Unduh</button>`;
+                            }
+                        },
+                    ],
+                });
+            }
 
             $(document).on('click', '.btn-lampiran', function() {
                 var id_izin = $(this).data('id_izin');
