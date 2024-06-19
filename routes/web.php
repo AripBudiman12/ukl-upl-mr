@@ -56,6 +56,7 @@ Route::get('datatable_r', [DashboardController::class, 'datatable_r'])->name('da
 // GET FILE APIs
 Route::get('getSpplFile', [DashboardController::class, 'getSpplFile'])->name('getSpplFile');
 Route::get('getPkplhFile', [DashboardController::class, 'getPkplhFile'])->name('getPkplhFile');
+Route::get('getLampiranFile', [DashboardController::class, 'getLampiranFile'])->name('getLampiranFile');
 
 Auth::routes();
 

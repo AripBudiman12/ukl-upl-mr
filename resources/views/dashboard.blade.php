@@ -560,242 +560,242 @@
             var province = <?php echo json_encode($province); ?>;
             var district = '';
 
-            // // TOTAL DATA
-            // $.ajax({
-            //     url: "{{ route('api.total') }}",
-            //     method: 'GET',
-            //     success: function(data) {
-            //         $('#loading_total_mr').hide();
-            //         $('#loading_total_r').hide();
-            //         $('#total_mr').show();
-            //         $('#total_r').show();
-            //         $('#total_mr').text(data.total_mr);
-            //         $('#total_r').text(data.total_r);
-            //     }
-            // })
+            // TOTAL DATA
+            $.ajax({
+                url: "{{ route('api.total', ['kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                method: 'GET',
+                success: function(data) {
+                    $('#loading_total_mr').hide();
+                    $('#loading_total_r').hide();
+                    $('#total_mr').show();
+                    $('#total_r').show();
+                    $('#total_mr').text(data.total_mr);
+                    $('#total_r').text(data.total_r);
+                }
+            })
 
-            // // STATISIK
-            // $.ajax({
-            //     // url: `/statistic?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-            //     url: "{{ route('api.statistic', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-            //     method: 'GET',
-            //     success: function(data) {
-            //         $('#loading-spinner').hide();
-            //         $('#canvas_kegiatan').show();
+            // STATISIK
+            $.ajax({
+                // url: `/statistic?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                url: "{{ route('api.statistic', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                method: 'GET',
+                success: function(data) {
+                    $('#loading-spinner').hide();
+                    $('#canvas_kegiatan').show();
 
-            //         var ctx = document.getElementById('Kegiatan').getContext('2d');
-            //         var KegiatanChart = new Chart(ctx, {
-            //             type: 'bar',
-            //             data: {
-            //                 'labels': data.labels,
-            //                 'datasets': [
-            //                     {
-            //                         'label': 'Statistik',
-            //                         'backgroundColor': '#4BAF48',
-            //                         'borderColor': 'rgba(75,192,192,1)',
-            //                         'data': data.data,
-            //                     }
-            //                 ]
-            //             },
-            //         });
-            //     },
-            //     error: function() {
-            //         $('#loading-spinner').text('Gagal memuat data');
-            //     }
-            // })
+                    var ctx = document.getElementById('Kegiatan').getContext('2d');
+                    var KegiatanChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            'labels': data.labels,
+                            'datasets': [
+                                {
+                                    'label': 'Statistik',
+                                    'backgroundColor': '#4BAF48',
+                                    'borderColor': 'rgba(75,192,192,1)',
+                                    'data': data.data,
+                                }
+                            ]
+                        },
+                    });
+                },
+                error: function() {
+                    $('#loading-spinner').text('Gagal memuat data');
+                }
+            })
 
-            // // TOTAL BY DATE
-            // $.ajax({
-            //     // url: `/totalByDate?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-            //     url: "{{ route('api.totalByDate', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-            //     method: 'GET',
-            //     success: function(data) {
-            //         $('#loading_total_both').hide();
-            //         $('#canvas_total_both').show();
-            //         $('#mr_total').text(data.total_mr);
-            //         $('#r_total').text(data.total_r);
+            // TOTAL BY DATE
+            $.ajax({
+                // url: `/totalByDate?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                url: "{{ route('api.totalByDate', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                method: 'GET',
+                success: function(data) {
+                    $('#loading_total_both').hide();
+                    $('#canvas_total_both').show();
+                    $('#mr_total').text(data.total_mr);
+                    $('#r_total').text(data.total_r);
 
-            //         var ctx = document.getElementById('total_both').getContext('2d');
-            //         var totalDate = new Chart(ctx, {
-            //             type: 'doughnut',
-            //             data: {
-            //                 'labels': ['Menengah Rendah', 'Rendah'],
-            //                 'datasets': [
-            //                     {
-            //                         'data': [data.total_r, data.total_mr],
-            //                         'backgroundColor': ['#f56954', '#00a65a'],
-            //                     }
-            //                 ]
-            //             },
-            //             options: {
-            //                 legend: {
-            //                     display: false
-            //                 }
-            //             }
-            //         });
-            //     },
-            //     error: function() {
-            //         $('#loading_total_both').text('Gagal memuat data');
-            //     }
-            // })
+                    var ctx = document.getElementById('total_both').getContext('2d');
+                    var totalDate = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            'labels': ['Menengah Rendah', 'Rendah'],
+                            'datasets': [
+                                {
+                                    'data': [data.total_r, data.total_mr],
+                                    'backgroundColor': ['#f56954', '#00a65a'],
+                                }
+                            ]
+                        },
+                        options: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    });
+                },
+                error: function() {
+                    $('#loading_total_both').text('Gagal memuat data');
+                }
+            })
 
-            // // TOTAL BY AUTHORITY
-            // $.ajax({
-            //     // url: `/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-            //     url: "{{ route('api.totalByAuthority', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-            //     method: 'GET',
-            //     success: function(data) {
-            //         $('#loading_auth_mr').hide();
-            //         $('#loading_auth_r').hide();
-            //         $('#canvas_auth_mr').show();
-            //         $('#canvas_auth_r').show();
-            //         $('#pusat_auth_mr').text(data.mr_pusat);
-            //         $('#prov_auth_mr').text(data.mr_prov);
-            //         $('#kabkot_auth_mr').text(data.mr_kabkot);
-            //         $('#pusat_auth_r').text(data.r_pusat);
-            //         $('#prov_auth_r').text(data.r_prov);
-            //         $('#kabkot_auth_r').text(data.r_kabkot);
+            // TOTAL BY AUTHORITY
+            $.ajax({
+                // url: `/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                url: "{{ route('api.totalByAuthority', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                method: 'GET',
+                success: function(data) {
+                    $('#loading_auth_mr').hide();
+                    $('#loading_auth_r').hide();
+                    $('#canvas_auth_mr').show();
+                    $('#canvas_auth_r').show();
+                    $('#pusat_auth_mr').text(data.mr_pusat);
+                    $('#prov_auth_mr').text(data.mr_prov);
+                    $('#kabkot_auth_mr').text(data.mr_kabkot);
+                    $('#pusat_auth_r').text(data.r_pusat);
+                    $('#prov_auth_r').text(data.r_prov);
+                    $('#kabkot_auth_r').text(data.r_kabkot);
 
-            //         var ctx = document.getElementById('auth_mr').getContext('2d');
-            //         var totalAuthMr = new Chart(ctx, {
-            //             type: 'doughnut',
-            //             data: {
-            //                 'labels': ['Pusat', 'Provinsi', 'Kabupaten/Kota'],
-            //                 'datasets': [
-            //                     {
-            //                         'data': [data.mr_pusat, data.mr_prov, data.mr_kabkot],
-            //                         'backgroundColor': ['#f56954', '#00a65a', '#f39c12'],
-            //                     }
-            //                 ]
-            //             },
-            //             options: {
-            //                 legend: {
-            //                     display: false
-            //                 }
-            //             }
-            //         });
+                    var ctx = document.getElementById('auth_mr').getContext('2d');
+                    var totalAuthMr = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            'labels': ['Pusat', 'Provinsi', 'Kabupaten/Kota'],
+                            'datasets': [
+                                {
+                                    'data': [data.mr_pusat, data.mr_prov, data.mr_kabkot],
+                                    'backgroundColor': ['#f56954', '#00a65a', '#f39c12'],
+                                }
+                            ]
+                        },
+                        options: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    });
                     
-            //         var ctx = document.getElementById('auth_r').getContext('2d');
-            //         var totalAuthR = new Chart(ctx, {
-            //             type: 'doughnut',
-            //             data: {
-            //                 'labels': ['Pusat', 'Provinsi', 'Kabupaten/Kota'],
-            //                 'datasets': [
-            //                     {
-            //                         'data': [data.r_pusat, data.r_prov, data.r_kabkot],
-            //                         'backgroundColor': ['#f56954', '#00a65a', '#f39c12'],
-            //                     }
-            //                 ]
-            //             },
-            //             options: {
-            //                 legend: {
-            //                     display: false
-            //                 }
-            //             }
-            //         });
-            //     },
-            //     error: function() {
-            //         $('#loading_auth_mr').text('Gagal memuat data');
-            //         $('#loading_auth_r').text('Gagal memuat data');
-            //     }
-            // })
+                    var ctx = document.getElementById('auth_r').getContext('2d');
+                    var totalAuthR = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            'labels': ['Pusat', 'Provinsi', 'Kabupaten/Kota'],
+                            'datasets': [
+                                {
+                                    'data': [data.r_pusat, data.r_prov, data.r_kabkot],
+                                    'backgroundColor': ['#f56954', '#00a65a', '#f39c12'],
+                                }
+                            ]
+                        },
+                        options: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    });
+                },
+                error: function() {
+                    $('#loading_auth_mr').text('Gagal memuat data');
+                    $('#loading_auth_r').text('Gagal memuat data');
+                }
+            })
 
-            // // DATA BY CLUSTER KBLI
-            // $.ajax({
-            //     // url: `/cluster?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-            //     url: "{{ route('api.cluster', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-            //     method: 'GET',
-            //     success: function(data) {
-            //         $('#loading_cluster').hide();
-            //         $('#canvas_cluster').show();
+            // DATA BY CLUSTER KBLI
+            $.ajax({
+                // url: `/cluster?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                url: "{{ route('api.cluster', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                method: 'GET',
+                success: function(data) {
+                    $('#loading_cluster').hide();
+                    $('#canvas_cluster').show();
 
-            //         var ctx = document.getElementById('cluster').getContext('2d');
-            //         var cluster = new Chart(ctx, {
-            //             type: 'doughnut',
-            //             data: {
-            //                 'labels': data.cluster_label,
-            //                 'datasets': [
-            //                     {
-            //                         'label': 'Total',
-            //                         'data': data.cluster_data,
-            //                         'backgroundColor': ['rgba(255, 99, 132)',
-            //                             'rgba(255, 159, 64)',
-            //                             'rgba(255, 205, 86)',
-            //                             'rgba(75, 192, 192)',
-            //                             'rgba(255, 190, 12)',
-            //                             'rgba(234, 29, 157)',
-            //                             'rgba(153, 102, 255)',
-            //                             'rgba(201, 203, 207)',
-            //                             'rgba(205, 156, 100)',
-            //                         ],
-            //                     }
-            //                 ]
-            //             },
-            //             options: {
-            //                 legend: {
-            //                     display: false
-            //                 }
-            //             }
-            //         });
-            //     },
-            //     error: function() {
-            //         $('#loading_cluster').text('Gagal memuat data');
-            //     }
-            // })
+                    var ctx = document.getElementById('cluster').getContext('2d');
+                    var cluster = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            'labels': data.cluster_label,
+                            'datasets': [
+                                {
+                                    'label': 'Total',
+                                    'data': data.cluster_data,
+                                    'backgroundColor': ['rgba(255, 99, 132)',
+                                        'rgba(255, 159, 64)',
+                                        'rgba(255, 205, 86)',
+                                        'rgba(75, 192, 192)',
+                                        'rgba(255, 190, 12)',
+                                        'rgba(234, 29, 157)',
+                                        'rgba(153, 102, 255)',
+                                        'rgba(201, 203, 207)',
+                                        'rgba(205, 156, 100)',
+                                    ],
+                                }
+                            ]
+                        },
+                        options: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    });
+                },
+                error: function() {
+                    $('#loading_cluster').text('Gagal memuat data');
+                }
+            })
 
-            // // DATA PER PROVINSI
-            // $.ajax({
-            //     // url: `/ByProvince?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-            //     url: "{{ route('api.ByProvince', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-            //     method: 'GET',
-            //     success: function(data) {
-            //         $('#loading_byprov').hide();
-            //         $('#canvas_byprov').show();
+            // DATA PER PROVINSI
+            $.ajax({
+                // url: `/ByProvince?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                url: "{{ route('api.ByProvince', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                method: 'GET',
+                success: function(data) {
+                    $('#loading_byprov').hide();
+                    $('#canvas_byprov').show();
 
-            //         var ctx = document.getElementById('byprov').getContext('2d');
-            //         var options = {
-            //             maintainAspectRatio: true,
-            //             responsive: true,
-            //             legend: {
-            //                 display: true
-            //             },
-            //             scales: {
-            //                 x: {
-            //                     stacked: true
-            //                 },
-            //                 y: {
-            //                     stacked: true
-            //                 }
-            //             }
-            //         }
-            //         var totalBothChart = new Chart(ctx, {
-            //             type: 'bar',
-            //             data: {
-            //                 'labels': data.labels,
-            //                 'datasets': [
-            //                     {
-            //                         'label': 'Menengah Rendah',
-            //                         'data': data.mr_data,
-            //                         'fill': false,
-            //                         'backgroundColor': '#f56954',
-            //                         'tension': 0.1
-            //                     },
-            //                     {
-            //                         'label': 'Rendah',
-            //                         'data': data.r_data,
-            //                         'fill': false,
-            //                         'backgroundColor': '#7FFF00',
-            //                         'tension': 0.1
-            //                     },
-            //                 ]
-            //             },
-            //             options: options
-            //         });
-            //     },
-            //     error: function() {
-            //         $('#loading_byprov').text('Gagal memuat data');
-            //     }
-            // })
+                    var ctx = document.getElementById('byprov').getContext('2d');
+                    var options = {
+                        maintainAspectRatio: true,
+                        responsive: true,
+                        legend: {
+                            display: true
+                        },
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: true
+                            }
+                        }
+                    }
+                    var totalBothChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            'labels': data.labels,
+                            'datasets': [
+                                {
+                                    'label': 'Menengah Rendah',
+                                    'data': data.mr_data,
+                                    'fill': false,
+                                    'backgroundColor': '#f56954',
+                                    'tension': 0.1
+                                },
+                                {
+                                    'label': 'Rendah',
+                                    'data': data.r_data,
+                                    'fill': false,
+                                    'backgroundColor': '#7FFF00',
+                                    'tension': 0.1
+                                },
+                            ]
+                        },
+                        options: options
+                    });
+                },
+                error: function() {
+                    $('#loading_byprov').text('Gagal memuat data');
+                }
+            })
 
             // DATATABLE MR
             $('#dataTableMr').DataTable({

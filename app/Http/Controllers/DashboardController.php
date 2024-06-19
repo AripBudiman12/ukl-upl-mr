@@ -44,7 +44,8 @@ class DashboardController extends Controller
             $province = getProvince($user['provinsi']);
         }
         if ($user['kabkota']) {
-            $kabkota = $user['kabkota'];
+            // $kabkota = $user['kabkota'];
+            $province = getProvince($user['provinsi']);
         }
 
         $date = (new Controller)->getDate();
@@ -77,9 +78,7 @@ class DashboardController extends Controller
 
         $kewenangan = $user['kewenangan'];
         $district = '';
-        $url_app = config('app.url');
-        return view('index', compact(
-            'url_app',
+        return view('dashboard', compact(
             'filterKewenangan',
             'kewenangan',
             'tgl_awal',
@@ -96,11 +95,11 @@ class DashboardController extends Controller
     public function statistic()
     {
         $data = Http::get('http://182.23.160.133/api/statistic', [
-            'start' => request('start'),
-            'end' => request('end'),
-            'kewenangan' => request('kewenangan'),
-            'province' => request('province'),
-            'district' => request('district'),
+            'start' => request('start_date'),
+            'end' => request('amp;end_date'),
+            'kewenangan' => request('amp;kewenangan'),
+            'province' => request('amp;province'),
+            'district' => request('amp;district'),
             'resiko' => 'MR'
         ]);
 
@@ -121,8 +120,8 @@ class DashboardController extends Controller
             'start' => '2022-01-01',
             'end' => $now,
             'kewenangan' => request('kewenangan'),
-            'province' => request('province'),
-            'district' => request('district'),
+            'province' => request('amp;province'),
+            'district' => request('amp;district'),
             'byResiko' => 1,
         ]);
 
@@ -146,11 +145,11 @@ class DashboardController extends Controller
     public function totalByDate()
     {
         $data = Http::get('http://182.23.160.133/api/filteredTotal', [
-            'start' => request('start'),
-            'end' => request('end'),
-            'kewenangan' => request('kewenangan'),
-            'province' => request('province'),
-            'district' => request('district'),
+            'start' => request('start_date'),
+            'end' => request('amp;end_date'),
+            'kewenangan' => request('amp;kewenangan'),
+            'province' => request('amp;province'),
+            'district' => request('amp;district'),
             'byResiko' => 1,
         ]);
         
@@ -174,11 +173,11 @@ class DashboardController extends Controller
     public function totalByAuthority()
     {
         $data = Http::get('http://182.23.160.133/api/kewenangan', [
-            'start' => request('start'),
-            'end' => request('end'),
-            'kewenangan' => request('kewenangan'),
-            'province' => request('province'),
-            'district' => request('district')
+            'start' => request('start_date'),
+            'end' => request('amp;end_date'),
+            'kewenangan' => request('amp;kewenangan'),
+            'province' => request('amp;province'),
+            'district' => request('amp;district')
         ]);
         
         $mr = [
@@ -227,9 +226,9 @@ class DashboardController extends Controller
             $kabkota = $user['kabkota'];
         }
 
-        if (request('start')) {
-            $start_date = str_replace('-', '/', request('start'));
-            $end_date = str_replace('-', '/', request('end'));
+        if (request('start_date')) {
+            $start_date = str_replace('-', '/', request('start_date'));
+            $end_date = str_replace('-', '/', request('amp;end_date'));
         } else {
             $start_date = str_replace('-', '/', $date['start']);
             $end_date = str_replace('-', '/', $date['now']);
@@ -269,11 +268,11 @@ class DashboardController extends Controller
     public function ByProvince()
     {
         $data = Http::get('http://182.23.160.133/api/totalProvince', [
-            'start' => request('start'),
-            'end' => request('end'),
-            'kewenangan' => request('kewenangan'),
-            'province' => request('province'),
-            'district' => request('district')
+            'start' => request('start_date'),
+            'end' => request('amp;end_date'),
+            'kewenangan' => request('amp;kewenangan'),
+            'province' => request('amp;province'),
+            'district' => request('amp;district')
         ]);
 
         $provinces = Http::get('http://182.23.160.133/api/provinces');
@@ -334,22 +333,22 @@ class DashboardController extends Controller
         $total = Http::get('http://182.23.160.133/api/filteredTotal', [
             'search' => $search,
             'start' => request('start_date'),
-            'end' => request('end_date'),
-            'kewenangan' => request('kewenangan'),
-            'province' => request('province'),
-            'district' => request('district'),
+            'end' => request('amp;end_date'),
+            'kewenangan' => request('amp;kewenangan'),
+            'province' => request('amp;province'),
+            'district' => request('amp;district'),
             'resiko' => 'MR',
         ]);
 
         $data = Http::get('http://182.23.160.133/api/data', [
-            'offset' => request('start'),
+            'offset' => request('start_date'),
             'limit' => request('length'),
             'search' => $search,
             'start' => request('start_date'),
-            'end' => request('end_date'),
-            'kewenangan' => request('kewenangan'),
-            'province' => request('province'),
-            'district' => request('district'),
+            'end' => request('amp;end_date'),
+            'kewenangan' => request('amp;kewenangan'),
+            'province' => request('amp;province'),
+            'district' => request('amp;district'),
             'resiko' => 'MR'
         ]);
 
@@ -378,22 +377,22 @@ class DashboardController extends Controller
         $total = Http::get('http://182.23.160.133/api/filteredTotal', [
             'search' => $search,
             'start' => request('start_date'),
-            'end' => request('end_date'),
-            'kewenangan' => request('kewenangan'),
-            'province' => request('province'),
-            'district' => request('district'),
+            'end' => request('amp;end_date'),
+            'kewenangan' => request('amp;kewenangan'),
+            'province' => request('amp;province'),
+            'district' => request('amp;district'),
             'resiko' => 'R',
         ]);
 
         $data = Http::get('http://182.23.160.133/api/data', [
-            'offset' => request('start'),
+            'offset' => request('start_date'),
             'limit' => request('length'),
             'search' => $search,
             'start' => request('start_date'),
-            'end' => request('end_date'),
-            'kewenangan' => request('kewenangan'),
-            'province' => request('province'),
-            'district' => request('district'),
+            'end' => request('amp;end_date'),
+            'kewenangan' => request('amp;kewenangan'),
+            'province' => request('amp;province'),
+            'district' => request('amp;district'),
             'resiko' => 'R'
         ]);
 
@@ -450,6 +449,33 @@ class DashboardController extends Controller
         return response()->json([
             'status' => $status,
             'link' => 'https://hub.menlhk.go.id/oss_hub/services/read_file_ds?token=' . $this->key . '&url='. $link
+        ]);
+    }
+
+    public function getLampiranFile()
+    {
+        $now = Carbon::now()->format('Y-m-d');
+        $status = false;
+
+        try {
+            $link = Http::withHeaders([
+                'Token' => $this->key,
+            ])->asForm()->post('https://hub.menlhk.go.id/oss_hub/services/listSPPLAmdal', [
+                'sd' => '2020-01-01',
+                'ed' => $now,
+                'id_izin' => request('id_izin')
+            ])['responSPPL'][0]['url_lampiran'];
+
+            if ($link) {
+                $status = true;
+            }
+        } catch (Throwable $th) {
+            $link = null;
+        }
+
+        return response()->json([
+            'status' => $status,
+            'link' => $link
         ]);
     }
 }
