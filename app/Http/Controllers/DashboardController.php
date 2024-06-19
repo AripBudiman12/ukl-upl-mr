@@ -330,18 +330,8 @@ class DashboardController extends Controller
             $search = request('search')['value'];
         }
 
-        $total = Http::get('http://182.23.160.133/api/filteredTotal', [
-            'search' => $search,
-            'start' => request('start_date'),
-            'end' => request('amp;end_date'),
-            'kewenangan' => request('amp;kewenangan'),
-            'province' => request('amp;province'),
-            'district' => request('amp;district'),
-            'resiko' => 'MR',
-        ]);
-
         $data = Http::get('http://182.23.160.133/api/data', [
-            'offset' => request('start_date'),
+            'offset' => request('start'),
             'limit' => request('length'),
             'search' => $search,
             'start' => request('start_date'),
@@ -354,8 +344,8 @@ class DashboardController extends Controller
 
         return response()->json([
             "draw" => intval(request('draw')),
-            "recordsTotal" => json_decode($total)->data[0]->total,
-            "recordsFiltered" => json_decode($total)->data[0]->total,
+            "recordsTotal" => json_decode($data)->total,
+            "recordsFiltered" => json_decode($data)->total,
             "data" => json_decode($data)->data,
         ]);
     }
@@ -374,18 +364,8 @@ class DashboardController extends Controller
             $search = request('search')['value'];
         }
 
-        $total = Http::get('http://182.23.160.133/api/filteredTotal', [
-            'search' => $search,
-            'start' => request('start_date'),
-            'end' => request('amp;end_date'),
-            'kewenangan' => request('amp;kewenangan'),
-            'province' => request('amp;province'),
-            'district' => request('amp;district'),
-            'resiko' => 'R',
-        ]);
-
         $data = Http::get('http://182.23.160.133/api/data', [
-            'offset' => request('start_date'),
+            'offset' => request('start'),
             'limit' => request('length'),
             'search' => $search,
             'start' => request('start_date'),
@@ -398,8 +378,8 @@ class DashboardController extends Controller
 
         return response()->json([
             "draw" => intval(request('draw')),
-            "recordsTotal" => json_decode($total)->data[0]->total,
-            "recordsFiltered" => json_decode($total)->data[0]->total,
+            "recordsTotal" => json_decode($data)->total,
+            "recordsFiltered" => json_decode($data)->total,
             "data" => json_decode($data)->data,
         ]);
     }

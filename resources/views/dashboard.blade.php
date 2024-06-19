@@ -855,54 +855,54 @@
             });
 
             // DATATABLE R
-            // $('#dataTableR').DataTable({
-            //     'responsive': false,
-            //     'lengthChange': true,
-            //     'autoWidth': true,
-            //     'pageLength': 10,
-            //     'processing': true,
-            //     'serverSide': true,
-            //     'serverMethod': 'post',
-            //     "order": [
-            //         [0, "desc"]
-            //     ],
-            //     'deferRender': true,
-            //     'scrollX': true,
-            //     'scrollY': false,
-            //     scroller: {
-            //         loadingIndicator: true
-            //     },
-            //     ajax: {
-            //         type: "GET",
-            //         url: "{{ route('datatable_r', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-            //     },
-            //     'columns': [
-            //         { data: 'last_kirim', name: 'last_kirim' },
-            //         { data: 'nib', name: 'nib' },
-            //         { data: 'kbli', name: 'kbli' },
-            //         { data: 'bidang', name: 'bidang' },
-            //         { data: 'id_izin', name: 'id_izin' },
-            //         { data: 'judul', name: 'judul' },
-            //         { data: 'alamat', name: 'alamat' },
-            //         { data: 'province', name: 'province' },
-            //         { data: 'district', name: 'district' },
-            //         { data: 'kewenangan', name: 'kewenangan' },
-            //         {
-            //             data: 'id_izin',
-            //             name: 'sppl',
-            //             render: function (data, type, row) {
-            //                 return `<button class="btn btn-sm btn-success btn-sppl" data-id_izin="${data}">Unduh</button>`;
-            //             }
-            //         },
-            //         {
-            //             data: 'id_izin',
-            //             name: 'lampiran',
-            //             render: function (data, type, row) {
-            //                 return `<button class="btn btn-sm btn-success btn-lampiran" data-id_izin="${data}">Unduh</button>`;
-            //             }
-            //         },
-            //     ],
-            // });
+            $('#dataTableR').DataTable({
+                'responsive': false,
+                'lengthChange': true,
+                'autoWidth': true,
+                'pageLength': 10,
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'post',
+                "order": [
+                    [0, "desc"]
+                ],
+                'deferRender': true,
+                'scrollX': true,
+                'scrollY': false,
+                scroller: {
+                    loadingIndicator: true
+                },
+                ajax: {
+                    type: "GET",
+                    url: "{{ route('datatable_r', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                },
+                'columns': [
+                    { data: 'last_kirim', name: 'last_kirim' },
+                    { data: 'nib', name: 'nib' },
+                    { data: 'kbli', name: 'kbli' },
+                    { data: 'bidang', name: 'bidang' },
+                    { data: 'id_izin', name: 'id_izin' },
+                    { data: 'judul', name: 'judul' },
+                    { data: 'alamat', name: 'alamat' },
+                    { data: 'province', name: 'province' },
+                    { data: 'district', name: 'district' },
+                    { data: 'kewenangan', name: 'kewenangan' },
+                    {
+                        data: 'id_izin',
+                        name: 'sppl',
+                        render: function (data, type, row) {
+                            return `<button class="btn btn-sm btn-success btn-sppl" data-id_izin="${data}">Unduh</button>`;
+                        }
+                    },
+                    {
+                        data: 'id_izin',
+                        name: 'lampiran',
+                        render: function (data, type, row) {
+                            return `<button class="btn btn-sm btn-success btn-lampiran" data-id_izin="${data}">Unduh</button>`;
+                        }
+                    },
+                ],
+            });
 
             $(document).on('click', '.btn-lampiran', function() {
                 var id_izin = $(this).data('id_izin');
