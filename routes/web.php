@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function() {
 //     return view('maintenance');
 // })->name('index');
-// Route::get('/', [KegiatanController::class, 'index'])->name('chart-index');
+Route::get('/old', [KegiatanController::class, 'index'])->name('chart-index-old');
 Route::get('/', [DashboardController::class, 'index'])->name('chart-index');
 Route::get('/jadwal-rapat', function() {
     return view('rapatTabel');
@@ -45,7 +45,8 @@ Route::get('/export', [KegiatanController::class, 'export'])->name('export.data'
 
 // GET DATA APIs
 Route::get('statistic', [DashboardController::class, 'statistic'])->name('api.statistic');
-Route::get('total', [DashboardController::class, 'total'])->name('api.total');
+Route::get('sppl_total', [DashboardController::class, 'sppl_total'])->name('api.sppl_total');
+Route::get('uklupl_total', [DashboardController::class, 'uklupl_total'])->name('api.uklupl_total');
 Route::get('totalByDate', [DashboardController::class, 'totalByDate'])->name('api.totalByDate');
 Route::get('totalByAuthority', [DashboardController::class, 'totalByAuthority'])->name('api.totalByAuthority');
 Route::get('cluster', [DashboardController::class, 'cluster'])->name('api.cluster');

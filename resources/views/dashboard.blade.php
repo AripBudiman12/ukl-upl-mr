@@ -14,11 +14,11 @@
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Jumlah Data Jenis Resiko Menengah Rendah</span>
-                        <div id="loading_total_mr">
+                        <span class="info-box-text">Jumlah Data UKL-UPL</span>
+                        <div id="loading_total_uklupl">
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Proses...
                         </div>
-                        <span class="info-box-number" id="total_mr" style="display: none;">
+                        <span class="info-box-number" id="total_uklupl" style="display: none;">
                         </span>
                     </div>
                 </div>
@@ -29,10 +29,10 @@
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Jumlah Data Jenis Resiko Rendah</span>
-                        <div id="loading_total_r">
+                        <div id="loading_total_sppl">
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Proses...
                         </div>
-                        <span class="info-box-number" id="total_r" style="display: none;">
+                        <span class="info-box-number" id="total_sppl" style="display: none;">
                         </span>
                     </div>
                 </div>
@@ -562,15 +562,22 @@
 
             // TOTAL DATA
             $.ajax({
-                url: "{{ route('api.total', ['kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                url: "{{ route('api.sppl_total', ['kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                 method: 'GET',
                 success: function(data) {
-                    $('#loading_total_mr').hide();
-                    $('#loading_total_r').hide();
-                    $('#total_mr').show();
-                    $('#total_r').show();
-                    $('#total_mr').text(data.total_mr);
-                    $('#total_r').text(data.total_r);
+                    $('#loading_total_sppl').hide();
+                    $('#total_sppl').show();
+                    $('#total_sppl').text(data.total_sppl);
+                }
+            })
+
+            $.ajax({
+                url: "{{ route('api.uklupl_total', ['kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                method: 'GET',
+                success: function(data) {
+                    $('#loading_total_uklupl').hide();
+                    $('#total_uklupl').show();
+                    $('#total_uklupl').text(data.total_uklupl);
                 }
             })
 

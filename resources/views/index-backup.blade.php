@@ -1,9 +1,6 @@
 @extends('layouts.master')
 
 @section('section')
-<div class="loading overlay">
-    <div class="lds-circle"><div></div></div>
-</div>
 {{-- <button onclick="tampil_data_ajax()">Load data Ajax</button> --}}
 <div id="data_ajax"></div>
     <div class="container-fluid mt-3 pt-3" style="background-color: #628462;">
@@ -62,7 +59,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="info-box align-items-center">
-                    <form action="{{ route('chart-index') }}">
+                    <form action="{{ route('chart-index-old') }}">
                         <table>
                             <tbody>
                                 <tr>
