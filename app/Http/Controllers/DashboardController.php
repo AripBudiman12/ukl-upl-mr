@@ -18,6 +18,8 @@ use App\Http\Controllers\KegiatanController;
 use Illuminate\Contracts\Pipeline\Hub;
 use Throwable;
 
+use function GuzzleHttp\json_decode;
+
 class DashboardController extends Controller
 {
     public function __construct()
@@ -34,6 +36,10 @@ class DashboardController extends Controller
 
     public function index()
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
         $user = (new Controller)->user_role();
         $start_date = "";
         $end_date = "";
@@ -59,7 +65,7 @@ class DashboardController extends Controller
             $start_date = str_replace('-', '/', $date['start']);
             $end_date = str_replace('-', '/', $date['now']);
         }
-        
+
         $tanggal = (new Controller)->getDate();
         $tgl_awal = $tanggal['start'];
         $tgl_akhir = $tanggal['now'];
@@ -92,27 +98,6 @@ class DashboardController extends Controller
         ));
     }
 
-    public function unused_statistic()
-    {
-        $data = Http::get('http://182.23.160.133/api/statistic', [
-            'start' => request('start_date'),
-            'end' => request('amp;end_date'),
-            'kewenangan' => request('amp;kewenangan'),
-            'province' => request('amp;province'),
-            'district' => request('amp;district'),
-            'resiko' => 'MR'
-        ]);
-
-        $responseData = json_decode($data)->data;
-
-        $result = [
-            'labels' => array_column($responseData, 'last_kirim'),
-            'data' => array_column($responseData, 'total')
-        ];
-
-        return response()->json($result);
-    }
-
     public function statistic()
     {
         $user = $this->user_role();
@@ -126,19 +111,27 @@ class DashboardController extends Controller
         if (request('start_date')) {
             $start_date = str_replace('-', '/', request('start_date'));
             $end_date = str_replace('-', '/', request('end_date'));
-            $statistic = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('filterKewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&perbulan=0&start_date=' . $start_date . '&end_date=' . $end_date);
+            $statistic = Http::withHeaders([
+            'Token' => (new Controller)->getKey(),
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('filterKewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&perbulan=0&start_date=' . $start_date . '&end_date=' . $end_date);
         } else {
             $start_date = str_replace('-', '/', $date['start']);
             $end_date = str_replace('-', '/', $date['now']);
         }
         
         if (request('perbulan') == 1) {
-            $statistic = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('filterKewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&perbulan=1&start_date=' . $start_date . '&end_date=' . $end_date);
+            $statistic = Http::withHeaders([
+            'Token' => (new Controller)->getKey(),
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('filterKewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&perbulan=1&start_date=' . $start_date . '&end_date=' . $end_date);
         } else if (empty(request(['start_date','end_date','perbulan']))) {
-            $statistic = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('filterKewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota);
+            $statistic = Http::withHeaders([
+            'Token' => (new Controller)->getKey(),
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('filterKewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota);
         }
         
-        $important = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=all&kewenangan=' . $user['kewenangan'] . '&perbulan=0&start_date=2022-09-21&end_date=2022-09-23');
+        $important = Http::withHeaders([
+            'Token' => (new Controller)->getKey(),
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=all&kewenangan=' . $user['kewenangan'] . '&perbulan=0&start_date=2022-09-21&end_date=2022-09-23');
         $statistik = array();
         for ($i = 0; $i < count($statistic['data']); $i++) {
             if ($statistic['data'][$i]['tanggal_record'] == '2022/09/22') {
@@ -198,11 +191,17 @@ class DashboardController extends Controller
         if ($user['kabkota']) $kabkota = $user['kabkota'];
 
         if ($user['kewenangan'] == 'Pusat') {
-            $jum_uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL');
+            $jum_uklupl = Http::withHeaders([
+            'Token' => (new Controller)->getKey(),
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot', ['dokumen' => 'UKL-UPL']);
         } elseif ($user['kewenangan'] == 'Provinsi') {
-            $jum_uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&provinsi=' . $provinsi);
+            $jum_uklupl = Http::withHeaders([
+            'Token' => (new Controller)->getKey(),
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&provinsi=' . $provinsi);
         } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
-            $jum_uklupl = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&provinsi=' . $provinsi . "&kabkota=" . $kabkota);
+            $jum_uklupl = Http::withHeaders([
+            'Token' => (new Controller)->getKey(),
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&provinsi=' . $provinsi . "&kabkota=" . $kabkota);
         }
 
         $total_uklupl = $jum_uklupl['data'][0]['count'];
@@ -213,33 +212,92 @@ class DashboardController extends Controller
 
     public function totalByDate()
     {
-        $data = Http::get('http://182.23.160.133/api/filteredTotal', [
-            'start' => request('start_date'),
-            'end' => request('amp;end_date'),
+        // UKL-UPL
+        $date = (new KegiatanController)->getDate();
+        $user = (new KegiatanController)->user_role();
+        $start_date = "";
+        $end_date = "";
+
+        $provinsi = "";
+        $kabkota = "";
+        if ($user['provinsi']) {
+            $provinsi = $user['provinsi'];
+        }
+        if ($user['kabkota']) {
+            $kabkota = $user['kabkota'];
+        }
+
+        if (request('start_date')) {
+            $start_date = str_replace('/', '-', request('start_date'));
+            $end_date = str_replace('/', '-', request('amp;end_date'));
+        } else {
+            $start_date = str_replace('/', '-', $date['start']);
+            $end_date = str_replace('/', '-', $date['now']);
+        }
+
+        $response = Http::withHeaders(['Token' => (new Controller)->getKey()]);
+        if ($user['kewenangan'] == 'Pusat') {
+            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/totalByDate?dokumen=UKL-UPL&start_date=' . $start_date . '&end_date=' . $end_date);
+        } elseif ($user['kewenangan'] != 'Pusat') {
+            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/totalByDate?dokumen=UKL-UPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        }
+
+        // SPPL
+        $sppl = Http::get('http://182.23.160.133/api/filteredTotal', [
+            'start' => $start_date,
+            'end' => $end_date,
             'kewenangan' => request('amp;kewenangan'),
             'province' => request('amp;province'),
-            'district' => request('amp;district'),
-            'byResiko' => 1,
+            'district' => request('amp;district')
         ]);
-        
-        $totals = [
-            'MR' => 0,
-            'R' => 0
-        ];
-        
-        foreach (json_decode($data)->data as $row) {
-            if (isset($totals[$row->jenis_resiko])) {
-                $totals[$row->jenis_resiko] = $row->total;
-            }
-        }
-        
+
         return response()->json([
-            'total_mr' => $totals['MR'],
-            'total_r' => $totals['R'],
+            'total_sppl' => json_decode($sppl)->data[0]->total,
+            'total_uklupl' => json_decode($uklupl)->data[0]->jumlah,
         ]);
     }
 
-    public function totalByAuthority()
+    public function totalUkluplByAuthority()
+    {
+        $date = (new KegiatanController)->getDate();
+        $user = (new KegiatanController)->user_role();
+        $start_date = "";
+        $end_date = "";
+
+        $provinsi = "";
+        $kabkota = "";
+        if ($user['provinsi']) {
+            $provinsi = $user['provinsi'];
+        }
+        if ($user['kabkota']) {
+            $kabkota = $user['kabkota'];
+        }
+
+        if (request('start_date')) {
+            $start_date = str_replace('-', '/', request('start_date'));
+            $end_date = str_replace('-', '/', request('amp;end_date'));
+        } else {
+            $start_date = str_replace('-', '/', $date['start']);
+            $end_date = str_replace('-', '/', $date['now']);
+        }
+
+        $response = Http::withHeaders(['Token' => (new Controller)->getKey()]);
+        if ($user['kewenangan'] == 'Pusat') {
+            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?start_date=' . $start_date . '&end_date=' . $end_date);
+        } elseif ($user['kewenangan'] == 'Provinsi') {
+            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
+            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        }
+
+        return response()->json([
+            'pusat' => json_decode($uklupl)->data[2]->jumlah,
+            'prov' => json_decode($uklupl)->data[1]->jumlah,
+            'kabkot' => json_decode($uklupl)->data[0]->jumlah,
+        ]);  
+    }
+
+    public function totalSpplByAuthority()
     {
         $data = Http::get('http://182.23.160.133/api/kewenangan', [
             'start' => request('start_date'),
@@ -249,33 +307,10 @@ class DashboardController extends Controller
             'district' => request('amp;district')
         ]);
         
-        $mr = [
-            'Pusat' => 0,
-            'Provinsi' => 0,
-            'Kabupaten/Kota' => 0
-        ];
-        
-        $r = [
-            'Pusat' => 0,
-            'Provinsi' => 0,
-            'Kabupaten/Kota' => 0
-        ];
-        
-        foreach (json_decode($data)->data as $row) {
-            if ($row->jenis_resiko == 'MR') {
-                $mr[$row->kewenangan] = $row->total;
-            } else if ($row->jenis_resiko == 'R') {
-                $r[$row->kewenangan] = $row->total;
-            }
-        }
-        
         return response()->json([
-            'mr_pusat' => $mr['Pusat'],
-            'mr_prov' => $mr['Provinsi'],
-            'mr_kabkot' => $mr['Kabupaten/Kota'],
-            'r_pusat' => $r['Pusat'],
-            'r_prov' => $r['Provinsi'],
-            'r_kabkot' => $r['Kabupaten/Kota']
+            'pusat' => json_decode($data)->data[2]->total,
+            'prov' => json_decode($data)->data[1]->total,
+            'kabkot' => json_decode($data)->data[0]->total,
         ]);        
     }
 
@@ -303,22 +338,13 @@ class DashboardController extends Controller
             $end_date = str_replace('-', '/', $date['now']);
         }
 
-        if (request('start_date')) {
-            if ($user['kewenangan'] == 'Pusat') {
-                $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?start_date=' . $start_date . '&end_date=' . $end_date);
-            } elseif ($user['kewenangan'] == 'Provinsi') {
-                $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
-            } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
-                $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
-            }
-        } else {
-            if ($user['kewenangan'] == 'Pusat') {
-                $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster');
-            } elseif ($user['kewenangan'] == 'Provinsi') {
-                $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?provinsi=' . $provinsi);
-            } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
-                $cluster = Http::withToken('1|QCyB3h7pys9X0g6vwG2gNoMK5y2dDamjTJSUVXbi')->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?provinsi=' . $provinsi . '&kabkota=' . $kabkota);
-            }
+        $response = Http::withHeaders(['Token' => (new Controller)->getKey()]);
+        if ($user['kewenangan'] == 'Pusat') {
+            $cluster = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?start_date=' . $start_date . '&end_date=' . $end_date);
+        } elseif ($user['kewenangan'] == 'Provinsi') {
+            $cluster = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
+            $cluster = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
         }
 
         $cluster_label = array();
@@ -336,6 +362,28 @@ class DashboardController extends Controller
 
     public function ByProvince()
     {
+        $date = (new KegiatanController)->getDate();
+        $user = (new KegiatanController)->user_role();
+        $start_date = "";
+        $end_date = "";
+
+        $provinsi = "";
+        $kabkota = "";
+        if ($user['provinsi']) {
+            $provinsi = $user['provinsi'];
+        }
+        if ($user['kabkota']) {
+            $kabkota = $user['kabkota'];
+        }
+
+        if (request('start_date')) {
+            $start_date = str_replace('-', '/', request('start_date'));
+            $end_date = str_replace('-', '/', request('amp;end_date'));
+        } else {
+            $start_date = str_replace('-', '/', $date['start']);
+            $end_date = str_replace('-', '/', $date['now']);
+        }
+
         $data = Http::get('http://182.23.160.133/api/totalProvince', [
             'start' => request('start_date'),
             'end' => request('amp;end_date'),
@@ -345,47 +393,41 @@ class DashboardController extends Controller
         ]);
 
         $provinces = Http::get('http://182.23.160.133/api/provinces');
-        $provs = array_column(json_decode($provinces)->data, 'province');
+        $provs = array_column(json_decode($provinces)->data, 'propinsi');
         $provs = array_map('strtoupper', $provs);
         $rm = ['', null];
 
-        $prov_label = array_values(array_diff($provs, $rm));
-        $mr_data = [];
-        $r_data = [];
+        $prov_label = array_values(array_unique(array_diff($provs, $rm)));
+
+        $response = Http::withHeaders(['Token' => (new Controller)->getKey()]);
+        if ($user['kewenangan'] == 'Pusat') {
+            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL&start_date=' . $start_date . '&end_date=' . $end_date);
+        } elseif ($user['kewenangan'] != 'Pusat') {
+            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/jml_prov?dokumen=UKL-UPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        }
 
         foreach ($prov_label as $row) {
-            $mr_found = false;
-            $r_found = false;
-
             foreach (json_decode($data)->data as $col) {
-                if ($col->province == $row) {
-                    if ($col->jenis_resiko == 'MR') {
-                        $mr_data[] = $col->total;
-                        $mr_found = true;
-                    } elseif ($col->jenis_resiko == 'R') {
-                        $r_data[] = $col->total;
-                        $r_found = true;
-                    }
+                if (strtoupper($col->province) == $row) {
+                    $total_sppl[] = $col->total;
                 }
             }
 
-            // If no matching province was found, push 0
-            if (!$mr_found) {
-                $mr_data[] = 0;
-            }
-            if (!$r_found) {
-                $r_data[] = 0;
+            foreach (json_decode($uklupl)->data as $col) {
+                if (strtoupper($col->prov) == $row) {
+                    $total_uklupl[] = $col->jumlah;
+                }
             }
         }
 
         return response()->json([
             'labels' => $prov_label,
-            'mr_data' => $mr_data,
-            'r_data' => $r_data,
+            'total_sppl' => $total_sppl,
+            'total_uklupl' => $total_uklupl
         ]);
     }
 
-    public function datatable_mr()
+    public function datatable_sppl()
     {
         // Increase memory limit to unlimited
         ini_set('memory_limit', '-1');
@@ -399,50 +441,18 @@ class DashboardController extends Controller
             $search = request('search')['value'];
         }
 
-        $data = Http::get('http://182.23.160.133/api/data', [
-            'offset' => request('start'),
-            'limit' => request('length'),
-            'search' => $search,
-            'start' => request('start_date'),
-            'end' => request('amp;end_date'),
-            'kewenangan' => request('amp;kewenangan'),
-            'province' => request('amp;province'),
-            'district' => request('amp;district'),
-            'resiko' => 'MR'
-        ]);
-
-        return response()->json([
-            "draw" => intval(request('draw')),
-            "recordsTotal" => json_decode($data)->total,
-            "recordsFiltered" => json_decode($data)->total,
-            "data" => json_decode($data)->data,
-        ]);
-    }
-
-    public function datatable_r()
-    {
-        // Increase memory limit to unlimited
-        ini_set('memory_limit', '-1');
-        // Set the max execution time limit to unlimited
-        ini_set('max_execution_time', 0);
-        // Set the execution time limit to unlimited
-        set_time_limit(0);
-
-        $search = null;
-        if (request('search')['value'] != null) {
-            $search = request('search')['value'];
-        }
+        $start_date = str_replace('/', '-', request('start_date'));
+        $end_date = str_replace('/', '-', request('amp;end_date'));
 
         $data = Http::get('http://182.23.160.133/api/data', [
             'offset' => request('start'),
             'limit' => request('length'),
             'search' => $search,
-            'start' => request('start_date'),
-            'end' => request('amp;end_date'),
+            'start' => $start_date,
+            'end' => $end_date,
             'kewenangan' => request('amp;kewenangan'),
             'province' => request('amp;province'),
             'district' => request('amp;district'),
-            'resiko' => 'R'
         ]);
 
         return response()->json([

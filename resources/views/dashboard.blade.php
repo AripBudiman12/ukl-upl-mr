@@ -5,7 +5,7 @@
         <div class="row-12 mb-3">
             {{-- <a href="https://amdalnet-dev.menlhk.go.id/#/dashboard"><button class="btn btn-light float-left">Kembali</button></a> --}}
             {{-- <a class="nav-link" data-widget="pushmenu" href="#" role="button"><button class="btn btn-light float-left">Kembali</button></a> --}}
-            <h3 class="text-center"><b style="color:white;">Daftar Rekap Dokumen Resiko Menengah Rendah dan Rendah</b></h3>
+            <h3 class="text-center"><b style="color:white;">Daftar Rekap UKL-UPL dan SPPL</b></h3>
         </div>
 
         {{-- JUMLAH DATA KEDUA JENIS --}}
@@ -28,7 +28,7 @@
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Jumlah Data Jenis Resiko Rendah</span>
+                        <span class="info-box-text">Jumlah Data SPPL</span>
                         <div id="loading_total_sppl">
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Proses...
                         </div>
@@ -111,7 +111,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title"><b>Grafik Resiko Menengah Rendah</b>
+                        <h5 class="card-title"><b>Grafik UKL-UPL Menengah Rendah</b>
                         @if ($start_date != null)
                             ({{ $dts }} s/d {{ $dte }})
                         @endif
@@ -146,7 +146,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><b>Jumlah Data Resiko Menengah Rendah dan Rendah</b>
+                        <h3 class="card-title"><b>Jumlah Data UKL-UPL dan SPPL</b>
                             @if ($start_date != null)
                                 ({{ $dts }} s/d {{ $dte }})
                             @endif
@@ -173,8 +173,8 @@
 
                             <div class="col-md-4">
                                 <ul class="chart-legend clearfix">
-                                    <li><i class="far fa-circle text-success"></i> Resiko Menengah Rendah</li>
-                                    <li><i class="far fa-circle text-danger"></i> Resiko Rendah</li>
+                                    <li><i class="far fa-circle text-success"></i> UKL-UPL</li>
+                                    <li><i class="far fa-circle text-danger"></i> SPPL</li>
                                 </ul>
                             </div>
 
@@ -183,7 +183,7 @@
                                     <div class="info-box">
                                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book"></i></span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Jumlah Jenis Resiko Menengah Rendah</span>
+                                            <span class="info-box-text">Jumlah UKL-UPL</span>
                                             <span class="info-box-number" id="mr_total">
                                                 {{-- {{ number_format($tot_uklupl, 0, ',', '.') }} --}}
                                             </span>
@@ -195,7 +195,7 @@
                                     <div class="info-box mb-3">
                                         <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Jumlah Jenis Resiko Rendah</span>
+                                            <span class="info-box-text">Jumlah SPPL</span>
                                             <span class="info-box-number" id="r_total">
                                                 {{-- {{ number_format($tot_sppl, 0, ',', '.') }} --}}
                                             </span>
@@ -208,11 +208,11 @@
                 </div>
             </div>
 
-            {{-- JUMLAH DATA MR PER KEWENANGAN --}}
+            {{-- JUMLAH DATA UKL-UPL PER KEWENANGAN --}}
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><b>Jumlah Resiko Menengah Rendah per Kewenangan</b>
+                        <h3 class="card-title"><b>Jumlah UKL-UPL per Kewenangan</b>
                         @if ($start_date != null)
                             ({{ $dts }} s/d {{ $dte }})
                         @endif
@@ -286,11 +286,11 @@
                 </div>
             </div>
 
-            {{-- JUMLAH DATA R PER KEWENANGAN --}}
+            {{-- JUMLAH DATA SPPL PER KEWENANGAN --}}
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><b>Jumlah Resiko Rendah per Kewenangan</b>
+                        <h3 class="card-title"><b>Jumlah SPPL per Kewenangan</b>
                         @if ($start_date != null)
                             ({{ $dts }} s/d {{ $dte }})
                         @endif
@@ -412,7 +412,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title"><b>Jumlah Resiko Menengah Rendah dan Rendah di setiap Provinsi</b>
+                        <h5 class="card-title"><b>Jumlah UKL-UPL dan SPPL di setiap Provinsi</b>
                         @if ($start_date != null)
                             ({{ $dts }} s/d {{ $dte }})
                         @endif
@@ -440,11 +440,11 @@
             </div>
         </div>
 
-        {{-- DATATABLE MR --}}
+        {{-- DATATABLE SPPL --}}
         <div class="card" id="mr_card" style="background-color: #133715; color: white; display: none;">
             <div class="card-body">
                 <div class="form-group mt-2" style="display: flex; justify-content: center; align-items: center;">
-                    <h2><b>Daftar Resiko Menengah Rendah</b></h2>
+                    <h2><b>Daftar SPPL</b></h2>
                 </div>
                 @if (session('message'))
                     <div class="alert alert-danger" role="alert">
@@ -484,7 +484,7 @@
         </div>
 
         {{-- DATATABLE R --}}
-        <div class="card" id="r_card" style="background-color: #133715; color: white; display: none;">
+        {{-- <div class="card" id="r_card" style="background-color: #133715; color: white; display: none;">
             <div class="card-body">
                 <div class="form-group mt-2" style="display: flex; justify-content: center; align-items: center;">
                     <h2><b>Daftar Resiko Rendah</b></h2>
@@ -495,9 +495,6 @@
                     </div>
                 @endif
                 <div class="d-flex justify-content-between">
-                    {{-- <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalExport">
-                        <i class="fas fa-file-excel">&nbsp;&nbsp;&nbsp;Export</i>
-                    </button> --}}
                     <h4>
                         Tanggal : {{ $dts }} s/d {{ $dte }}
                     </h4>
@@ -523,7 +520,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     {{-- MODAL DOWNLOAD FILE --}}
@@ -555,7 +552,7 @@
     <script>
         $(document).ready(function() {
             var kewenangan = <?php echo json_encode($filterKewenangan); ?>;
-            var start_date = <?php echo json_encode($start_date); ?>;
+            var start_date = <?php echo json_encode($date_start); ?>;
             var end_date = <?php echo json_encode($end_date); ?>;
             var province = <?php echo json_encode($province); ?>;
             var district = '';
@@ -571,6 +568,7 @@
                 }
             })
 
+            // TOTAL UKL-UPL
             $.ajax({
                 url: "{{ route('api.uklupl_total', ['kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                 method: 'GET',
@@ -584,7 +582,7 @@
             // STATISIK
             $.ajax({
                 // url: `/statistic?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-                url: "{{ route('api.statistic', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                url: "{{ route('api.statistic', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                 method: 'GET',
                 success: function(data) {
                     $('#loading-spinner').hide();
@@ -614,22 +612,22 @@
             // TOTAL BY DATE
             $.ajax({
                 // url: `/totalByDate?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-                url: "{{ route('api.totalByDate', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                url: "{{ route('api.totalByDate', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                 method: 'GET',
                 success: function(data) {
                     $('#loading_total_both').hide();
                     $('#canvas_total_both').show();
-                    $('#mr_total').text(data.total_mr);
-                    $('#r_total').text(data.total_r);
+                    $('#mr_total').text(data.total_uklupl);
+                    $('#r_total').text(data.total_sppl);
 
                     var ctx = document.getElementById('total_both').getContext('2d');
                     var totalDate = new Chart(ctx, {
                         type: 'doughnut',
                         data: {
-                            'labels': ['Menengah Rendah', 'Rendah'],
+                            'labels': ['SPPL', 'UKL-UPL'],
                             'datasets': [
                                 {
-                                    'data': [data.total_r, data.total_mr],
+                                    'data': [data.total_sppl, data.total_uklupl],
                                     'backgroundColor': ['#f56954', '#00a65a'],
                                 }
                             ]
@@ -640,77 +638,117 @@
                             }
                         }
                     });
+                    totalUkluplAuth();
+                    totalSpplAuth();
                 },
                 error: function() {
                     $('#loading_total_both').text('Gagal memuat data');
+                    totalUkluplAuth();
+                    totalSpplAuth();
                 }
             })
 
-            // TOTAL BY AUTHORITY
-            $.ajax({
-                // url: `/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-                url: "{{ route('api.totalByAuthority', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-                method: 'GET',
-                success: function(data) {
-                    $('#loading_auth_mr').hide();
-                    $('#loading_auth_r').hide();
-                    $('#canvas_auth_mr').show();
-                    $('#canvas_auth_r').show();
-                    $('#pusat_auth_mr').text(data.mr_pusat);
-                    $('#prov_auth_mr').text(data.mr_prov);
-                    $('#kabkot_auth_mr').text(data.mr_kabkot);
-                    $('#pusat_auth_r').text(data.r_pusat);
-                    $('#prov_auth_r').text(data.r_prov);
-                    $('#kabkot_auth_r').text(data.r_kabkot);
+            // TOTAL UKL-UPL BY AUTHORITY
+            function totalUkluplAuth () {
+                $.ajax({
+                    // url: `/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                    url: "{{ route('api.totalUkluplByAuthority', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                    method: 'GET',
+                    success: function(data) {
+                        $('#loading_auth_mr').hide();
+                        $('#canvas_auth_mr').show();
+                        $('#pusat_auth_mr').text(data.pusat);
+                        $('#prov_auth_mr').text(data.prov);
+                        $('#kabkot_auth_mr').text(data.kabkot);
+    
+                        var ctx = document.getElementById('auth_mr').getContext('2d');
+                        var totalAuthMr = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                'labels': ['Pusat', 'Provinsi', 'Kabupaten/Kota'],
+                                'datasets': [
+                                    {
+                                        'data': [data.pusat, data.prov, data.kabkot],
+                                        'backgroundColor': ['#f56954', '#00a65a', '#f39c12'],
+                                    }
+                                ]
+                            },
+                            options: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        });
+                    },
+                    error: function() {
+                        $('#loading_auth_mr').text('Gagal memuat data');
+                        $('#loading_auth_r').text('Gagal memuat data');
+                    }
+                })
+            }
 
-                    var ctx = document.getElementById('auth_mr').getContext('2d');
-                    var totalAuthMr = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            'labels': ['Pusat', 'Provinsi', 'Kabupaten/Kota'],
-                            'datasets': [
-                                {
-                                    'data': [data.mr_pusat, data.mr_prov, data.mr_kabkot],
-                                    'backgroundColor': ['#f56954', '#00a65a', '#f39c12'],
+            // TOTAL SPPL BY AUTHORITY
+            function totalSpplAuth () {
+                $.ajax({
+                    // url: `/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                    url: "{{ route('api.totalSpplByAuthority', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                    method: 'GET',
+                    success: function(data) {
+                        $('#loading_auth_r').hide();
+                        $('#canvas_auth_r').show();
+                        $('#pusat_auth_r').text(data.pusat);
+                        $('#prov_auth_r').text(data.prov);
+                        $('#kabkot_auth_r').text(data.kabkot);
+    
+                        var ctx = document.getElementById('auth_r').getContext('2d');
+                        var totalAuthR = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                'labels': ['Pusat', 'Provinsi', 'Kabupaten/Kota'],
+                                'datasets': [
+                                    {
+                                        'data': [data.pusat, data.prov, data.kabkot],
+                                        'backgroundColor': ['#f56954', '#00a65a', '#f39c12'],
+                                    }
+                                ]
+                            },
+                            options: {
+                                legend: {
+                                    display: false
                                 }
-                            ]
-                        },
-                        options: {
-                            legend: {
-                                display: false
                             }
-                        }
-                    });
-                    
-                    var ctx = document.getElementById('auth_r').getContext('2d');
-                    var totalAuthR = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            'labels': ['Pusat', 'Provinsi', 'Kabupaten/Kota'],
-                            'datasets': [
-                                {
-                                    'data': [data.r_pusat, data.r_prov, data.r_kabkot],
-                                    'backgroundColor': ['#f56954', '#00a65a', '#f39c12'],
+                        });
+                        
+                        var ctx = document.getElementById('auth_r').getContext('2d');
+                        var totalAuthR = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                'labels': ['Pusat', 'Provinsi', 'Kabupaten/Kota'],
+                                'datasets': [
+                                    {
+                                        'data': [data.r_pusat, data.r_prov, data.r_kabkot],
+                                        'backgroundColor': ['#f56954', '#00a65a', '#f39c12'],
+                                    }
+                                ]
+                            },
+                            options: {
+                                legend: {
+                                    display: false
                                 }
-                            ]
-                        },
-                        options: {
-                            legend: {
-                                display: false
                             }
-                        }
-                    });
-                },
-                error: function() {
-                    $('#loading_auth_mr').text('Gagal memuat data');
-                    $('#loading_auth_r').text('Gagal memuat data');
-                }
-            })
+                        });
+                    },
+                    error: function() {
+                        $('#loading_auth_mr').text('Gagal memuat data');
+                        $('#loading_auth_r').text('Gagal memuat data');
+                    }
+                })
+            }
 
             // DATA BY CLUSTER KBLI
             $.ajax({
                 // url: `/cluster?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-                url: "{{ route('api.cluster', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                url: "{{ route('api.cluster', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                 method: 'GET',
                 success: function(data) {
                     $('#loading_cluster').hide();
@@ -744,72 +782,76 @@
                             }
                         }
                     });
+                    dataByProv();
                 },
                 error: function() {
                     $('#loading_cluster').text('Gagal memuat data');
+                    dataByProv();
                 }
             })
 
             // DATA PER PROVINSI
-            $.ajax({
-                // url: `/ByProvince?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-                url: "{{ route('api.ByProvince', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-                method: 'GET',
-                success: function(data) {
-                    $('#loading_byprov').hide();
-                    $('#canvas_byprov').show();
-
-                    var ctx = document.getElementById('byprov').getContext('2d');
-                    var options = {
-                        maintainAspectRatio: true,
-                        responsive: true,
-                        legend: {
-                            display: true
-                        },
-                        scales: {
-                            x: {
-                                stacked: true
+            function dataByProv () {
+                $.ajax({
+                    // url: `/ByProvince?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                    url: "{{ route('api.ByProvince', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                    method: 'GET',
+                    success: function(data) {
+                        $('#loading_byprov').hide();
+                        $('#canvas_byprov').show();
+    
+                        var ctx = document.getElementById('byprov').getContext('2d');
+                        var options = {
+                            maintainAspectRatio: true,
+                            responsive: true,
+                            legend: {
+                                display: true
                             },
-                            y: {
-                                stacked: true
+                            scales: {
+                                x: {
+                                    stacked: true
+                                },
+                                y: {
+                                    stacked: true
+                                }
                             }
                         }
+                        var totalBothChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                'labels': data.labels,
+                                'datasets': [
+                                    {
+                                        'label': 'UKL-UPL',
+                                        'data': data.total_uklupl,
+                                        'fill': false,
+                                        'backgroundColor': '#f56954',
+                                        'tension': 0.1
+                                    },
+                                    {
+                                        'label': 'SPPL',
+                                        'data': data.total_sppl,
+                                        'fill': false,
+                                        'backgroundColor': '#7FFF00',
+                                        'tension': 0.1
+                                    },
+                                ]
+                            },
+                            options: options
+                        });
+                        $('#mr_card').show();
+                        datatable_sppl();
+                    },
+                    error: function() {
+                        $('#loading_byprov').text('Gagal memuat data');
+                        $('#mr_card').show();
+                        datatable_sppl();
                     }
-                    var totalBothChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            'labels': data.labels,
-                            'datasets': [
-                                {
-                                    'label': 'Menengah Rendah',
-                                    'data': data.mr_data,
-                                    'fill': false,
-                                    'backgroundColor': '#f56954',
-                                    'tension': 0.1
-                                },
-                                {
-                                    'label': 'Rendah',
-                                    'data': data.r_data,
-                                    'fill': false,
-                                    'backgroundColor': '#7FFF00',
-                                    'tension': 0.1
-                                },
-                            ]
-                        },
-                        options: options
-                    });
-                    $('#mr_card').show();
-                    datatable_mr();
-                },
-                error: function() {
-                    $('#loading_byprov').text('Gagal memuat data');
-                    $('#mr_card').show();
-                    datatable_mr();
-                }
-            })
+                })
+            }
 
             // DATATABLE MR
-            function datatable_mr () {
+            function datatable_sppl () {
                 $('#dataTableMr').DataTable({
                     'responsive': false,
                     'lengthChange': true,
@@ -829,7 +871,7 @@
                     },
                     ajax: {
                         type: "GET",
-                        url: "{{ route('datatable_mr', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                        url: "{{ route('datatable_sppl', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                     },
                     'columns': [
                         { data: 'last_kirim', name: 'last_kirim' },
@@ -870,56 +912,56 @@
             }
 
             // DATATABLE R
-            function datatable_r () {
-                $('#dataTableR').DataTable({
-                    'responsive': false,
-                    'lengthChange': true,
-                    'autoWidth': true,
-                    'pageLength': 10,
-                    'processing': true,
-                    'serverSide': true,
-                    'serverMethod': 'post',
-                    "order": [
-                        [0, "desc"]
-                    ],
-                    'deferRender': true,
-                    'scrollX': true,
-                    'scrollY': false,
-                    scroller: {
-                        loadingIndicator: true
-                    },
-                    ajax: {
-                        type: "GET",
-                        url: "{{ route('datatable_r', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-                    },
-                    'columns': [
-                        { data: 'last_kirim', name: 'last_kirim' },
-                        { data: 'nib', name: 'nib' },
-                        { data: 'kbli', name: 'kbli' },
-                        { data: 'bidang', name: 'bidang' },
-                        { data: 'id_izin', name: 'id_izin' },
-                        { data: 'judul', name: 'judul' },
-                        { data: 'alamat', name: 'alamat' },
-                        { data: 'province', name: 'province' },
-                        { data: 'district', name: 'district' },
-                        { data: 'kewenangan', name: 'kewenangan' },
-                        {
-                            data: 'id_izin',
-                            name: 'sppl',
-                            render: function (data, type, row) {
-                                return `<button class="btn btn-sm btn-success btn-sppl" data-id_izin="${data}">Unduh</button>`;
-                            }
-                        },
-                        {
-                            data: 'id_izin',
-                            name: 'lampiran',
-                            render: function (data, type, row) {
-                                return `<button class="btn btn-sm btn-success btn-lampiran" data-id_izin="${data}">Unduh</button>`;
-                            }
-                        },
-                    ],
-                });
-            }
+            // function datatable_r () {
+            //     $('#dataTableR').DataTable({
+            //         'responsive': false,
+            //         'lengthChange': true,
+            //         'autoWidth': true,
+            //         'pageLength': 10,
+            //         'processing': true,
+            //         'serverSide': true,
+            //         'serverMethod': 'post',
+            //         "order": [
+            //             [0, "desc"]
+            //         ],
+            //         'deferRender': true,
+            //         'scrollX': true,
+            //         'scrollY': false,
+            //         scroller: {
+            //             loadingIndicator: true
+            //         },
+            //         ajax: {
+            //             type: "GET",
+            //             url: "{{ route('datatable_r', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+            //         },
+            //         'columns': [
+            //             { data: 'last_kirim', name: 'last_kirim' },
+            //             { data: 'nib', name: 'nib' },
+            //             { data: 'kbli', name: 'kbli' },
+            //             { data: 'bidang', name: 'bidang' },
+            //             { data: 'id_izin', name: 'id_izin' },
+            //             { data: 'judul', name: 'judul' },
+            //             { data: 'alamat', name: 'alamat' },
+            //             { data: 'province', name: 'province' },
+            //             { data: 'district', name: 'district' },
+            //             { data: 'kewenangan', name: 'kewenangan' },
+            //             {
+            //                 data: 'id_izin',
+            //                 name: 'sppl',
+            //                 render: function (data, type, row) {
+            //                     return `<button class="btn btn-sm btn-success btn-sppl" data-id_izin="${data}">Unduh</button>`;
+            //                 }
+            //             },
+            //             {
+            //                 data: 'id_izin',
+            //                 name: 'lampiran',
+            //                 render: function (data, type, row) {
+            //                     return `<button class="btn btn-sm btn-success btn-lampiran" data-id_izin="${data}">Unduh</button>`;
+            //                 }
+            //             },
+            //         ],
+            //     });
+            // }
 
             $(document).on('click', '.btn-lampiran', function() {
                 var id_izin = $(this).data('id_izin');

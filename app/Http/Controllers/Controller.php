@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Http;
 
 class Controller extends BaseController
 {
@@ -60,5 +61,12 @@ class Controller extends BaseController
         ];
 
         return $data;
+    }
+
+    public function getKey()
+    {
+        $response = Http::get('http://amdal.menlhk.go.id/data_mr_api/public/api/GetKey');
+
+        return $response['token'];
     }
 }
