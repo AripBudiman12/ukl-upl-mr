@@ -408,7 +408,7 @@
         </div>
 
         {{-- JUMLAH PER PROVINSI --}}
-        <div class="row">
+        <div class="row" id="ByProvTotal">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -551,12 +551,17 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            var auth = <?php echo json_encode($kewenangan); ?>;
             var kewenangan = <?php echo json_encode($filterKewenangan); ?>;
             var start_date = <?php echo json_encode($date_start); ?>;
             var end_date = <?php echo json_encode($end_date); ?>;
             var province = <?php echo json_encode($province); ?>;
             var district = '';
 
+            console.log(auth);
+            if (auth != 'Pusat') {
+                $('#ByProvTotal').hide();
+            }
             // TOTAL DATA
             $.ajax({
                 url: "{{ route('api.sppl_total', ['kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
@@ -652,7 +657,7 @@
             function totalUkluplAuth () {
                 $.ajax({
                     // url: `/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-                    url: "{{ route('api.totalUkluplByAuthority', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                    url: "{{ route('api.totalUkluplByAuthority', ['start_date' => $date_start, 'end_date' => $date_end, 'province' => $province, 'district' => $district]) }}",
                     method: 'GET',
                     success: function(data) {
                         $('#loading_auth_mr').hide();
@@ -691,7 +696,7 @@
             function totalSpplAuth () {
                 $.ajax({
                     // url: `/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-                    url: "{{ route('api.totalSpplByAuthority', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                    url: "{{ route('api.totalSpplByAuthority', ['start_date' => $date_start, 'end_date' => $date_end, 'province' => $province, 'district' => $district]) }}",
                     method: 'GET',
                     success: function(data) {
                         $('#loading_auth_r').hide();
@@ -792,62 +797,67 @@
 
             // DATA PER PROVINSI
             function dataByProv () {
-                $.ajax({
-                    // url: `/ByProvince?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-                    url: "{{ route('api.ByProvince', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-                    method: 'GET',
-                    success: function(data) {
-                        $('#loading_byprov').hide();
-                        $('#canvas_byprov').show();
-    
-                        var ctx = document.getElementById('byprov').getContext('2d');
-                        var options = {
-                            maintainAspectRatio: true,
-                            responsive: true,
-                            legend: {
-                                display: true
-                            },
-                            scales: {
-                                x: {
-                                    stacked: true
+                if (auth != 'Pusat') {
+                    $('#mr_card').show();
+                    datatable_sppl();
+                } else {
+                    $.ajax({
+                        // url: `/ByProvince?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
+                        url: "{{ route('api.ByProvince', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                        method: 'GET',
+                        success: function(data) {
+                            $('#loading_byprov').hide();
+                            $('#canvas_byprov').show();
+        
+                            var ctx = document.getElementById('byprov').getContext('2d');
+                            var options = {
+                                maintainAspectRatio: true,
+                                responsive: true,
+                                legend: {
+                                    display: true
                                 },
-                                y: {
-                                    stacked: true
+                                scales: {
+                                    x: {
+                                        stacked: true
+                                    },
+                                    y: {
+                                        stacked: true
+                                    }
                                 }
                             }
+                            var totalBothChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    'labels': data.labels,
+                                    'datasets': [
+                                        {
+                                            'label': 'UKL-UPL',
+                                            'data': data.total_uklupl,
+                                            'fill': false,
+                                            'backgroundColor': '#f56954',
+                                            'tension': 0.1
+                                        },
+                                        {
+                                            'label': 'SPPL',
+                                            'data': data.total_sppl,
+                                            'fill': false,
+                                            'backgroundColor': '#7FFF00',
+                                            'tension': 0.1
+                                        },
+                                    ]
+                                },
+                                options: options
+                            });
+                            $('#mr_card').show();
+                            datatable_sppl();
+                        },
+                        error: function() {
+                            $('#loading_byprov').text('Gagal memuat data');
+                            $('#mr_card').show();
+                            datatable_sppl();
                         }
-                        var totalBothChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                'labels': data.labels,
-                                'datasets': [
-                                    {
-                                        'label': 'UKL-UPL',
-                                        'data': data.total_uklupl,
-                                        'fill': false,
-                                        'backgroundColor': '#f56954',
-                                        'tension': 0.1
-                                    },
-                                    {
-                                        'label': 'SPPL',
-                                        'data': data.total_sppl,
-                                        'fill': false,
-                                        'backgroundColor': '#7FFF00',
-                                        'tension': 0.1
-                                    },
-                                ]
-                            },
-                            options: options
-                        });
-                        $('#mr_card').show();
-                        datatable_sppl();
-                    },
-                    error: function() {
-                        $('#loading_byprov').text('Gagal memuat data');
-                        $('#mr_card').show();
-                        datatable_sppl();
-                    }
-                })
+                    })
+                }
             }
 
             // DATATABLE MR

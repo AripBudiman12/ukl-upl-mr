@@ -77,7 +77,7 @@ class DashboardController extends Controller
         $dts = $dts->formatLocalized('%e %B %Y');
         $dte = $dte->formatLocalized('%e %B %Y');
 
-        $filterKewenangan = null;
+        $filterKewenangan = $user['kewenangan'];
         if (request('filterKewenangan') != null) {
             $filterKewenangan = request('filterKewenangan');
         }
@@ -237,24 +237,58 @@ class DashboardController extends Controller
 
         $response = Http::withHeaders(['Token' => (new Controller)->getKey()]);
         if ($user['kewenangan'] == 'Pusat') {
-            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/totalByDate?dokumen=UKL-UPL&start_date=' . $start_date . '&end_date=' . $end_date);
-        } elseif ($user['kewenangan'] != 'Pusat') {
-            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/totalByDate?dokumen=UKL-UPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?start_date=' . $start_date . '&end_date=' . $end_date);
+        } elseif ($user['kewenangan'] == 'Provinsi') {
+            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
+            $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
         }
 
-        // SPPL
-        $sppl = Http::get('http://182.23.160.133/api/filteredTotal', [
-            'start' => $start_date,
-            'end' => $end_date,
-            'kewenangan' => request('amp;kewenangan'),
+        $sppl = Http::get('http://182.23.160.133/api/kewenangan', [
+            'start' => request('start_date'),
+            'end' => request('amp;end_date'),
+            // 'kewenangan' => request('amp;kewenangan'),
             'province' => request('amp;province'),
             'district' => request('amp;district')
         ]);
 
+        $total_uklupl = 0;
+        $total_sppl = 0;
+        foreach (json_decode($uklupl)->data as $col) {
+            $total_uklupl += $col->jumlah;
+        }
+        foreach (json_decode($sppl)->data as $col) {
+            $total_sppl += $col->total;
+        }
+
         return response()->json([
-            'total_sppl' => json_decode($sppl)->data[0]->total,
-            'total_uklupl' => json_decode($uklupl)->data[0]->jumlah,
+            'total_sppl' => $total_sppl,
+            'total_uklupl' => $total_uklupl,
         ]);
+        #region Unused Query (With own API)
+        // $response = Http::withHeaders(['Token' => (new Controller)->getKey()]);
+        // if ($user['kewenangan'] == 'Pusat') {
+        //     $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/totalByDate?dokumen=UKL-UPL&start_date=' . $start_date . '&end_date=' . $end_date);
+        // } elseif ($user['kewenangan'] != 'Pusat') {
+        //     // $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/totalByDate?dokumen=UKL-UPL&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        //     $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/totalByDate?dokumen=UKL-UPL&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        // }
+
+        // SPPL
+        // $sppl = Http::get('http://182.23.160.133/api/filteredTotal', [
+        //     'start' => $start_date,
+        //     'end' => $end_date,
+        //     // 'kewenangan' => request('amp;kewenangan'),
+        //     'province' => request('amp;province'),
+        //     'district' => request('amp;district')
+        // ]);
+
+        // return response()->json([
+        //     'total_sppl' => json_decode($sppl)->data[0]->total,
+        //     'total_uklupl' => json_decode($uklupl)->data[0]->jumlah,
+        // ]);
+        #endregion
+        
     }
 
     public function totalUkluplByAuthority()
@@ -274,11 +308,11 @@ class DashboardController extends Controller
         }
 
         if (request('start_date')) {
-            $start_date = str_replace('-', '/', request('start_date'));
-            $end_date = str_replace('-', '/', request('amp;end_date'));
+            $start_date = str_replace('/', '-', request('start_date'));
+            $end_date = str_replace('/', '-', request('amp;end_date'));
         } else {
-            $start_date = str_replace('-', '/', $date['start']);
-            $end_date = str_replace('-', '/', $date['now']);
+            $start_date = str_replace('/', '-', $date['start']);
+            $end_date = str_replace('/', '-', $date['now']);
         }
 
         $response = Http::withHeaders(['Token' => (new Controller)->getKey()]);
@@ -294,7 +328,7 @@ class DashboardController extends Controller
             'pusat' => json_decode($uklupl)->data[2]->jumlah,
             'prov' => json_decode($uklupl)->data[1]->jumlah,
             'kabkot' => json_decode($uklupl)->data[0]->jumlah,
-        ]);  
+        ]);
     }
 
     public function totalSpplByAuthority()
@@ -302,16 +336,16 @@ class DashboardController extends Controller
         $data = Http::get('http://182.23.160.133/api/kewenangan', [
             'start' => request('start_date'),
             'end' => request('amp;end_date'),
-            'kewenangan' => request('amp;kewenangan'),
+            // 'kewenangan' => request('amp;kewenangan'),
             'province' => request('amp;province'),
             'district' => request('amp;district')
         ]);
-        
+
         return response()->json([
             'pusat' => json_decode($data)->data[2]->total,
             'prov' => json_decode($data)->data[1]->total,
             'kabkot' => json_decode($data)->data[0]->total,
-        ]);        
+        ]);    
     }
 
     public function cluster()
