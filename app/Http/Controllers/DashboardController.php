@@ -168,11 +168,17 @@ class DashboardController extends Controller
 
     public function sppl_total()
     {
+        if (request('kewenangan') == 'Pusat') {
+            $kewenangan = '';
+        } else {
+            $kewenangan = request('kewenangan');
+        }
+
         $now = Carbon::now()->format('Y-m-d');
         $data = Http::get('http://182.23.160.133/api/filteredTotal', [
             'start' => '2022-01-01',
             'end' => $now,
-            'kewenangan' => request('kewenangan'),
+            'kewenangan' => $kewenangan,
             'province' => request('amp;province'),
             'district' => request('amp;district'),
         ]);
