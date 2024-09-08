@@ -100,6 +100,7 @@ class DashboardController extends Controller
 
     public function statistic()
     {
+        // return 'iya';
         $user = $this->user_role();
         $provinsi = "";
         $kabkota = "";
@@ -110,10 +111,10 @@ class DashboardController extends Controller
 
         if (request('start_date')) {
             $start_date = str_replace('-', '/', request('start_date'));
-            $end_date = str_replace('-', '/', request('end_date'));
+            $end_date = str_replace('-', '/', request('amp;end_date'));
             $statistic = Http::withHeaders([
             'Token' => (new Controller)->getKey(),
-            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('filterKewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&perbulan=0&start_date=' . $start_date . '&end_date=' . $end_date);
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/statistik?dokumen=UKL-UPL&filterKewenangan=' . request('amp;kewenangan') . '&kewenangan=' . $user['kewenangan'] . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&perbulan=0&start_date=' . $start_date . '&end_date=' . $end_date);
         } else {
             $start_date = str_replace('-', '/', $date['start']);
             $end_date = str_replace('-', '/', $date['now']);
