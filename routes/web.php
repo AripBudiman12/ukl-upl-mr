@@ -54,7 +54,7 @@ Route::get('totalUkluplByAuthority', [DashboardController::class, 'totalUkluplBy
 Route::get('cluster', [DashboardController::class, 'cluster'])->name('api.cluster');
 Route::get('ByProvince', [DashboardController::class, 'ByProvince'])->name('api.ByProvince');
 Route::get('datatable_sppl', [DashboardController::class, 'datatable_sppl'])->name('datatable_sppl');
-Route::get('datatable_r', [DashboardController::class, 'datatable_r'])->name('datatable_r');
+Route::get('datatable_uklupl', [DashboardController::class, 'datatable_uklupl'])->name('datatable_uklupl');
 
 // GET FILE APIs
 Route::get('getSpplFile', [DashboardController::class, 'getSpplFile'])->name('getSpplFile');

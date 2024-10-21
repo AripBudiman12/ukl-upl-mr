@@ -484,7 +484,7 @@
         </div>
 
         {{-- DATATABLE R --}}
-        {{-- <div class="card" id="r_card" style="background-color: #133715; color: white; display: none;">
+        <div class="card" id="r_card" style="background-color: #133715; color: white; display: none;">
             <div class="card-body">
                 <div class="form-group mt-2" style="display: flex; justify-content: center; align-items: center;">
                     <h2><b>Daftar Resiko Rendah</b></h2>
@@ -520,7 +520,7 @@
                     </tbody>
                 </table>
             </div>
-        </div> --}}
+        </div>
     </div>
 
     {{-- MODAL DOWNLOAD FILE --}}
@@ -556,6 +556,7 @@
             var start_date = <?php echo json_encode($date_start); ?>;
             var end_date = <?php echo json_encode($end_date); ?>;
             var province = <?php echo json_encode($province); ?>;
+            var distincted = <?php echo json_encode($distincted); ?>;
             var district = '';
 
             console.log(auth);
@@ -575,7 +576,7 @@
 
             // TOTAL UKL-UPL
             $.ajax({
-                url: "{{ route('api.uklupl_total', ['kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                url: "{{ route('api.uklupl_total', ['kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district, 'distincted' => $distincted]) }}",
                 method: 'GET',
                 success: function(data) {
                     $('#loading_total_uklupl').hide();
@@ -657,7 +658,7 @@
             function totalUkluplAuth () {
                 $.ajax({
                     // url: `/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-                    url: "{{ route('api.totalUkluplByAuthority', ['start_date' => $date_start, 'end_date' => $date_end, 'province' => $province, 'district' => $district]) }}",
+                    url: "{{ route('api.totalUkluplByAuthority', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                     method: 'GET',
                     success: function(data) {
                         $('#loading_auth_mr').hide();
@@ -696,7 +697,7 @@
             function totalSpplAuth () {
                 $.ajax({
                     // url: `/totalByAuthority?kewenangan=${kewenangan}&start_date=${start_date}&end_date=${end_date}&province=${province}&district=${district}`,
-                    url: "{{ route('api.totalSpplByAuthority', ['start_date' => $date_start, 'end_date' => $date_end, 'province' => $province, 'district' => $district]) }}",
+                    url: "{{ route('api.totalSpplByAuthority', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
                     method: 'GET',
                     success: function(data) {
                         $('#loading_auth_r').hide();
@@ -855,6 +856,7 @@
                             $('#loading_byprov').text('Gagal memuat data');
                             $('#mr_card').show();
                             datatable_sppl();
+                            datatable_uklupl();
                         }
                     })
                 }
@@ -917,61 +919,68 @@
                         },
                     ],
                 });
-                $('#r_card').show();
-                datatable_r();
+                // $('#r_card').show();
             }
 
             // DATATABLE R
-            // function datatable_r () {
-            //     $('#dataTableR').DataTable({
-            //         'responsive': false,
-            //         'lengthChange': true,
-            //         'autoWidth': true,
-            //         'pageLength': 10,
-            //         'processing': true,
-            //         'serverSide': true,
-            //         'serverMethod': 'post',
-            //         "order": [
-            //             [0, "desc"]
-            //         ],
-            //         'deferRender': true,
-            //         'scrollX': true,
-            //         'scrollY': false,
-            //         scroller: {
-            //             loadingIndicator: true
-            //         },
-            //         ajax: {
-            //             type: "GET",
-            //             url: "{{ route('datatable_r', ['start_date' => $start_date, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
-            //         },
-            //         'columns': [
-            //             { data: 'last_kirim', name: 'last_kirim' },
-            //             { data: 'nib', name: 'nib' },
-            //             { data: 'kbli', name: 'kbli' },
-            //             { data: 'bidang', name: 'bidang' },
-            //             { data: 'id_izin', name: 'id_izin' },
-            //             { data: 'judul', name: 'judul' },
-            //             { data: 'alamat', name: 'alamat' },
-            //             { data: 'province', name: 'province' },
-            //             { data: 'district', name: 'district' },
-            //             { data: 'kewenangan', name: 'kewenangan' },
-            //             {
-            //                 data: 'id_izin',
-            //                 name: 'sppl',
-            //                 render: function (data, type, row) {
-            //                     return `<button class="btn btn-sm btn-success btn-sppl" data-id_izin="${data}">Unduh</button>`;
-            //                 }
-            //             },
-            //             {
-            //                 data: 'id_izin',
-            //                 name: 'lampiran',
-            //                 render: function (data, type, row) {
-            //                     return `<button class="btn btn-sm btn-success btn-lampiran" data-id_izin="${data}">Unduh</button>`;
-            //                 }
-            //             },
-            //         ],
-            //     });
-            // }
+            function datatable_uklupl () {
+                $('#dataTableR').DataTable({
+                    'responsive': false,
+                    'lengthChange': true,
+                    'autoWidth': true,
+                    'pageLength': 10,
+                    'processing': true,
+                    'serverSide': true,
+                    'serverMethod': 'post',
+                    "order": [
+                        [0, "desc"]
+                    ],
+                    'deferRender': true,
+                    'scrollX': true,
+                    'scrollY': false,
+                    scroller: {
+                        loadingIndicator: true
+                    },
+                    ajax: {
+                        type: "GET",
+                        url: "{{ route('datatable_uklupl', ['start_date' => $date_start, 'end_date' => $date_end, 'kewenangan' => $filterKewenangan, 'province' => $province, 'district' => $district]) }}",
+                    },
+                    'columns': [
+                        { data: 'last_kirim', name: 'last_kirim' },
+                        { data: 'nib', name: 'nib' },
+                        { data: 'kbli', name: 'kbli' },
+                        { data: 'bidang', name: 'bidang' },
+                        { data: 'id_izin', name: 'id_izin' },
+                        { data: 'judul', name: 'judul' },
+                        { data: 'alamat', name: 'alamat' },
+                        { data: 'province', name: 'province' },
+                        { data: 'district', name: 'district' },
+                        { data: 'kewenangan', name: 'kewenangan' },
+                        {
+                            data: 'id_izin',
+                            name: 'sppl',
+                            render: function (data, type, row) {
+                                return `<button class="btn btn-sm btn-success btn-sppl" data-id_izin="${data}">Unduh</button>`;
+                            }
+                        },
+                        {
+                            data: 'id_izin',
+                            name: 'pkplh_otomatis',
+                            render: function (data, type, row) {
+                                return `<button class="btn btn-sm btn-success btn-pkplh" data-id_izin="${data}">Unduh</button>`;
+                            }
+                        },
+                        {
+                            data: 'id_izin',
+                            name: 'lampiran',
+                            render: function (data, type, row) {
+                                return `<button class="btn btn-sm btn-success btn-lampiran" data-id_izin="${data}">Unduh</button>`;
+                            }
+                        },
+                    ],
+                });
+                $('#r_card').show();
+            }
 
             $(document).on('click', '.btn-lampiran', function() {
                 var id_izin = $(this).data('id_izin');

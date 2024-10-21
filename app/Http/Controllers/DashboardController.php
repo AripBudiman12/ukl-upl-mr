@@ -82,8 +82,10 @@ class DashboardController extends Controller
             $filterKewenangan = request('filterKewenangan');
         }
 
+        $distincted = request('distincted') ?  true : null;
         $kewenangan = $user['kewenangan'];
         $district = '';
+
         return view('dashboard', compact(
             'filterKewenangan',
             'kewenangan',
@@ -94,7 +96,8 @@ class DashboardController extends Controller
             'dts',
             'dte',
             'province',
-            'district'
+            'district',
+            'distincted'
         ));
     }
 
@@ -200,15 +203,20 @@ class DashboardController extends Controller
         if ($user['kewenangan'] == 'Pusat') {
             $jum_uklupl = Http::withHeaders([
             'Token' => (new Controller)->getKey(),
-            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot', ['dokumen' => 'UKL-UPL']);
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&distincted=' . request('amp;distincted'));
         } elseif ($user['kewenangan'] == 'Provinsi') {
             $jum_uklupl = Http::withHeaders([
             'Token' => (new Controller)->getKey(),
-            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&provinsi=' . $provinsi);
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&provinsi=' . $provinsi . '&distincted=' . request('amp;distincted'));
         } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
             $jum_uklupl = Http::withHeaders([
             'Token' => (new Controller)->getKey(),
-            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&provinsi=' . $provinsi . "&kabkota=" . $kabkota);
+            ])->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_sppl_tot?dokumen=UKL-UPL&provinsi=' . $provinsi . "&kabkota=" . $kabkota . '&distincted=' . request('amp;distincted'));
+        }
+
+        if (!request('distincted')) {
+            $total = $jum_uklupl['data'][0]['count'];
+            $total_uklupl = $total - ($total * 0.02);
         }
 
         $total_uklupl = $jum_uklupl['data'][0]['count'];
@@ -323,11 +331,11 @@ class DashboardController extends Controller
         }
 
         $response = Http::withHeaders(['Token' => (new Controller)->getKey()]);
-        if ($user['kewenangan'] == 'Pusat') {
+        if (request('amp;kewenangan') == 'Pusat') {
             $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?start_date=' . $start_date . '&end_date=' . $end_date);
-        } elseif ($user['kewenangan'] == 'Provinsi') {
+        } elseif (request('amp;kewenangan') == 'Provinsi') {
             $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
-        } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
+        } elseif (request('amp;kewenangan') == 'Kabupaten/Kota') {
             $uklupl = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/uklupl_pusat?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
         }
 
@@ -380,11 +388,11 @@ class DashboardController extends Controller
         }
 
         $response = Http::withHeaders(['Token' => (new Controller)->getKey()]);
-        if ($user['kewenangan'] == 'Pusat') {
+        if (request('amp;kewenangan') == 'Pusat') {
             $cluster = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?start_date=' . $start_date . '&end_date=' . $end_date);
-        } elseif ($user['kewenangan'] == 'Provinsi') {
+        } elseif (request('amp;kewenangan') == 'Provinsi') {
             $cluster = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
-        } elseif ($user['kewenangan'] == 'Kabupaten/Kota') {
+        } elseif (request('amp;kewenangan') == 'Kabupaten/Kota') {
             $cluster = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/cluster?provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
         }
 
@@ -501,6 +509,65 @@ class DashboardController extends Controller
             "recordsTotal" => json_decode($data)->total,
             "recordsFiltered" => json_decode($data)->total,
             "data" => json_decode($data)->data,
+        ]);
+    }
+
+    public function datatable_uklupl()
+    {
+        // Increase memory limit to unlimited
+        ini_set('memory_limit', '-1');
+        // Set the max execution time limit to unlimited
+        ini_set('max_execution_time', 0);
+        // Set the execution time limit to unlimited
+        set_time_limit(0);
+
+        $date = (new KegiatanController)->getDate();
+        $user = (new KegiatanController)->user_role();
+        $limit = request('length');
+        $start = request('start');
+        $search = null;
+        if (request('search')['value'] != null) {
+            $search = request('search')['value'];
+        }
+
+        $user = $this->user_role();
+        $start_date = "";
+        $end_date = "";
+
+        $provinsi = "";
+        $kabkota = "";
+        if ($user['provinsi']) {
+            $provinsi = $user['provinsi'];
+        }
+        if ($user['kabkota']) {
+            $kabkota = $user['kabkota'];
+        }
+
+        if (request('start_date')) {
+            $start_date = str_replace('/', '-', request('start_date'));
+            $end_date = str_replace('/', '-', request('amp;end_date'));
+        } else {
+            $start_date = str_replace('/', '-', $date['start']);
+            $end_date = str_replace('/', '-', $date['now']);
+        }
+
+        $response = Http::withHeaders(['Token' => (new Controller)->getKey()]);
+        if (request('amp;kewenangan') == "Pusat") {
+            $api = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?search=' . $search . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
+            $total = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?search=' . $search . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        } elseif (request('amp;kewenangan') == "Provinsi") {
+            $api = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?search=' . $search . '&provinsi=' . $provinsi . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
+            $total = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?search=' . $search . '&provinsi=' . $provinsi . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        } elseif (request('amp;kewenangan') == 'Kabupaten/Kota') {
+            $api = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/kegiatan?search=' . $search . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&offset=' . $start . '&limit=' . $limit . '&start_date=' . $start_date . '&end_date=' . $end_date);
+            $total = $response->get('http://amdal.menlhk.go.id/data_mr_api/public/api/filteredTotal?search=' . $search . '&provinsi=' . $provinsi . '&kabkota=' . $kabkota . '&start_date=' . $start_date . '&end_date=' . $end_date);
+        }
+        
+        return response()->json([
+            "draw" => intval(request('draw')),
+            "recordsTotal" => intval($total['data'][0]['count']),
+            "recordsFiltered" => intval($total['data'][0]['count']),
+            "data" => $api['data'],
         ]);
     }
 
