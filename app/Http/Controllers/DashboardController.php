@@ -50,8 +50,8 @@ class DashboardController extends Controller
             $province = getProvince($user['provinsi']);
         }
         if ($user['kabkota']) {
-            // $kabkota = $user['kabkota'];
-            $province = getProvince($user['provinsi']);
+            $kabkota = $user['kabkota'];
+            // $province = getProvince($user['provinsi']);
         }
 
         $date = (new Controller)->getDate();
@@ -84,7 +84,7 @@ class DashboardController extends Controller
 
         $distincted = request('distincted') ?  true : null;
         $kewenangan = $user['kewenangan'];
-        $district = '';
+        $district = $kabkota;
 
         return view('dashboard', compact(
             'filterKewenangan',
